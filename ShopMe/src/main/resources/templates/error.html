@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head  th:replace="fragments :: page_head('Error - Shopme Admin', 'none')" />
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Error - Shopme Admin</title>-->
+<!--  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">-->
+
+<!--  <link rel="stylesheet" type="text/css" th:href="@{/fontawsome/all.css}"/>-->
+<!--  <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>-->
+
+<!--  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>-->
+<!--  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--  <script type="text/javascript" th:src="@{/js/common.js}"></script>-->
+
+<!--</head>-->
+    <body>
+        <!-- Spring will automatically detect this page when error in url is found  -->
+        <div class="container-fluid">
+
+          <div th:replace="navigation :: menu"></div>
+
+
+          <div class="container-fluid">
+            <div class="text-center">
+                <h2>An unexcpected error has occured</h2>
+            </div>
+
+
+            <div class="text-center">
+              <p>Shopme Control Panel - Copyright &copy; Shopme</p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

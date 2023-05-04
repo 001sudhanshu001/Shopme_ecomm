@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head  th:replace="fragments :: page_head('Products - Shopme Admin', 'none')" />
+
+<body>
+  <div class="container-fluid">
+
+    <div th:replace="navigation :: menu"></div>
+
+    <div>
+      <h2>Manage Products</h2>
+      <a th:href="@{/products/new}" class="fa-sharp fa-solid fa-folder-plus fa-2x icon-dark mr-2" title="Create New Brand"></a>
+
+      <a th:href="@{/products/export/csv}" class="fas fa-file-csv fa-2x icon-dark" title="Export to CSV"></a>
+
+    </div>
+
+    <div th:if="${message != null}" class="alert alert-success text-center"> <!-- success msg for new user created -->
+      [[${message}]]
+    </div>
+    <div th:if="${error_message != null}" class="alert alert-danger text-center"><!-- error msg when user not found -->
+      [[${error_message}]]
+    </div>
+
+    <!---------------------------- search filter -------------------------->
+    <div th:replace="fragments :: search_form('/products/page/1')"></div>
+
+    <!------------------------------------------------------------------>
+    <div class="full-details">
+      <table class="table table-responsive-xl table-bordered table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Main Image</th>
+                <th>Product Name</th>
+<!--                <th th:replace="fragments :: column_link('/products' ,'name', 'Product Name','none')"></th>-->
+                <th>Brand</th>
+                <th>Categories</th>
+                <th>Enabled</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="product : ${listProducts}">
+            <td>[[${product.id}]]</td>
+            <td>
+<!--                <img th:src="@{${brand.logoPath}}" style="width: 100px" class="img-fluid"/>-->
+            </td>
+            <td>[[${product.name}]]</td>
+            <td>[[${product.brand.name}]]</td>
+            <td>[[${product.category.name}]]</td>
+
+            <td> <!-- for enabled and disabled  -->
+                <div th:replace="fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})"></div>
+            </td>
+
+            <td>
+                <a class="fas fa-file-alt fa-2x icon-green"
+                      th:href="@{'/products/details/' + ${product.id}}"
+                      title="View Details of this Product">
+                </a>
+                &nbsp;
+                <div th:replace="fragments :: edit('product', '/products/edit/' + ${product.id})"> </div>
+                &nbsp;
+                <div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id}, true)"> </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!----------------- popup warning  --------------->
+    <div th:replace="modal_fragment :: confirm_modal"></div>
+
+
+    <div th:replace="fragments:: footer"></div>
+
+  </div>
+
+  <script th:src="@{/js/common_list.js}"></script>
+
+  <script type="text/javascript">
+    moduleURL = "[[@{/products}]]";
+
+    $(document).ready(function(){
+      $(".link-delete").on("click", function(e){
+        e.preventDefault();
+        showDeleteConfirmModal($(this), 'product');
+      });
+    })
+  </script>
+
+  
+
+</body>
+</html>
