@@ -220,12 +220,4 @@ public class UserController {
         exporter.export(allUser, response);
     }
 
-
-
-
-
-
-
-
-
 }

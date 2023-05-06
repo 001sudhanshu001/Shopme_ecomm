@@ -59,6 +59,14 @@ public class Product {
     public void addExtraImage(String imageName){
         this.images.add(new ProductImage(imageName, this)); // image added to this Product only
     }
+
+    @Transient
+    public String getMainImagePath(){
+        if(id == null || mainImage == null) {
+            return "/images/image-thumbnail.png";
+        }
+        return "/product-images/" + this.id + "/" + this.mainImage;
+    }
     @Override
     public String toString() {
         return "Product{" +

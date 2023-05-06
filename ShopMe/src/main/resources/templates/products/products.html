@@ -9,7 +9,7 @@
 
     <div>
       <h2>Manage Products</h2>
-      <a th:href="@{/products/new}" class="fa-sharp fa-solid fa-folder-plus fa-2x icon-dark mr-2" title="Create New Brand"></a>
+      <a th:href="@{/products/new}" class="fa-sharp fa-solid fa-folder-plus fa-2x icon-dark mr-2" title="Create New Product"></a>
 
       <a th:href="@{/products/export/csv}" class="fas fa-file-csv fa-2x icon-dark" title="Export to CSV"></a>
 
@@ -45,7 +45,7 @@
           <tr th:each="product : ${listProducts}">
             <td>[[${product.id}]]</td>
             <td>
-<!--                <img th:src="@{${brand.logoPath}}" style="width: 100px" class="img-fluid"/>-->
+              <img th:src="@{${product.mainImagePath}}" style="width: 120px" class="img-fluid"/>
             </td>
             <td>[[${product.name}]]</td>
             <td>[[${product.brand.name}]]</td>
