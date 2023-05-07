@@ -15,12 +15,15 @@
 
     </div>
 
-    <div th:if="${message != null}" class="alert alert-success text-center"> <!-- success msg for new user created -->
+    <div th:if="${message != null}" class="alert alert-success text-center"> <!-- success msg for new product created -->
       [[${message}]]
     </div>
-    <div th:if="${error_message != null}" class="alert alert-danger text-center"><!-- error msg when user not found -->
+    <div th:if="${error_message != null}" class="alert alert-danger text-center"><!-- error msg when product not found -->
       [[${error_message}]]
     </div>
+      <div th:if="${disable_message != null}" class="alert alert-warning text-center"><!-- error msg when product not found -->
+          [[${disable_message}]]
+      </div>
 
     <!---------------------------- search filter -------------------------->
     <div th:replace="fragments :: search_form('/products/page/1')"></div>

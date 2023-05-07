@@ -54,11 +54,15 @@ public class ProductController {
     @PostMapping("/products/save")
     public String saveProduct(Product product, RedirectAttributes redirectAttributes,
                               @RequestParam("fileImage")MultipartFile mainImageMultipart,
-                              @RequestParam("extraImage")MultipartFile[] extraImageMultiparts)
+                              @RequestParam("extraImage")MultipartFile[] extraImageMultiparts,
+                              @RequestParam(name = "detailNames", required = false) String[] detailNames,
+                              @RequestParam(name = "detailValues", required = false) String[] detailValues
+                              )
                                     throws IOException { // fileImage as we used in product_images.html
 
         setMainImage(mainImageMultipart, product);
         setExtraImagenames(extraImageMultiparts, product);
+        setProductDetials(detailNames, detailValues, product);
 
         Product savedProduct = productService.save(product);
 
@@ -68,6 +72,19 @@ public class ProductController {
         redirectAttributes.addFlashAttribute("message","The Product has been saved successfully");
 
         return "redirect:/products";
+    }
+
+    private void setProductDetials(String[] detailNames, String[] detailValues, Product product) {
+        if(detailNames == null || detailNames.length == 0) return;
+
+        for(int count = 0; count < detailNames.length; count++){
+            String name = detailNames[count];
+            String value = detailValues[count];
+
+            if(!name.isEmpty() && !value.isEmpty()){
+                product.addDetails(name, value);
+            }
+        }
     }
 
     private void saveUploadedImages(MultipartFile mainImageMultipart, MultipartFile[] extraImageMultiparts,
@@ -81,10 +98,11 @@ public class ProductController {
         }
 
         if(extraImageMultiparts.length > 0) { // to save extra image
+            System.out.println("saving extra images");
             String uploadDir = "../product-images/" + savedProduct.getId() + "/extras";
 
             for (MultipartFile multipartFile : extraImageMultiparts) {
-                if (!multipartFile.isEmpty()) {
+                if (multipartFile.isEmpty()) {
                     continue;
                 }
                 String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -103,6 +121,7 @@ public class ProductController {
         if(extraImageMultiparts.length > 0){
             for (MultipartFile multipartFile : extraImageMultiparts){
                 if(!multipartFile.isEmpty()){
+                    System.out.println("Setting extra image");
                     String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
                     product.addExtraImage(fileName);
                 }
@@ -113,11 +132,16 @@ public class ProductController {
     @GetMapping("/products/{id}/enabled/{status}")
     public String updateCategoryEnabledStatus(@PathVariable("id") Integer id,
                                               @PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
+
         productService.updateProductEnabledStatus(id, enabled);
-        String updatedStatus = enabled ? "enabled" : "disabled";
+        String updatedStatus = enabled ? "Enabled" : "Disabled";
         String message = "The Product ID "+ id + " has been " + updatedStatus;
 
-        redirectAttributes.addFlashAttribute("message", message);
+        if(updatedStatus.equals("Enabled")){
+            redirectAttributes.addFlashAttribute("message", message);
+        }else {
+            redirectAttributes.addFlashAttribute("disable_message",message);
+        }
 
         return "redirect:/products";
     }
@@ -126,19 +150,43 @@ public class ProductController {
     public String deleteProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
         try {
             productService.delete(id);
-            String productMainImagesDir = "../product-images/" + id;
+            // deleting images related to this product
             String productExtraImagesDir = "../product-images/" + id + "/extras";
+            String productMainImagesDir = "../product-images/" + id;
 
-            FileUploadUtil.removeDir(productMainImagesDir);
             FileUploadUtil.removeDir(productExtraImagesDir);
-
+            FileUploadUtil.removeDir(productMainImagesDir);
 
             redirectAttributes.addFlashAttribute("message",
                     "The Product ID " + id + " has been deleted successfully");
+            return "redirect:/products";
         }catch (ProductNotFoundException ex){
-            redirectAttributes.addAttribute("message", ex.getMessage());
+            redirectAttributes.addFlashAttribute("error_message", ex.getMessage());
+            return "redirect:/products";
         }
 
-        return "redirect:/products";
+    }
+
+    // To edit product
+    @GetMapping("/products/edit/{id}")
+    public String editProduct(@PathVariable("id") Integer id, Model model,  RedirectAttributes redirectAttributes){
+        try{
+            Product product = productService.get(id);
+
+            List<Brand> listBrands = brandService.listAll();
+
+            Integer numberOfExistingExtraImages = product.getImages().size();
+            model.addAttribute("listBrands", listBrands);;
+            model.addAttribute("product", product);
+            model.addAttribute("pageTitle", "Edit Product (ID:" + id + ")");
+            model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
+
+
+
+            return "products/product_form";
+        }catch (ProductNotFoundException ex){
+            redirectAttributes.addFlashAttribute("error_message", ex.getMessage());
+            return "redirect:/products";
+        }
     }
 }

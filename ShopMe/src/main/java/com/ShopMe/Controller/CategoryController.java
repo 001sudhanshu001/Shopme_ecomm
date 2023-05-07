@@ -114,7 +114,7 @@ public class CategoryController {
 
             return "categories/category_form";
         }catch (CategoryNotFoundException ex){
-            attributes.addFlashAttribute("message", ex.getMessage());
+            attributes.addFlashAttribute("error_message", ex.getMessage());
             return "redirect:/categories";
         }
     }
@@ -143,7 +143,7 @@ public class CategoryController {
 
             attributes.addFlashAttribute("message", "The category having ID " +id + " has been deleted successfully");
         }catch (CategoryNotFoundException ex){
-            attributes.addFlashAttribute("message", ex.getMessage());
+            attributes.addFlashAttribute("error_message", ex.getMessage());
         }
 
         return "redirect:/categories";

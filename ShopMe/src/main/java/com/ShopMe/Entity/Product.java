@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Setter @Getter
@@ -55,7 +53,14 @@ public class Product {
     private Brand brand; // one brand can have many products
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductImage> images = new HashSet<>();  //one product can have many images
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductDetails> details = new ArrayList<>();
 
+    public void addDetails(String name, String value){
+        this.details.add(new ProductDetails(name, value, this));
+    }
+
+    @Transient
     public void addExtraImage(String imageName){
         this.images.add(new ProductImage(imageName, this)); // image added to this Product only
     }

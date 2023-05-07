@@ -25,4 +25,10 @@ public class ProductImage {  // this is for extra images of the product
         this.name = name;
         this.product = product;
     }
+
+    @Transient
+    public String getImagePath() {
+        return "/product-images/" + product.getId() + "/extras/" + this.name;
+    }
+
 }
