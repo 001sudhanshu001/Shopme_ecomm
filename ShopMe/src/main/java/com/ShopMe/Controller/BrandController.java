@@ -5,7 +5,6 @@ import com.ShopMe.Entity.Category;
 import com.ShopMe.ExceptionHandler.BrandNotFoundException;
 import com.ShopMe.Service.Impl.BrandService;
 import com.ShopMe.Service.Impl.CategoryService;
-import com.ShopMe.Service.Impl.UserServiceImpl;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -94,7 +93,9 @@ public class BrandController {
     }
 
     @PostMapping("/brands/save")
-    public String savebrand(Brand brand, @RequestParam("fileImage")MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
+    public String savebrand(Brand brand, @RequestParam("fileImage")MultipartFile multipartFile, RedirectAttributes ra)
+            throws IOException {
+
         if(!multipartFile.isEmpty()){
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             brand.setLogo(fileName);

@@ -4,7 +4,7 @@
 
     <body>
         <div th:fragment="content" id = "divProductDetails">
-            <th:block th:each="detail, status : ${product.details}">
+            <th:block th:each="detail, status : ${product.details}"><!-- looping on each detail -->
                 <div class="form-inline" th:id="'divDetails' + ${status.index}">
                     <label class="m-3">Name:</label>
                     <input type="text" class="form-control w-25" name="detailNames" maxlength="255"

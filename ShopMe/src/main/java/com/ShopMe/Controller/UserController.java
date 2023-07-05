@@ -92,7 +92,7 @@ public class UserController {
 
     // new user or update user ke liye form handler yahi hai
     @PostMapping("/users/save") //@RequestParam is used to extract data from query
-    public String saveUser(User user, RedirectAttributes redirectAttributes,
+    public String saveUser(User user, RedirectAttributes redirectAttributes, // 'user' will come from Form
                            @RequestParam("image") MultipartFile multipartFile) throws IOException {
         System.out.println("4");
 
@@ -192,7 +192,7 @@ public class UserController {
         return "redirect:/users";
     }
 
-    // ----------- export ot csv -------------
+    // ----------- export to csv -------------
 
     @GetMapping("/users/export/csv")
     public void exportTOCSV(HttpServletResponse response) throws IOException {

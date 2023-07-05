@@ -79,4 +79,16 @@ public class Product {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public boolean containsImageName(String imageName) {
+        Iterator<ProductImage> iterator = images.iterator();
+
+        while (iterator.hasNext()){
+            ProductImage img = iterator.next();
+            if(img.getName().equals(imageName)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -2,6 +2,7 @@ package com.ShopMe.Controller;
 
 import com.ShopMe.Entity.Brand;
 import com.ShopMe.Entity.Product;
+import com.ShopMe.Entity.ProductImage;
 import com.ShopMe.ExceptionHandler.ProductNotFoundException;
 import com.ShopMe.Service.Impl.BrandService;
 import com.ShopMe.Service.Impl.ProductService;
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.image.RescaleOp;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -56,12 +59,15 @@ public class ProductController {
                               @RequestParam("fileImage")MultipartFile mainImageMultipart,
                               @RequestParam("extraImage")MultipartFile[] extraImageMultiparts,
                               @RequestParam(name = "detailNames", required = false) String[] detailNames,
-                              @RequestParam(name = "detailValues", required = false) String[] detailValues
+                              @RequestParam(name = "detailValues", required = false) String[] detailValues,
+                              @RequestParam(name = "imageIDs", required = false) String[] imageIDs,// same name as in product_images.html
+                              @RequestParam(name = "imageNames", required = false) String[] imageNames
                               )
                                     throws IOException { // fileImage as we used in product_images.html
 
         setMainImage(mainImageMultipart, product);
-        setExtraImagenames(extraImageMultiparts, product);
+        setExistingExtraImagesName(imageIDs, imageNames, product);
+        setNewExtraImagenames(extraImageMultiparts, product);
         setProductDetials(detailNames, detailValues, product);
 
         Product savedProduct = productService.save(product);
@@ -72,6 +78,20 @@ public class ProductController {
         redirectAttributes.addFlashAttribute("message","The Product has been saved successfully");
 
         return "redirect:/products";
+    }
+
+    private void setExistingExtraImagesName(String[] imageIDs, String[] imageNames, Product product) {
+        if(imageIDs == null || imageIDs.length == 0) return;
+
+        Set<ProductImage> images = new HashSet<>();
+
+        for(int count = 0; count < imageIDs.length; count++){
+            int id = Integer.parseInt(imageIDs[count]);
+            String name = imageNames[count];
+
+            images.add(new ProductImage(id, name, product));
+        }
+        product.setImages(images);
     }
 
     private void setProductDetials(String[] detailNames, String[] detailValues, Product product) {
@@ -117,13 +137,16 @@ public class ProductController {
             product.setMainImage(fileName);
         }
     }
-    private void setExtraImagenames(MultipartFile[] extraImageMultiparts, Product product){
+    private void setNewExtraImagenames(MultipartFile[] extraImageMultiparts, Product product){
         if(extraImageMultiparts.length > 0){
             for (MultipartFile multipartFile : extraImageMultiparts){
                 if(!multipartFile.isEmpty()){
                     System.out.println("Setting extra image");
                     String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-                    product.addExtraImage(fileName);
+
+                    if(!product.containsImageName(fileName)){
+                        product.addExtraImage(fileName);
+                    }
                 }
             }
         }
@@ -176,12 +199,10 @@ public class ProductController {
             List<Brand> listBrands = brandService.listAll();
 
             Integer numberOfExistingExtraImages = product.getImages().size();
-            model.addAttribute("listBrands", listBrands);;
+            model.addAttribute("listBrands", listBrands);
             model.addAttribute("product", product);
             model.addAttribute("pageTitle", "Edit Product (ID:" + id + ")");
             model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
-
-
 
             return "products/product_form";
         }catch (ProductNotFoundException ex){
