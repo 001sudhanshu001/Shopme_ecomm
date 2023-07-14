@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "Product_details")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDetails {
+public class  ProductDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

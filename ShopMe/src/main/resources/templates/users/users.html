@@ -78,7 +78,12 @@
                         <td  class="hideable-column" th:text="${user.email}"></td>
                         <td th:text="${user.firstName}"></td>
                         <td th:text="${user.lastName}"></td>
-                        <td th:text="${user.roles}"></td>
+<!--                        <td th:text="${user.roles}"></td>-->
+                        <td>
+                            <th:block th:each="role : ${user.roles}">
+                                <span class="badge badge-secondary" th:text="${role.name}"></span>
+                            </th:block>
+                        </td>
 
                         <td> <!-- for enabled and disabled  -->
                             <div th:replace="fragments :: status(${user.enabled}, 'user', '/users/' + ${user.id})"></div>

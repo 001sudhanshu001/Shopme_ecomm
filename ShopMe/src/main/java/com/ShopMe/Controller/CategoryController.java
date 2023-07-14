@@ -46,17 +46,22 @@ public class CategoryController {
 
         CategoryPageInfo pageInfo = new CategoryPageInfo();
         List<Category> categories = categoryService.listByPage(pageInfo, pageNum,sortField, sortDir, keyword);
+        System.out.println("In controller " + categories);
 
-        long startCount = (long) (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE -1;
+
+        long startCount = (long) (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
         long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
+        System.out.println("Start Count " + startCount);
+        System.out.println("End Count " + endCount);
 
         if(endCount > pageInfo.getTotalElements()){
             endCount = pageInfo.getTotalElements();
         }
 
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+        System.out.println("Total Pages in category " + pageInfo.getTotalPage());
 
-        model.addAttribute("totalPages", pageInfo.getTotalPage());
+        model.addAttribute("totalPages",pageInfo.getTotalPage());
         model.addAttribute("totalItems", pageInfo.getTotalElements());
         model.addAttribute("currentPage",pageNum);
         model.addAttribute("categories",categories);
@@ -83,8 +88,10 @@ public class CategoryController {
     }
 
     @PostMapping("/categories/save")
-    public String saveCategory(@ModelAttribute Category category,
-                               @RequestParam("fileName")MultipartFile multipartFile, RedirectAttributes attributes) throws IOException {
+    public String saveCategory(Category category,
+                               @RequestParam("fileName")MultipartFile multipartFile, RedirectAttributes attributes)
+            throws IOException {
+
         if(!multipartFile.isEmpty()){
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 

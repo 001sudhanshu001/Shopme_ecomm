@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -19,8 +20,14 @@ import java.util.*;
 @Transactional // to update enabled category status
 public class CategoryService {
 
-    public static final int ROOT_CATEGORIES_PER_PAGE = 4;
+    public static final int ROOT_CATEGORIES_PER_PAGE = 1;
     private final CategoryRepo categoryRepo;
+
+    @PostConstruct
+    void init() {
+        System.out.println("CategoryService Created..!");
+        System.out.println(categoryRepo.getClass());
+    }
 
     public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortField, String sortDir,
                                      String keyword) {
@@ -43,10 +50,16 @@ public class CategoryService {
         }
 
         List<Category> rootCategories = pageCategories.getContent();
+        //***************************************
+        System.out.println("In Service" + rootCategories);
 
         pageInfo.setTotalElements(pageCategories.getTotalElements());
         pageInfo.setTotalPage(pageCategories.getTotalPages());
 
+
+        //********************************************
+        System.out.println("In Category Service Total pages : " + pageCategories.getTotalPages());
+        System.out.println("*********** Page category total elements" + pageCategories.getTotalElements());
         if(keyword != null && !keyword.isEmpty()){
             List<Category> searchResult = pageCategories.getContent();
             for(Category category : searchResult){

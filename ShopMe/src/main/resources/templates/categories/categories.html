@@ -55,7 +55,7 @@
                         <td>
                             <img th:src="@{${cat.imagePath}}" style="width:100px" class="img-fulid"/>
                         </td>
-                        <td>[[${cat.name}]]</td>
+                        <td class="badge badge-secondary">[[${cat.name}]]</td>
                         <td>[[${cat.alias}]]</td>
 
                          <!-- for enabled and disabled  -->
@@ -75,7 +75,7 @@
         </div>
 
          <!-------------------- Page Navigation ------------------------>
-         <div th:replace="fragments :: pagination('/categories', 'top level categories')"></div>
+         <div th:replace="fragments :: pagination('/categories', 'top-level categories')"></div>
     <!--     -->
     <!--     <div th:if="${keyword != null}" class="text-center">-->
     <!--         <span> Search result does not show categories in hierarchical form</span>-->

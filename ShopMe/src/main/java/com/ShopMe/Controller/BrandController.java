@@ -33,6 +33,11 @@ public class BrandController {
         List<Brand> listBrands = brandService.listAll();
         model.addAttribute("listBrands", listBrands);
 
+        for(Brand brand : listBrands){
+            System.out.println("*******************************************************************");
+            System.out.println(brand.getCategories());
+        }
+
         return "brands/brands";
     }
     @GetMapping("/brands/page/{pageNum}")

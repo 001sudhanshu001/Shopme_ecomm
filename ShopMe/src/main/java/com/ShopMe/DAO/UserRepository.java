@@ -28,4 +28,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
       @Query("SELECT u FROM User u WHERE CONCAT(u.id, ' ', u.email, ' ', u.firstName, ' ', u.lastName) LIKE %?1%")
       Page<User> findAll(String keyword, Pageable pageable);
 
+      // statement -> string concat -> sql injection
+      // prepared statement -> ? -> database -> wrong value
+
 }

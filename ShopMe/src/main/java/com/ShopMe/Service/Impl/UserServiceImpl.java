@@ -5,7 +5,6 @@ import com.ShopMe.DAO.UserRepository;
 import com.ShopMe.Entity.Role;
 import com.ShopMe.Entity.User;
 import com.ShopMe.ExceptionHandler.UserNotFoundException;
-import com.ShopMe.Payloads.UserDto;
 import com.ShopMe.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,9 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -117,14 +114,14 @@ public class UserServiceImpl implements UserService {
 
     // ------------- to update the user -------------------
     @Override
-    public User get(Integer id) throws UserNotFoundException {
-        try {
-            return this.userRepository.findById(id).get();
-
-        }catch (NoSuchElementException e){
-            throw new UserNotFoundException("User not found with id " +id); //  this is custom exception
-        }
-
+    public Optional<User> get(Integer id) {
+//        try {
+//            return this.userRepository.findById(id).get();
+//
+//        }catch (NoSuchElementException e){
+//            throw new UserNotFoundException("User not found with id " +id); //  this is custom exception
+//        }
+        return this.userRepository.findById(id);
     }
 
     //---------------------- Delete User -------------------

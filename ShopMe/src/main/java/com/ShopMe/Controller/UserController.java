@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class UserController {
     private final ModelMapper modelMapper;
 
 
-    //----------- this url will aleays show first page -----------
+    //----------- this url will always show first page -----------
     @GetMapping("/users")
     public String getAllUsers(Model model) { // by default sorting will be asc based on firstName
 
@@ -53,6 +54,7 @@ public class UserController {
 
         long startCount = (long) (pageNumber - 1) * UserServiceImpl.USER_PER_PAGE + 1;
         long endCount = startCount + UserServiceImpl.USER_PER_PAGE - 1;
+        System.out.println("In user controller" + startCount);
 
         if(endCount > page.getTotalElements()){
             endCount = page.getTotalElements();
@@ -136,22 +138,22 @@ public class UserController {
     //-------------------- edit(Update) the user ------------------
     @GetMapping("/users/edit/{id}")
     public String editUser(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        try {
-
-            User user = this.userService.get(id);// humne DB main pehle se pade user ko le kr page pe bhej diya jisse update kiya jaa sktha hai
-
-            List<Role> listRoles = this.userService.listRoles();
-            model.addAttribute("user",user);
-            model.addAttribute("listRoles",listRoles);
-            model.addAttribute("pageTitle","Edit the user(ID : "+id+ ")");
-
-            return "users/user_form";
-        }catch (UserNotFoundException e){ // message mai vo message ayega jo humne UserService class se bheja hai
-            redirectAttributes.addFlashAttribute("error_message",e.getMessage());
-
+        Optional<User> optionalUser = this.userService.get(id);
+        if (optionalUser.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    "error_message", "User Not Found With Id " + id
+            );
             return "redirect:/users"; // redirect to the users page with message error
         }
 
+        User user = optionalUser.get();// humne DB main pehle se pade user ko le kr page pe bhej diya jisse update kiya jaa sktha hai
+
+        List<Role> listRoles = this.userService.listRoles();
+        model.addAttribute("user",user);
+        model.addAttribute("listRoles",listRoles);
+        model.addAttribute("pageTitle","Edit the user(ID : "+id+ ")");
+
+        return "users/user_form";
     }
 
 

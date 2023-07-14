@@ -50,9 +50,9 @@
             <td>
               <img th:src="@{${product.mainImagePath}}" style="width: 120px" class="img-fluid"/>
             </td>
-            <td>[[${product.name}]]</td>
+            <td class="badge badge-secondary">[[${product.name}]]</td>
             <td>[[${product.brand.name}]]</td>
-            <td>[[${product.category.name}]]</td>
+            <td class="badge badge-secondary">[[${product.category.name}]]</td>
 
             <td> <!-- for enabled and disabled  -->
                 <div th:replace="fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})"></div>

@@ -17,11 +17,13 @@ public class ShopmeUserDetails implements UserDetails {
     private User user;
 
     public ShopmeUserDetails(User user) {
+        System.out.println(1);
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println(2);
         Set<Role> roles = this.user.getRoles();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
@@ -33,31 +35,37 @@ public class ShopmeUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
+        System.out.println(3);
         return user.getPassword();
     }
 
     @Override
     public String getUsername() {
+        System.out.println(4);
         return user.getEmail();
     }
 
     @Override
     public boolean isAccountNonExpired() {
+        System.out.println(5);
         return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
+        System.out.println(6);
         return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
+        System.out.println(7);
         return true;
     }
 
     @Override
     public boolean isEnabled() {
+        System.out.println(8);
         return user.isEnabled();
     }
 

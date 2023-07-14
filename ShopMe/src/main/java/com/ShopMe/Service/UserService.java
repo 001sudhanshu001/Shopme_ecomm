@@ -3,7 +3,6 @@ package com.ShopMe.Service;
 import com.ShopMe.Entity.Role;
 import com.ShopMe.Entity.User;
 import com.ShopMe.ExceptionHandler.UserNotFoundException;
-import com.ShopMe.Payloads.UserDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public interface UserService {
 
     public boolean isEmailUnique(Integer id,String email);
 
-    User get(Integer id) throws UserNotFoundException;
+    Optional<User> get(Integer id);
 
     void deleteUser(Integer id) throws UserNotFoundException;
 

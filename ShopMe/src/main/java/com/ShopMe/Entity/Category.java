@@ -60,7 +60,7 @@ public class Category {
     }
 
     public static Category copyFull(Category category, String name){
-        Category copyCategory = Category.copyFull(category);
+         Category copyCategory = Category.copyFull(category);
          copyCategory.setName(name);
 
          return copyCategory;

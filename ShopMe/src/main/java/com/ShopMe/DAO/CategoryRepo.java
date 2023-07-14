@@ -15,13 +15,13 @@ public interface CategoryRepo extends JpaRepository<Category, Integer> {
      @Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
      List<Category> findRootCategories(Sort sort);
 
-    @Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
-    Page<Category> findRootCategories(Pageable pageable);
+     @Query("SELECT c FROM Category c WHERE c.parent.id is NULL")
+     Page<Category> findRootCategories(Pageable pageable);
 
      Long countById(Integer id);
 
 
-   //  @Query("SELECT c FROM Category c WHERE c.name LIKE %?1%")
+     //  @Query("SELECT c FROM Category c WHERE c.name LIKE %?1%")
      @Query("SELECT c FROM Category c WHERE CONCAT(c.id, ' ', c.name, ' ', c.alias) LIKE %?1%")
      Page<Category> search(String keyword, Pageable pageable);
 
