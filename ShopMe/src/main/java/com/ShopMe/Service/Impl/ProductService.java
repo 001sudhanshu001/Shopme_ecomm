@@ -1,9 +1,14 @@
 package com.ShopMe.Service.Impl;
 
 import com.ShopMe.DAO.ProductRepo;
+import com.ShopMe.Entity.Brand;
 import com.ShopMe.Entity.Product;
 import com.ShopMe.ExceptionHandler.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,8 +22,23 @@ import java.util.NoSuchElementException;
 public class ProductService {
     private final ProductRepo repo;
 
+    public static final int PRODUCTS_PER_PAGE = 2;
+
     public List<Product> listAll() {
         return repo.findAll();
+    }
+
+    public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword){
+        Sort sort = Sort.by(sortField);
+
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNum - 1, PRODUCTS_PER_PAGE, sort);
+
+        if(keyword != null){
+            return repo.findAll(keyword, pageable);
+        }
+        return repo.findAll(pageable);
     }
 
     public Product save(Product product){

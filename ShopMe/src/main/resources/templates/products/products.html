@@ -33,14 +33,22 @@
       <table class="table table-responsive-xl table-bordered table-striped table-hover">
         <thead class="thead-dark">
             <tr>
-                <th>ID</th>
+                <th th:replace="fragments :: column_link('/products' ,'id', 'ID','none')"></th>
                 <th>Main Image</th>
-                <th>Product Name</th>
-<!--                <th th:replace="fragments :: column_link('/products' ,'name', 'Product Name','none')"></th>-->
-                <th>Brand</th>
-                <th>Categories</th>
-                <th>Enabled</th>
+                <th th:replace="fragments :: column_link('/products' ,'name', 'Product Name','none')"></th>
+                <!--                <th th:replace="fragments :: column_link('/products' ,'name', 'Product Name','none')"></th>-->
+                <th th:replace="fragments :: column_link('/products' ,'brand', 'Brand','none')"></th>
+                <th th:replace="fragments :: column_link('/products' ,'category', 'Category','none')"></th>
+                <th th:replace="fragments :: column_link('/products' ,'enabled', 'Enabled','none')"></th>
                 <th></th>
+<!--                <th>ID</th>-->
+<!--                <th>Main Image</th>-->
+<!--                <th>Product Name</th>-->
+<!--&lt;!&ndash;                <th th:replace="fragments :: column_link('/products' ,'name', 'Product Name','none')"></th>&ndash;&gt;-->
+<!--                <th>Brand</th>-->
+<!--                <th>Categories</th>-->
+<!--                <th>Enabled</th>-->
+<!--                <th></th>-->
             </tr>
         </thead>
 
@@ -52,7 +60,7 @@
             </td>
             <td>
                 <a class="link-detail" th:href="@{'/products/details/' + ${product.id}}"
-                   title="View Details of this Product"> [[${product.name}]] </a>
+                   th:title="${product.name}"> [[${product.shortName}]] </a>
 
             </td>
             <td>[[${product.brand.name}]]</td>
@@ -89,6 +97,7 @@
          </div>
      </div>
 
+    <div th:replace="fragments :: pagination('/products', 'products')"></div>
     <div th:replace="fragments:: footer"></div>
 
   </div>
