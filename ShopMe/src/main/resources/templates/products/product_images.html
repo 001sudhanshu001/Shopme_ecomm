@@ -16,7 +16,7 @@
                                 th:required="${product.mainImage == null}"
                                     accept="image/png, image/jpeg">
                     </div>
-                    <input type="hidden" th:field="*{mainImage}"/>
+                    <input type="hidden" th:field="*{mainImage}"/> <!-- To show name in the image-->
                 </div>
 
                 <th:block th:each="productImage, status : ${product.images}">

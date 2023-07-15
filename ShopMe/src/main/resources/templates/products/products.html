@@ -50,7 +50,11 @@
             <td>
               <img th:src="@{${product.mainImagePath}}" style="width: 120px" class="img-fluid"/>
             </td>
-            <td class="badge badge-secondary">[[${product.name}]]</td>
+            <td>
+                <a class="link-detail" th:href="@{'/products/details/' + ${product.id}}"
+                   title="View Details of this Product"> [[${product.name}]] </a>
+
+            </td>
             <td>[[${product.brand.name}]]</td>
             <td class="badge badge-secondary">[[${product.category.name}]]</td>
 
@@ -59,8 +63,8 @@
             </td>
 
             <td>
-                <a class="fas fa-file-alt fa-2x icon-green"
-                      th:href="@{'/products/details/' + ${product.id}}"
+                <a class="fas fa-file-alt fa-2x icon-green link-detail"
+                   th:href="@{'/products/details/' + ${product.id}}"
                       title="View Details of this Product">
                 </a>
                 &nbsp;
@@ -77,6 +81,13 @@
     <!----------------- popup warning  --------------->
     <div th:replace="modal_fragment :: confirm_modal"></div>
 
+     <div class="modal fade" id="detailModal">
+         <div class="modal-dialog modal-xl">
+             <div class="modal-content">
+
+             </div>
+         </div>
+     </div>
 
     <div th:replace="fragments:: footer"></div>
 
@@ -92,7 +103,13 @@
         e.preventDefault();
         showDeleteConfirmModal($(this), 'product');
       });
-    })
+
+      $(".link-detail").on("click", function(e){
+        e.preventDefault();
+        linkDefaultURL = $(this).attr("href");
+        $("#detailModal").modal("show").find(".modal-content").load(linkDefaultURL);
+      });
+    });
   </script>
 
   
