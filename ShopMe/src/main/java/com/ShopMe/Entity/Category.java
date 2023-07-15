@@ -25,6 +25,10 @@ public class Category {
     private String image;
     private boolean enabled;
 
+    // This is for Searching Category
+    @Column(name = "all_parent_ids", length = 256, nullable = true)// "nullable = true" for Root Category
+    private String allParentIDs;
+
     @OneToOne // ek category ka ek hi parent
     @JoinColumn(name = "parent_id")
     private Category parent; // beacuse it will be hierarchical relation

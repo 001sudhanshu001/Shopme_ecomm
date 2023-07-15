@@ -113,6 +113,12 @@ public class CategoryService {
     }
 
     public Category save(Category category){
+        Category parent = category.getParent();
+        if(parent != null){ // if this is not null then means it is not root category
+            String allParentIds = parent.getAllParentIDs() == null ? "-" : parent.getAllParentIDs();
+            allParentIds += String.valueOf(parent.getId()) + "-";
+            category.setAllParentIDs(allParentIds);
+        }// otherwise we can save directly
         return this.categoryRepo.save(category);
     }
 
