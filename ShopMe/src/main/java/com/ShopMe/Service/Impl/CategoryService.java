@@ -98,14 +98,14 @@ public class CategoryService {
         int newSubLevel = subLevel + 1;
 
         for(Category subCategory : children){
-            String name = "";
+            StringBuilder name = new StringBuilder();
             for(int i = 0; i < newSubLevel; i++){
-                name += "--";
+                name.append("--");
             }
 
-            name += subCategory.getName();
+            name.append(subCategory.getName());
 
-            hierarchicalCategories.add(Category.copyFull(subCategory, name));
+            hierarchicalCategories.add(Category.copyFull(subCategory, name.toString()));
 
             listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel, sortDir);
         }
@@ -113,10 +113,11 @@ public class CategoryService {
     }
 
     public Category save(Category category){
+        // To store the id of all parent's
         Category parent = category.getParent();
         if(parent != null){ // if this is not null then means it is not root category
             String allParentIds = parent.getAllParentIDs() == null ? "-" : parent.getAllParentIDs();
-            allParentIds += String.valueOf(parent.getId()) + "-";
+            allParentIds += String.valueOf(parent.getId()) + "-"; // contacting with the Id of Direct Parent Id
             category.setAllParentIDs(allParentIds);
         }// otherwise we can save directly
         return this.categoryRepo.save(category);

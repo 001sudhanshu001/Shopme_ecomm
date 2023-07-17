@@ -1,10 +1,12 @@
 package com.ShopMe.Controller;
 
 import com.ShopMe.Entity.Brand;
+import com.ShopMe.Entity.Category;
 import com.ShopMe.Entity.Product;
 import com.ShopMe.Entity.ProductImage;
 import com.ShopMe.ExceptionHandler.ProductNotFoundException;
 import com.ShopMe.Service.Impl.BrandService;
+import com.ShopMe.Service.Impl.CategoryService;
 import com.ShopMe.Service.Impl.ProductService;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +35,11 @@ public class ProductController {
     private final ProductService productService;
     private final BrandService brandService;
 
+    private final CategoryService categoryService;
+
     @GetMapping("/products")
     public String listFirstPage(Model model){
-        return listByPage(1,model, "name","asc",null);
+        return listByPage(1,model, "name","asc",null, 0); // Initially CategoryID is 0
 //        List<Product> listProducts = productService.listAll();
 //
 //        model.addAttribute("listProducts",listProducts);
@@ -45,11 +49,12 @@ public class ProductController {
     @GetMapping("/products/page/{pageNum}")
     public String listByPage(@PathVariable(name = "pageNum") int pageNUm, Model model,
                              @Param("sortField") String sortField, @Param("sortDir") String sortDir,
-                             @Param("keyword") String keyword){
+                             @Param("keyword") String keyword, @Param("categoryId") Integer categoryId ){
 
-        Page<Product> page = this.productService.listByPage(pageNUm, sortField, sortDir, keyword);
+        Page<Product> page = this.productService.listByPage(pageNUm, sortField, sortDir, keyword, categoryId);
         List<Product> listProducts = page.getContent();
 
+        List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 
         long startCount = (long) (pageNUm - 1) * ProductService.PRODUCTS_PER_PAGE + 1;
         long endCount = startCount +  ProductService.PRODUCTS_PER_PAGE - 1;
@@ -73,6 +78,7 @@ public class ProductController {
 //        model.addAttribute("keyword", keyword);
 //        model.addAttribute("listBrands", listBrand);
 
+        if(categoryId != null) model.addAttribute("categoryId", categoryId); // For search using Category
         model.addAttribute("currentPage", pageNUm);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("startCount", startCount);
@@ -83,6 +89,7 @@ public class ProductController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("listCategories", listCategories);
 
         return "products/products";
 

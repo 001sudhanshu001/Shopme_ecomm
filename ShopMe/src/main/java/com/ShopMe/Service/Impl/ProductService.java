@@ -22,21 +22,30 @@ import java.util.NoSuchElementException;
 public class ProductService {
     private final ProductRepo repo;
 
-    public static final int PRODUCTS_PER_PAGE = 2;
+    public static final int PRODUCTS_PER_PAGE = 1;
 
     public List<Product> listAll() {
         return repo.findAll();
     }
 
-    public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword){
+    public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword, Integer categoryId){
         Sort sort = Sort.by(sortField);
 
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 
         Pageable pageable = PageRequest.of(pageNum - 1, PRODUCTS_PER_PAGE, sort);
 
-        if(keyword != null){
+        if(keyword != null && !keyword.isEmpty()){
+            if(categoryId != null && categoryId > 0){ // Search in filter by Category
+                String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+                return repo.searchInCategory(categoryId, categoryIdMatch, keyword, pageable);
+            }
+            // if normal Search
             return repo.findAll(keyword, pageable);
+        }
+        if(categoryId != null && categoryId > 0){
+            String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
+            return repo.findAllInCategory(categoryId, categoryIdMatch, pageable);
         }
         return repo.findAll(pageable);
     }
