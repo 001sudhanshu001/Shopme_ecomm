@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head  th:replace="fragments :: page_head('Products - Shopme Admin', 'none')" />
 
 <body>
@@ -7,13 +8,13 @@
 
     <div th:replace="navigation :: menu"></div>
 
-    <div>
+    <v>
       <h2>Manage Products</h2>
-      <a th:href="@{/products/new}" class="fa-sharp fa-solid fa-folder-plus fa-2x icon-dark mr-2" title="Create New Product"></a>
-
-      <a th:href="@{/products/export/csv}" class="fas fa-file-csv fa-2x icon-dark" title="Export to CSV"></a>
-
-    </div>
+      <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+          <a th:href="@{/products/new}" class="fa-sharp fa-solid fa-folder-plus fa-2x icon-dark mr-2" title="Create New Product"></a>
+          <a th:href="@{/products/export/csv}" class="fas fa-file-csv fa-2x icon-dark" title="Export to CSV"></a>
+      </th:block>
+    <div>
 
     <div th:if="${message != null}" class="alert alert-success text-center"> <!-- success msg for new product created -->
       [[${message}]]
@@ -67,7 +68,9 @@
                 <!--                <th th:replace="fragments :: column_link('/products' ,'name', 'Product Name','none')"></th>-->
                 <th th:replace="fragments :: column_link('/products' ,'brand', 'Brand','none')"></th>
                 <th th:replace="fragments :: column_link('/products' ,'category', 'Category','none')"></th>
-                <th th:replace="fragments :: column_link('/products' ,'enabled', 'Enabled','none')"></th>
+                <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                    Enabled
+                </th:block>
                 <th></th>
 <!--                <th>ID</th>-->
 <!--                <th>Main Image</th>-->
@@ -93,10 +96,11 @@
             </td>
             <td>[[${product.brand.name}]]</td>
             <td class="badge badge-secondary">[[${product.category.name}]]</td>
-
-            <td> <!-- for enabled and disabled  -->
-                <div th:replace="fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})"></div>
-            </td>
+            <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                <td> <!-- for enabled and disabled  -->
+                    <div th:replace="fragments :: status(${product.enabled}, 'product', '/products/' + ${product.id})"></div>
+                </td>
+            </th:block>
 
             <td>
                 <a class="fas fa-file-alt fa-2x icon-green link-detail"
@@ -104,9 +108,15 @@
                       title="View Details of this Product">
                 </a>
                 &nbsp;
-                <div th:replace="fragments :: edit('product', '/products/edit/' + ${product.id})"> </div>
-                &nbsp;
-                <div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id}, true)"> </div>
+
+                <th:block sec:authorize="hasAnyAuthority('Admin','Editor','Salesperson')">
+                    <div th:replace="fragments :: edit('product', '/products/edit/' + ${product.id})"> </div>
+                    &nbsp;
+                </th:block>
+                <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                    <div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id}, true)"> </div>
+                </th:block>
+
             </td>
           </tr>
         </tbody>

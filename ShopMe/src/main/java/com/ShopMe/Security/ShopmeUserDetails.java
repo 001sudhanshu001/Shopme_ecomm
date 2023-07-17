@@ -2,7 +2,6 @@ package com.ShopMe.Security;
 
 import com.ShopMe.Entity.Role;
 import com.ShopMe.Entity.User;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +14,7 @@ import java.util.Set;
 public class ShopmeUserDetails implements UserDetails {
 
     private User user;
+    private static final long serialVersionUID = 1L;
 
     public ShopmeUserDetails(User user) {
         System.out.println(1);
@@ -78,5 +78,9 @@ public class ShopmeUserDetails implements UserDetails {
     }
     public void setlastName(String lastName){
         this.user.setFirstName(lastName);
+    }
+
+    public boolean hasRole(String roleName){
+        return this.user.hasRole(roleName);
     }
 }

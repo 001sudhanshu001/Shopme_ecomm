@@ -99,98 +99,54 @@
 
 <!--        Description-->
         <div class="tab-pane" id="description" role="tabpanel" >
-            <div class="m-2">
-                <label>Short Description:</label>
-                <div th:utext="${product.shortDescription}" class="border p-2 m-2"></div>
-            </div>
-
-            <div class="m-2">
-                <label>Full Description:</label>
-                <div th:utext="${product.fullDescription}" class="border p-2 m-2"></div>
-            </div>
+            <div th:replace="products/readonly/product_description_readonly :: content"></div>
         </div>
 
 <!--        Images-->
         <div class="tab-pane" id="images" role="tabpanel">
-            <div class="row" id="divProductImages">
-                <div class="col border m-3 p-2">
-                    <div><label>Main Image: [[${product.mainImage}]]</label></div>
-                    <div class="m-2">
-                        <img alt="Main image preview" class="img-fluid"
-                             th:src="@{${product.mainImagePath}}"> <!-- same id as we used in common.js -->
-                    </div>
-                </div>
-
-                <th:block th:each="productImage, status : ${product.images}">
-                    <div class="col border m-3 p-2">
-                        <div>
-                            <label>Extra Image #[[${status.index + 1}]]: [[${productImage.name}]]</label>
-                        </div>
-
-                        <div class="m-2">
-                            <img th:alt="'Extra image #' + ${status.index + 1} + ' preview'" class="img-fluid"
-                                 th:src="@{${productImage.imagePath}}"/>
-                        </div>
-                    </div>
-                </th:block>
-            </div>
+            <div th:replace="products/readonly/product_images_readonly :: content"></div>
         </div>
 
 <!--        Details-->
         <div class="tab-pane p-3" id="details" role="tabpanel">
-            <div>
-                <table class="table table-striped table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Name</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr th:each="detail : ${product.details}">
-                            <td width="40%">[[${detail.name}]]</td>
-                            <td>[[${detail.value}]]</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <div th:replace="products/readonly/product_details_readonly :: content"></div>
         </div>
 
 <!--        Shipping-->
         <div class="tab-pane p-3" id="shipping" role="tabpanel">
-            <div class="form-group row">
-                The following information in important to calculate shipping cost for the Product.<br>
-                The dimensions (L X W X H) is for the box that is used to package the product - not the product's dimension.
-            </div>
+            <div th:replace="products/readonly/product_shipping_readonly :: content"></div>
+<!--            <div class="form-group row">-->
+<!--                The following information in important to calculate shipping cost for the Product.<br>-->
+<!--                The dimensions (L X W X H) is for the box that is used to package the product - not the product's dimension.-->
+<!--            </div>-->
 
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Length(inch):</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:value="${product.length}" readonly="readonly" />
-                </div>
-            </div>
+<!--            <div class="form-group row">-->
+<!--                <label class="col-sm-2 col-form-label">Length(inch):</label>-->
+<!--                <div class="col-sm-10">-->
+<!--                    <input type="text" class="form-control" th:value="${product.length}" readonly="readonly" />-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Width(inch):</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:value="${product.width}" readonly="readonly" />
-                </div>
-            </div>
+<!--            <div class="form-group row">-->
+<!--                <label class="col-sm-2 col-form-label">Width(inch):</label>-->
+<!--                <div class="col-sm-10">-->
+<!--                    <input type="text" class="form-control" th:value="${product.width}" readonly="readonly" />-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Height(inch):</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:value="${product.height}" readonly="readonly" />
-                </div>
-            </div>
+<!--            <div class="form-group row">-->
+<!--                <label class="col-sm-2 col-form-label">Height(inch):</label>-->
+<!--                <div class="col-sm-10">-->
+<!--                    <input type="text" class="form-control" th:value="${product.height}" readonly="readonly" />-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Weight(kg):</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" th:value="${product.weight}" readonly="readonly" />
-                </div>
-            </div>
+<!--            <div class="form-group row">-->
+<!--                <label class="col-sm-2 col-form-label">Weight(kg):</label>-->
+<!--                <div class="col-sm-10">-->
+<!--                    <input type="text" class="form-control" th:value="${product.weight}" readonly="readonly" />-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </div>

@@ -55,7 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  .authorizeRequests()
                  .antMatchers("/users/**").hasAuthority("Admin")
                  .antMatchers("/categories/**", "/brands/**").hasAnyAuthority("Admin", "Editor")
-                 .antMatchers("/products").hasAnyAuthority("Admin", "Editor", "SalesPerson", "Shipper")
+
+                 .antMatchers("/products/new", "/products/delete/**").hasAnyAuthority("Admin", "Editor")
+                 // SalesPerson can edit but can't create new, He is allowed to edit only cost
+                 .antMatchers("/products/edit/**", "/products/save","/products/check_unique").hasAnyAuthority("Admin", "Editor", "Salesperson")
+                 .antMatchers("/products","/products/", "/products/details/**", "/products/page/**")
+                    .hasAnyAuthority("Admin", "Editor", "Salesperson", "Shipper")
+                 .antMatchers("/products/**").hasAnyAuthority("Admin", "Editor")
                  .anyRequest().authenticated()
                  .and()
                      .formLogin()

@@ -5,6 +5,7 @@ import com.ShopMe.Entity.Category;
 import com.ShopMe.Entity.Product;
 import com.ShopMe.Entity.ProductImage;
 import com.ShopMe.ExceptionHandler.ProductNotFoundException;
+import com.ShopMe.Security.ShopmeUserDetails;
 import com.ShopMe.Service.Impl.BrandService;
 import com.ShopMe.Service.Impl.CategoryService;
 import com.ShopMe.Service.Impl.ProductService;
@@ -12,6 +13,7 @@ import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -106,20 +108,32 @@ public class ProductController {
         model.addAttribute("product", product);
         model.addAttribute("listBrands", listBrands);
         model.addAttribute("pageTitle", "Create New Product");
+        model.addAttribute("numberOfExistingExtraImages", 0);
+
 
         return "products/product_form";
     }
 
     @PostMapping("/products/save")
     public String saveProduct(Product product, RedirectAttributes redirectAttributes,
-                              @RequestParam("fileImage")MultipartFile mainImageMultipart,
-                              @RequestParam("extraImage")MultipartFile[] extraImageMultiparts,
+                              @RequestParam(value = "fileImage", required = false)MultipartFile mainImageMultipart,
+                              @RequestParam(value = "extraImage", required = false)MultipartFile[] extraImageMultiparts,
                               @RequestParam(name = "detailNames", required = false) String[] detailNames,
                               @RequestParam(name = "detailValues", required = false) String[] detailValues,
                               @RequestParam(name = "imageIDs", required = false) String[] imageIDs,// same name as in product_images.html
-                              @RequestParam(name = "imageNames", required = false) String[] imageNames
+                              @RequestParam(name = "imageNames", required = false) String[] imageNames,
+                              @AuthenticationPrincipal ShopmeUserDetails loggedUser
                               )
                                     throws IOException { // fileImage as we used in product_images.html
+        if(loggedUser.hasRole("Salesperson")){ // Just updating Price by Salesperson
+            productService.saveProductPrice(product);
+            redirectAttributes.addFlashAttribute("message","The Product has been saved successfully");
+
+            return "redirect:/products";
+        }
+
+        // If user has Admin or Editor then the fileImage i.e. main photo is required
+        // this is handled in product_image.html and product_image_readonly.html
 
         setMainImage(mainImageMultipart, product);
         setExistingExtraImagesName(imageIDs, imageNames, product);

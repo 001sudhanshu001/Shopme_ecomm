@@ -41,24 +41,58 @@
 
           <!-- Tab panes -->
           <div class="tab-content">
+<!--            overview-->
             <div class="tab-pane active p-3" id="overview" role="tabpanel">
               <div th:replace="products/product_overview :: content"></div>
             </div>
+
+<!--            description-->
             <div class="tab-pane" id="description" role="tabpanel" >
-              <div th:replace="products/product_description :: content"></div>
+                <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                    <div th:replace="products/product_description :: content"></div>
+                </th:block>
+
+              <th:block sec:authorize="hasAuthority('Salesperson')">
+                <div th:replace="products/readonly/product_description_readonly :: content"></div>
+              </th:block>
             </div>
-            <div class="tab-pane" id="images" role="tabpanel" >
-              <div th:replace="products/product_images :: content"></div>
+
+<!--            images-->
+            <div class="tab-pane" id="images" role="tabpanel">
+              <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                  <div th:replace="products/product_images :: content"></div>
+              </th:block>
+
+              <th:block sec:authorize="hasAuthority('Salesperson')">
+                <div th:replace="products/readonly/product_images_readonly :: content"></div>
+              </th:block>
             </div>
+
+<!--            details-->
             <div class="tab-pane p-3" id="details" role="tabpanel" >
-              <div th:replace="products/product_details :: content"></div>
-              <div>
-                <input type="button" class="btn btn-secondary" value="Add More Details"
-                    onclick="addNextDetailSection()"/> <!-- method in product_details.js -->
-              </div>
+
+               <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                <div th:replace="products/product_details :: content"></div>
+                <div>
+                  <input type="button" class="btn btn-secondary" value="Add More Details"
+                         onclick="addNextDetailSection()"/> <!-- method in product_details.js -->
+                </div>
+              </th:block>
+
+              <th:block sec:authorize="hasAuthority('Salesperson')">
+                <div th:replace="products/readonly/product_details_readonly :: content"></div>
+              </th:block>
+
             </div>
-            <div class="tab-pane p-3" id="shipping" role="tabpanel" >
-              <div th:replace="products/product_shipping :: content"></div>
+
+<!--            shipping-->
+            <div class="tab-pane p-3" id="shipping" role="tabpanel">
+              <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+                <div th:replace="products/product_shipping :: content"></div>
+              </th:block>
+              <th:block sec:authorize="hasAuthority('Salesperson')">
+                <div th:replace="products/readonly/product_shipping_readonly :: content"></div>
+              </th:block>
             </div>
           </div>
       </div>
