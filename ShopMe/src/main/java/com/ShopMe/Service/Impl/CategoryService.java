@@ -23,11 +23,11 @@ public class CategoryService {
     public static final int ROOT_CATEGORIES_PER_PAGE = 1;
     private final CategoryRepo categoryRepo;
 
-    @PostConstruct
-    void init() {
-        System.out.println("CategoryService Created..!");
-        System.out.println(categoryRepo.getClass());
-    }
+//    @PostConstruct
+//    void init() {
+//        System.out.println("CategoryService Created..!");
+//        System.out.println(categoryRepo.getClass());
+//    }
 
     public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortField, String sortDir,
                                      String keyword) {

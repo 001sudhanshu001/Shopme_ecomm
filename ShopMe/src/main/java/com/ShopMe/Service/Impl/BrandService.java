@@ -19,7 +19,7 @@ public class BrandService {
 
     private final BrandRepo brandRepo;
 
-    public static final int BRANDS_PER_PAGE = 2;
+    public static final int BRANDS_PER_PAGE = 5;
 
     public List<Brand> listAll() {
         return brandRepo.findAll();

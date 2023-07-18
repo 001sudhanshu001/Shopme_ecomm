@@ -30,15 +30,17 @@ public class BrandController {
     @GetMapping("/brands")
     public String listFirstPage(Model model){
 
-        List<Brand> listBrands = brandService.listAll();
-        model.addAttribute("listBrands", listBrands);
+        return this.listByPage(1,model,"name", "asc",null);
 
-        for(Brand brand : listBrands){
-            System.out.println("*******************************************************************");
-            System.out.println(brand.getCategories());
-        }
-
-        return "brands/brands";
+//        List<Brand> listBrands = brandService.listAll();
+//        model.addAttribute("listBrands", listBrands);
+//
+//        for(Brand brand : listBrands){
+//            System.out.println("*******************************************************************");
+//            System.out.println(brand.getCategories());
+//        }
+//
+//        return "brands/brands";
     }
     @GetMapping("/brands/page/{pageNum}")
     public String listByPage(@PathVariable(name = "pageNum") int pageNUm, Model model,
@@ -55,8 +57,8 @@ public class BrandController {
         if(endCount > page.getTotalElements()){
             endCount = page.getTotalElements();
         }
-        System.out.println(page.getTotalElements());
-        System.out.println(page.getTotalPages());
+        System.out.println("Total Elements : " + page.getTotalElements());
+        System.out.println("Total Pages : " + page.getTotalPages());
 
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
