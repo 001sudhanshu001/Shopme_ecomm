@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 public class ProductService {
     private final ProductRepo repo;
 
-    public static final int PRODUCTS_PER_PAGE = 1;
+    public static final int PRODUCTS_PER_PAGE = 3;
 
     public List<Product> listAll() {
         return repo.findAll();

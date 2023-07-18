@@ -33,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public DaoAuthenticationProvider authenticationProvider() {
-        System.out.println(12);
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
@@ -44,13 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        System.out.println(11);
+        System.out.println("Dao Auth configure");
         auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println(10);
+        System.out.println("Url Secured");
          http
                  .authorizeRequests()
                  .antMatchers("/users/**").hasAuthority("Admin")

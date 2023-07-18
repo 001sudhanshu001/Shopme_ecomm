@@ -20,7 +20,6 @@ public class ShopmeUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println(9);
         User user = this.userRepository.findByEmail(email);
         System.out.println("User Fetch..!");
         if(user != null){

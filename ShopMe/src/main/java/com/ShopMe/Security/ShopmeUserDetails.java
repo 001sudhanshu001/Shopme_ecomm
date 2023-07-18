@@ -2,9 +2,14 @@ package com.ShopMe.Security;
 
 import com.ShopMe.Entity.Role;
 import com.ShopMe.Entity.User;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,13 +22,12 @@ public class ShopmeUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     public ShopmeUserDetails(User user) {
-        System.out.println(1);
         this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println(2);
+        System.out.println("getAuthorities called");
         Set<Role> roles = this.user.getRoles();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
@@ -35,37 +39,31 @@ public class ShopmeUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        System.out.println(3);
         return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        System.out.println(4);
         return user.getEmail();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        System.out.println(5);
         return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        System.out.println(6);
         return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        System.out.println(7);
         return true;
     }
 
     @Override
     public boolean isEnabled() {
-        System.out.println(8);
         return user.isEnabled();
     }
 
