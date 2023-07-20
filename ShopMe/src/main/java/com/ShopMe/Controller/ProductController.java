@@ -1,9 +1,6 @@
 package com.ShopMe.Controller;
 
-import com.ShopMe.Entity.Brand;
-import com.ShopMe.Entity.Category;
-import com.ShopMe.Entity.Product;
-import com.ShopMe.Entity.ProductImage;
+import com.ShopMe.Entity.*;
 import com.ShopMe.ExceptionHandler.ProductNotFoundException;
 import com.ShopMe.Security.ShopmeUserDetails;
 import com.ShopMe.Service.Impl.BrandService;
@@ -28,6 +25,7 @@ import java.awt.image.RescaleOp;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -64,21 +62,8 @@ public class ProductController {
         if(endCount > page.getTotalElements()){
             endCount = page.getTotalElements();
         }
-        System.out.println(page.getTotalElements());
-        System.out.println(page.getTotalPages());
 
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-
-//        model.addAttribute("currentPage", pageNUm);
-//        model.addAttribute("totalPages", page.getTotalPages());
-//        model.addAttribute("startCount", startCount);
-//        model.addAttribute("endCount", endCount);
-//        model.addAttribute("totalItems", page.getTotalElements());
-//        model.addAttribute("sortField", sortField);
-//        model.addAttribute("sortDir", sortDir);
-//        model.addAttribute("reverseSortDir", reverseSortDir);
-//        model.addAttribute("keyword", keyword);
-//        model.addAttribute("listBrands", listBrand);
 
         if(categoryId != null) model.addAttribute("categoryId", categoryId); // For search using Category
         model.addAttribute("currentPage", pageNUm);
@@ -124,29 +109,30 @@ public class ProductController {
                               @RequestParam(name = "imageNames", required = false) String[] imageNames,
                               @AuthenticationPrincipal ShopmeUserDetails loggedUser
                               )
-                                    throws IOException { // fileImage as we used in product_images.html
+            throws IOException, ProductNotFoundException { // fileImage as we used in product_images.html
         if(loggedUser.hasRole("Salesperson")){ // Just updating Price by Salesperson
             productService.saveProductPrice(product);
             redirectAttributes.addFlashAttribute("message","The Product has been saved successfully");
 
             return "redirect:/products";
         }
-
         // If user has Admin or Editor then the fileImage i.e. main photo is required
         // this is handled in product_image.html and product_image_readonly.html
-
         setMainImage(mainImageMultipart, product);
         setExistingExtraImagesName(imageIDs, imageNames, product);
         setNewExtraImagenames(extraImageMultiparts, product);
+
+        // while updating
+//        Product clearedProduct = productService.get(product.getId());
+//        product.getDetails().clear();//Removing old details which are present in the database
+
         setProductDetials(detailNames, detailValues, product);
 
         Product savedProduct = productService.save(product);
 
         saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
 
-        productService.save(product);
         redirectAttributes.addFlashAttribute("message","The Product has been saved successfully");
-
         return "redirect:/products";
     }
 
@@ -164,7 +150,7 @@ public class ProductController {
         product.setImages(images);
     }
 
-    private void setProductDetials(String[] detailNames, String[] detailValues, Product product) {
+    private void setProductDetials(String[] detailNames, String[] detailValues, Product product) throws ProductNotFoundException {
         if(detailNames == null || detailNames.length == 0) return;
 
         for(int count = 0; count < detailNames.length; count++){
@@ -180,7 +166,7 @@ public class ProductController {
     private void saveUploadedImages(MultipartFile mainImageMultipart, MultipartFile[] extraImageMultiparts,
                                     Product savedProduct) throws IOException {
         if(!mainImageMultipart.isEmpty()) { // to save main image
-            String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(mainImageMultipart.getOriginalFilename()));
             String uploadDir = "../product-images/" + savedProduct.getId();
 
             FileUploadUtil.cleanDir(uploadDir); // clearing upload dir before uploading
@@ -210,10 +196,9 @@ public class ProductController {
     private void setNewExtraImagenames(MultipartFile[] extraImageMultiparts, Product product){
         if(extraImageMultiparts.length > 0){
             for (MultipartFile multipartFile : extraImageMultiparts){
+                System.out.println("Saving " + multipartFile.getOriginalFilename() + ".......................................");
                 if(!multipartFile.isEmpty()){
-                    System.out.println("Setting extra image");
                     String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-
                     if(!product.containsImageName(fileName)){
                         product.addExtraImage(fileName);
                     }
@@ -285,7 +270,12 @@ public class ProductController {
     public String viewProductDetails(@PathVariable("id") Integer id, Model model,  RedirectAttributes redirectAttributes){
         try{
             Product product = productService.get(id);
-
+            System.out.println("Getting Details");
+            for(ProductDetails str : product.getDetails()){
+                System.out.println(str.getName() + "........" + str.getValue());
+            }
+            System.out.println("Detail length in viewProductDetails" + product.getDetails());
+            System.out.println(product.getDetails().size());
             model.addAttribute("product", product);
 
             return "products/product_detail_modal"; // this is logical page for the modal

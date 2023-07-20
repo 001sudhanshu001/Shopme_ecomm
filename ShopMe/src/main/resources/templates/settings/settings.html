@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments :: page_head(${pageTitle}, 'tag')" />
+  <link rel="stylesheet" th:href="@{/rich_text/richtext.min.css}">
+  <script th:src="@{/rich_text/jquery.richtext.min.js}"></script>
+<body>
+<div class="container-fluid">
+
+      <div th:replace="navigation :: menu"></div>
+
+      <div>
+        <h2>Site Settings</h2>
+      </div>
+
+      <div th:if="${message != null}" class="alert alert-success text-center"> <!-- success msg for new product created -->
+          [[${message}]]
+      </div>
+
+      <div>
+
+        <!-- Nav tabs -->
+          <ul class="nav nav-tabs" id="settingsTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active"  data-toggle="tab" href="#general" role="tab">General</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  data-toggle="tab" href="#countries" role="tab" >Countries</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  data-toggle="tab" href="#states" role="tab">States</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  data-toggle="tab" href="#mailServer" role="tab" >Mail Server</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  data-toggle="tab" href="#mailTemplates" role="tab" >Mail Templates</a>
+            </li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+<!--            General-->
+            <div class="tab-pane active p-3" id="general" role="tabpanel">
+              <div th:replace="settings/general :: content"></div>
+            </div>
+
+<!--            countries-->
+            <div class="tab-pane" id="countries" role="tabpanel" >
+                <h2>countries</h2>
+            </div>
+
+<!--            states-->
+            <div class="tab-pane" id="states" role="tabpanel">
+                <h2>States</h2>
+            </div>
+
+<!--            mailServer-->
+            <div class="tab-pane p-3" id="mailServer" role="tabpanel" >
+                <h2>mailServer</h2>
+            </div>
+
+<!--            mailTemplates-->
+            <div class="tab-pane p-3" id="mailTemplates" role="tabpanel">
+                <h2>mailTemplates</h2>
+            </div>
+          </div>
+      </div>
+
+  <div th:replace="fragments:: footer"></div>
+
+</div>
+<!--this has code to show the input image file-->
+<script>
+        MAX_FILE_SIZE = 102400
+</script>
+<script th:src="@{/js/common_form.js}"></script>
+
+</body>
+</html>

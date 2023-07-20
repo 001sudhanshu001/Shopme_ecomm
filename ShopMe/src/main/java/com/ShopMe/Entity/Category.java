@@ -33,6 +33,7 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent; // beacuse it will be hierarchical relation
     @OneToMany(mappedBy = "parent") // ek category ke kai child
+    @OrderBy("name asc")
     private Set<Category> children = new HashSet<>();
 
     public static Category copyIdAndName(Category category){
