@@ -23,11 +23,11 @@ public class ShopmeUserDetailsService implements UserDetailsService {
         User user = this.userRepository.findByEmail(email);
         System.out.println("User Fetch..!");
         if(user != null){
-            System.out.println(user.getRoles().getClass());
-            System.out.println("User Role Fetching..!");
+//            System.out.println(user.getRoles().getClass());
+//            System.out.println("User Role Fetching..!");
 
             ShopmeUserDetails shopmeUserDetails = new ShopmeUserDetails(user);
-            shopmeUserDetails.getAuthorities();
+//            shopmeUserDetails.getAuthorities();
             return shopmeUserDetails;
         }
         throw new UsernameNotFoundException("Could not find user with email" +email); //Provided by spring security
