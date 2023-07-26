@@ -35,6 +35,9 @@
             <li class="nav-item">
               <a class="nav-link"  data-toggle="tab" href="#mailTemplates" role="tab" >Mail Templates</a>
             </li>
+             <li class="nav-item">
+                <a class="nav-link"  data-toggle="tab" href="#payment" role="tab" >Payment</a>
+             </li>
           </ul>
 
           <!-- Tab panes -->
@@ -51,7 +54,7 @@
 
 <!--            states-->
             <div class="tab-pane" id="states" role="tabpanel">
-                <h2>States</h2>
+                <div th:replace="settings/states :: content"></div>
             </div>
 
 <!--            mailServer-->
@@ -62,6 +65,10 @@
 <!--            mailTemplates-->
             <div class="tab-pane p-3" id="mailTemplates" role="tabpanel">
                 <h2>mailTemplates</h2>
+            </div>
+<!--           payment-->
+            <div class="tab-pane p-3" id="payment" role="tabpanel">
+                <h2>Payment</h2>
             </div>
           </div>
       </div>
@@ -86,7 +93,8 @@
         var csrfValue = "[[${_csrf.token}]]";
 </script>
 <script th:src="@{/js/common_form.js}"></script>
+<script th:src="@{/js/common.js}"></script>
 <script th:src="@{/js/countries_setting.js}"></script>
-
+<script th:src="@{/js/states_setting.js}"></script>
 </body>
 </html>

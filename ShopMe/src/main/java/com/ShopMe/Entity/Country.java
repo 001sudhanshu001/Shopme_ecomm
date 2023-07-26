@@ -32,4 +32,8 @@ public class Country {
 
     @OneToMany(mappedBy = "country")
     private Set<State> states;
+
+    public Country(Integer countryId) {
+        this.id = countryId;
+    }
 }

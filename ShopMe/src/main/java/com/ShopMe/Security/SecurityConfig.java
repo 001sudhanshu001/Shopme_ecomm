@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         System.out.println("Url Secured");
          http
                  .authorizeRequests()
-                 .antMatchers("/users/**").hasAuthority("Admin")
+                 .antMatchers("/users/**", "/settings/**", "/countries/**", "/states/**").hasAuthority("Admin")
                  .antMatchers("/categories/**", "/brands/**").hasAnyAuthority("Admin", "Editor")
 
                  .antMatchers("/products/new", "/products/delete/**").hasAnyAuthority("Admin", "Editor")
