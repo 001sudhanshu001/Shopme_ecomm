@@ -35,4 +35,12 @@ public class SettingService {
         System.out.println("In saveAll of Service, the settings are : " + settings);
         settingRepo.saveAll(settings);
     }
+
+    public List<Setting> getMailServerSetting() {
+        return settingRepo.findByCategory(SettingCategory.MAIL_SERVER);
+    }
+
+    public List<Setting> getMailTemplateSetting() {
+        return settingRepo.findByCategory(SettingCategory.MAIL_TEMPLATE);
+    }
 }

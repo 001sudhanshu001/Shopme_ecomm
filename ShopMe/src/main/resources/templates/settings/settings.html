@@ -59,12 +59,12 @@
 
 <!--            mailServer-->
             <div class="tab-pane p-3" id="mailServer" role="tabpanel" >
-                <h2>mailServer</h2>
+                <div th:replace="settings/mail_server :: content"></div>
             </div>
 
 <!--            mailTemplates-->
             <div class="tab-pane p-3" id="mailTemplates" role="tabpanel">
-                <h2>mailTemplates</h2>
+                <div th:replace="settings/mail_templates/mail_templates :: content"></div>
             </div>
 <!--           payment-->
             <div class="tab-pane p-3" id="payment" role="tabpanel">
@@ -87,10 +87,16 @@
 </div>
 <!--this has code to show the input image file-->
 <script>
+        moduleURL = "[[@{/settings}]]";
         MAX_FILE_SIZE = 102400
         contextPath = "[[@{/}]]" ;
         var csrfHeaderName = "[[${_csrf.headerName}]]";
         var csrfValue = "[[${_csrf.token}]]";
+
+        $(document).ready(function(){
+          $("#customerVerificationContent").richText();
+        });
+        
 </script>
 <script th:src="@{/js/common_form.js}"></script>
 <script th:src="@{/js/common.js}"></script>

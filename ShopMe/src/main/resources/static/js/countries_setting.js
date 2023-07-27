@@ -30,9 +30,9 @@ $(document).ready(function() {
 
 	buttonAddCountry.click(function() {
 		if (buttonAddCountry.val() == "Add") {
-			if(checkUnique()){
+//			if(checkUnique()){
 				addCountry();
-			}
+//			}
 		} else {
 			changeFormStateToNewCountry();
 		}
@@ -70,7 +70,7 @@ function deleteCountry() {
 
 function updateCountry() {
 
-	if (!validateFormCountry()) return;
+//	if (!validateFormCountry()) return;
 
 	url = contextPath + "countries/save";
 	countryName = fieldCountryName.val();
@@ -101,7 +101,7 @@ function updateCountry() {
 
 function addCountry() {
 
-	if (!validateFormCountry()) return;
+//	if (!validateFormCountry()) return;
 
 	url = contextPath + "countries/save";
 	countryName = fieldCountryName.val();
@@ -170,7 +170,9 @@ function changeFormStateToSelectedCountry() {
 
 function loadCountries() {
 	url = contextPath + "countries/list";
+	alert("Going to load countries");
 	$.get(url, function(responseJSON) {
+	    alert("After hitting url");
 		dropDownCountry.empty();
 
 		$.each(responseJSON, function(index, country) {
@@ -184,13 +186,14 @@ function loadCountries() {
 	}).fail(function() {
 		showToastMessage("ERROR: Could not connect to server or server encountered an error");
 	});
+	alert("CALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 }
 
 function showToastMessage(message) {
 	$("#toastMessage").text(message);
 	$(".toast").toast('show');
 }
-
+/*
 function validateFormCountry() {
 	formCountry = document.getElementById("formCountry");
 	if (!formCountry.checkValidity()) {
@@ -200,8 +203,9 @@ function validateFormCountry() {
 
 	return true;
 }
+*/
 
-
+/*
 function checkUnique() {
 
 	console.log("checkUnique is working");
@@ -241,3 +245,4 @@ function checkUnique() {
 
 	return false;
 }
+*/

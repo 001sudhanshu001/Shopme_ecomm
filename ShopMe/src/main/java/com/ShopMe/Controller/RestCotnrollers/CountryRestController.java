@@ -2,9 +2,7 @@ package com.ShopMe.Controller.RestCotnrollers;
 
 import com.ShopMe.DAO.CountryRepo;
 import com.ShopMe.Entity.Country;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +14,10 @@ public class CountryRestController {
 
     @GetMapping("/countries/list")
     public List<Country> listAll() {
-        return repo.findAllByOrderByNameAsc();
+        List<Country> allByOrderByNameAsc = repo.findAllByOrderByNameAsc();
+        System.out.println("Data Fetched");
+        allByOrderByNameAsc.forEach(System.out::println);
+        return allByOrderByNameAsc;
     }
 
     @PostMapping("/countries/save")
