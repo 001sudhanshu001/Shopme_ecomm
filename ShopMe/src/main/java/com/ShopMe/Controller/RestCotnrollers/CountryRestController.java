@@ -9,15 +9,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class CountryRestController {
+public class CountryRestController { // This Controller handles AJAX call from Settings -> countries
     private final CountryRepo repo;
 
     @GetMapping("/countries/list")
     public List<Country> listAll() {
-        List<Country> allByOrderByNameAsc = repo.findAllByOrderByNameAsc();
-        System.out.println("Data Fetched");
-        allByOrderByNameAsc.forEach(System.out::println);
-        return allByOrderByNameAsc;
+        List<Country> countryList = repo.findAllByOrderByNameAsc();
+
+        return countryList;
     }
 
     @PostMapping("/countries/save")

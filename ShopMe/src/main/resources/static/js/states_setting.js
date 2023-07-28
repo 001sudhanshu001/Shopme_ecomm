@@ -71,8 +71,8 @@ function deleteState() {
 }
 
 function updateState() {
-	
-//	if (!validateFormState()) return;
+	// Checking if the fields are not empty
+	if (!validateFormState()) return;
 	
 	url = contextPath + "states/save";
 	stateId = dropDownStates.val();
@@ -102,8 +102,9 @@ function updateState() {
 }
 
 function addState() {
-	
-//	if (!validateFormState()) return;
+
+	// Checking if the fields are not empty
+	if (!validateFormState()) return;
 	
 	url = contextPath + "states/save";
 	stateName = fieldStateName.val();
@@ -202,10 +203,10 @@ function loadCountries4States() {
 	});
 } 
 
-/*
+
 function validateFormState() {
 	formState = document.getElementById("formState");
-	if (!formState.checkValidity()) {
+	if (!formState.checkValidity()) { // checkValidity will return false if the form has wrong input based on our criteria
 		formState.reportValidity();
 		return false;
 	}	
@@ -213,7 +214,7 @@ function validateFormState() {
 	return true;
 }
 
-
+/*
 function checkUnique() {
 
 	console.log("checkUnique is working");

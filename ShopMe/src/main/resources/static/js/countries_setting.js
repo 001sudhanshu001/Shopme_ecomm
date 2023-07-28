@@ -70,7 +70,7 @@ function deleteCountry() {
 
 function updateCountry() {
 
-//	if (!validateFormCountry()) return;
+    if (!validateFormCountry()) return;
 
 	url = contextPath + "countries/save";
 	countryName = fieldCountryName.val();
@@ -101,7 +101,8 @@ function updateCountry() {
 
 function addCountry() {
 
-//	if (!validateFormCountry()) return;
+    // Check if the field are not empty
+	if (!validateFormCountry()) return;
 
 	url = contextPath + "countries/save";
 	countryName = fieldCountryName.val();
@@ -170,9 +171,7 @@ function changeFormStateToSelectedCountry() {
 
 function loadCountries() {
 	url = contextPath + "countries/list";
-	alert("Going to load countries");
 	$.get(url, function(responseJSON) {
-	    alert("After hitting url");
 		dropDownCountry.empty();
 
 		$.each(responseJSON, function(index, country) {
@@ -186,24 +185,23 @@ function loadCountries() {
 	}).fail(function() {
 		showToastMessage("ERROR: Could not connect to server or server encountered an error");
 	});
-	alert("CALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 }
 
 function showToastMessage(message) {
 	$("#toastMessage").text(message);
 	$(".toast").toast('show');
 }
-/*
+
 function validateFormCountry() {
 	formCountry = document.getElementById("formCountry");
-	if (!formCountry.checkValidity()) {
-		formCountry.reportValidity();
+	if (!formCountry.checkValidity()) { // checkValidity will return false if the form has error
+		formCountry.reportValidity(); // Will point to that field will has error input
 		return false;
 	}
 
 	return true;
 }
-*/
+
 
 /*
 function checkUnique() {

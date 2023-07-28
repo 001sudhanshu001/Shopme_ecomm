@@ -2,8 +2,8 @@ package com.ShopMe.Controller;
 
 import com.ShopMe.DAO.CurrencyRepo;
 import com.ShopMe.Entity.Currency;
-import com.ShopMe.Entity.GeneralSettingBag;
-import com.ShopMe.Entity.Setting;
+import com.ShopMe.Entity.settings.GeneralSettingBag;
+import com.ShopMe.Entity.settings.Setting;
 import com.ShopMe.Service.Impl.SettingService;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;

@@ -270,12 +270,6 @@ public class ProductController {
     public String viewProductDetails(@PathVariable("id") Integer id, Model model,  RedirectAttributes redirectAttributes){
         try{
             Product product = productService.get(id);
-            System.out.println("Getting Details");
-            for(ProductDetails str : product.getDetails()){
-                System.out.println(str.getName() + "........" + str.getValue());
-            }
-            System.out.println("Detail length in viewProductDetails" + product.getDetails());
-            System.out.println(product.getDetails().size());
             model.addAttribute("product", product);
 
             return "products/product_detail_modal"; // this is logical page for the modal

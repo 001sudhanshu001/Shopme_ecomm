@@ -62,4 +62,9 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
+
+    @Transient
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

@@ -136,14 +136,13 @@
 
         <script type="text/javascript">
             $(document).ready(function(){
-                $(".link-delete").on("click", function(e){
-                    e.preventDefault();
+                $(".link-delete").on("click", function(e){ // link-delete is the class of the link <a> </a> int fragments :: delete
+                    e.preventDefault(); // Otherwise it will directly hit the url and delete the user
                     link = $(this);
                     userId = link.attr("userId");
                     $("#yesButton").attr("href", link.attr("href"));
                     $("#confirmText").text("Are you sure you want to delete this user, ID : " + userId + "?");
                     $("#confirmModal").modal();
-
                 });
             });
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class CustomerRestController {
+    // This class is used to check uniqueness of email when Admin changes email of customer
 
     private final CustomerService service;
 

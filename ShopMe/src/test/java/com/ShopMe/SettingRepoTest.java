@@ -1,8 +1,8 @@
 package com.ShopMe;
 
 import com.ShopMe.DAO.SettingRepo;
-import com.ShopMe.Entity.Setting;
-import com.ShopMe.Entity.SettingCategory;
+import com.ShopMe.Entity.settings.Setting;
+import com.ShopMe.Entity.settings.SettingCategory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

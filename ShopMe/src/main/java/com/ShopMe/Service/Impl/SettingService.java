@@ -1,9 +1,9 @@
 package com.ShopMe.Service.Impl;
 
 import com.ShopMe.DAO.SettingRepo;
-import com.ShopMe.Entity.GeneralSettingBag;
-import com.ShopMe.Entity.Setting;
-import com.ShopMe.Entity.SettingCategory;
+import com.ShopMe.Entity.settings.GeneralSettingBag;
+import com.ShopMe.Entity.settings.Setting;
+import com.ShopMe.Entity.settings.SettingCategory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

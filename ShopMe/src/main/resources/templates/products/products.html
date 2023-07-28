@@ -175,7 +175,7 @@
     moduleURL = "[[@{/products}]]";
 
     $(document).ready(function(){
-      $(".link-delete").on("click", function(e){
+      $(".link-delete").on("click", function(e){ // link-delete is the class of the link <a> </a> int fragments :: delete
         e.preventDefault();
         showDeleteConfirmModal($(this), 'product');
       });
