@@ -57,7 +57,7 @@
                     </th:block>
 
 
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Salesperson')">
+                    <th:block sec:authorize="hasAnyAuthority('Admin')">
                         <li class="nav-item">
                             <a th:href="@{/customers}" class="nav-link">Customers</a>
                         </li>
