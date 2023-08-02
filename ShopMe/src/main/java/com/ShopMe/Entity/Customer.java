@@ -1,5 +1,6 @@
 package com.ShopMe.Entity;
 
+import com.ShopMe.Entity.customerAuthentication.AuthenticationType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -62,6 +63,16 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
+
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authentication_type", length = 10)
+    private AuthenticationType authenticationType;
+
+    // This is used only in frontEnd Application
+    @Column(name = "rest_password_token", length = 30)
+    private String resetPasswordToken;
 
     @Transient
     public String getFullName() {

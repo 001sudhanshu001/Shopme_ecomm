@@ -8,10 +8,7 @@ import com.ShopMe.Payloads.CategoryDto;
 import com.ShopMe.Service.Impl.BrandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ public class BrandRestController {
     private final BrandService brandService;
 
     @PostMapping("/brands/check_unique")
-    public String checkUninque(@Param("id") Integer id, @Param("name") String name){
+    public String checkUninque(@RequestParam("id") Integer id, @RequestParam("name") String name){
         return brandService.checkUnique(id, name);
     }
 

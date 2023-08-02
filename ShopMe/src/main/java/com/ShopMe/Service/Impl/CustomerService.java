@@ -73,10 +73,12 @@ public class CustomerService {
         }
         // Since in the Editing form are not sending created time, enabled status, and verification code
         // so if we update it then all these three values will be null
-        // so we have to add these also explicity
+        // so we have to add these also explicitly
         customerInForm.setEnabled(customerInDB.isEnabled());
         customerInForm.setCreatedTime(customerInDB.getCreatedTime());
         customerInForm.setVerificationCode(customerInDB.getVerificationCode());
+        customerInForm.setAuthenticationType(customerInDB.getAuthenticationType());
+        customerInForm.setResetPasswordToken(customerInDB.getResetPasswordToken());
 
         customerRepo.save(customerInForm);
     }
