@@ -2,7 +2,6 @@ package com.ShopMe.Payloads;
 
 import com.ShopMe.Entity.Role;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.HashSet;
 import java.util.Set;

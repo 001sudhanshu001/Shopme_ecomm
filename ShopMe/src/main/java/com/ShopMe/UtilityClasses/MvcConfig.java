@@ -12,6 +12,9 @@ public class MvcConfig implements WebMvcConfigurer {
 
    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//       registry.addResourceHandler("user-photos/**")
+//               .addResourceLocations("/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/34/target.png");
+
         exposeDirectory("user-photos", registry);
         exposeDirectory("../category-images", registry);
         exposeDirectory("../brand-logos", registry);
@@ -27,7 +30,37 @@ public class MvcConfig implements WebMvcConfigurer {
        String logicalPath = pathPattern.replace("../","") + "/**";
 
        registry.addResourceHandler(logicalPath)
-               .addResourceLocations("file:/" + absolutePath + "/");
+               .addResourceLocations("file://" + absolutePath + "/");
+       /*
+       System.out.println("--------------------------------");
+       System.out.println(pathPattern);
+       Path path = Paths.get(pathPattern);
+
+       String absolutePath = path.toFile().getAbsolutePath();
+       System.out.println(absolutePath);
+
+       String logicalPath = pathPattern.replace("../","") + "/**";
+
+       System.out.println(logicalPath);
+       String filePath = "file://" + absolutePath + "/";
+       System.out.println(filePath);
+
+
+       System.out.println("----------------------------------");
+       registry.addResourceHandler(pathPattern)
+               .addResourceLocations(filePath);
+
+        */
+
+       //       /home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/34/target.png
+//       2023-10-14 16:56:55.995  WARN 64877 --- [nio-8080-exec-7] o.s.w.s.resource.PathResourceResolver    :
+//       "Resource path "34/target.png" was successfully resolved but resource
+//       "file://home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/34/target.png"
+//       is neither under the current location
+//       "file://home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/**"
+//       nor under any of the allowed locations [
+//       URL [file://home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/**]]"
+
    }
 
 //    @Override

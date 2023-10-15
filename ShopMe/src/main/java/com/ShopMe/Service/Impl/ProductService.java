@@ -1,7 +1,6 @@
 package com.ShopMe.Service.Impl;
 
 import com.ShopMe.DAO.ProductRepo;
-import com.ShopMe.Entity.Brand;
 import com.ShopMe.Entity.Product;
 import com.ShopMe.ExceptionHandler.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;

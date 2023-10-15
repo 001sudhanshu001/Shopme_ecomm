@@ -22,26 +22,28 @@ public class SettingRepoTest {
 
     @Test
     public void testCreateGeneralSettings() {
-//        Setting siteName = new Setting("SITE_NAME", "Shopme", SettingCategory.GENERAL);
+//        Setting siteName = new Setting("SITE_NAME", "ClickCart", SettingCategory.GENERAL);
+//        Setting savedSetting = repo.save(siteName);
 //        Setting siteLogo = new Setting("SITE_LOGO", "Shopme.png", SettingCategory.GENERAL);
 //        Setting copyRight = new Setting("COPYRIGHT", "Copyright (C) 2023 Shopme Ltd.", SettingCategory.GENERAL);
+//        repo.saveAll(List.of(siteLogo,copyRight));
         Setting currencyId = new Setting("CURRENCY_ID", "1", SettingCategory.CURRENCY);
-        Setting symbol = new Setting("CURRENCY_SYMBOL", "$", SettingCategory.CURRENCY);
+        Setting symbol = new Setting("CURRENCY_SYMBOL", "₹", SettingCategory.CURRENCY);
         Setting symbolPosition = new Setting("CURRENCY_SYMBOL_POSITION", "Before Price", SettingCategory.CURRENCY);
         Setting decimalPointType = new Setting("DECIMAL_POINT_TYPE", "POINT", SettingCategory.CURRENCY);
         Setting decimalDigits = new Setting("DECIMAL_DIGITS", "2", SettingCategory.CURRENCY);
         Setting thousandsPointType = new Setting("THOUSANDS_POINT_TYPE", "COMMA", SettingCategory.CURRENCY);
 
-        repo.saveAll(List.of(currencyId, symbol, symbolPosition, decimalPointType, decimalDigits, thousandsPointType));
-
+       repo.saveAll(List.of(currencyId, symbol, symbolPosition, decimalPointType, decimalDigits, thousandsPointType));
+//
         Iterable<Setting> iterable = repo.findAll();
+        assertThat(iterable).isNotNull();
+//        for(Setting setting : iterable){
+//            assertThat(setting).isNotNull();
+//        }
+      //  Setting savedSetting = repo.save(siteName);
 
-        for(Setting setting : iterable){
-            assertThat(setting).isNotNull();
-        }
-//        Setting savedSetting = repo.save(siteName);
-
-//        assertThat(savedSetting).isNotNull();
+//       assertThat(savedSetting).isNotNull();
     }
 
     @Test

@@ -51,9 +51,9 @@ public class SettingController {
         saveSiteLogo(multipartFile, settingBag);
         saveCurrencySymbol(request, settingBag);
 
-         updateSettingValuesFromForm(request, settingBag.list());
+        updateSettingValuesFromForm(request, settingBag.list());
 
-         ra.addFlashAttribute("message","General Settings have been saved");
+        ra.addFlashAttribute("message","General Settings have been saved");
 
         return "redirect:/settings";
 

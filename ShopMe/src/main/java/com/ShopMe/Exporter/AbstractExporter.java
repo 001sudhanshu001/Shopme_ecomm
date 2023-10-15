@@ -1,13 +1,10 @@
 package com.ShopMe.Exporter;
 
-import com.ShopMe.Entity.User;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public abstract class AbstractExporter {
     public void setResponseHeader(HttpServletResponse response, String contentType, String extension, String prefix) throws IOException {

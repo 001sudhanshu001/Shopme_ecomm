@@ -2,6 +2,7 @@ package com.ShopMe.Entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.util.NumberUtils;
 
 import javax.persistence.*;
 import java.util.*;
@@ -94,8 +95,10 @@ public class Product {
 
     @Transient
     public String getShortName() {
-        if(this.name.length() > 70){
-            return name.substring(0, 70) + "...";
+        // Magic Number
+        int maxShortNameLengthWillBe = 70;
+        if(this.name.length() > maxShortNameLengthWillBe){
+            return name.substring(0, maxShortNameLengthWillBe) + "...";
         }
         return this.name;
     }

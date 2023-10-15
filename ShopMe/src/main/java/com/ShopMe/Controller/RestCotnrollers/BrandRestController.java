@@ -20,7 +20,7 @@ public class BrandRestController {
     private final BrandService brandService;
 
     @PostMapping("/brands/check_unique")
-    public String checkUninque(@RequestParam("id") Integer id, @RequestParam("name") String name){
+    public String checkUninque(@Param("id") Integer id, @Param("name") String name){
         return brandService.checkUnique(id, name);
     }
 
@@ -38,6 +38,7 @@ public class BrandRestController {
 
             return listCategories;
         } catch (BrandNotFoundException e) {
+
             throw new BrandNotFoundRestException();
         }
     }

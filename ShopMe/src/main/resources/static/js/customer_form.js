@@ -1,7 +1,7 @@
 function checkEmailUnique(form) {
 	customerId = $("#id").val();
 	customerEmail = $("#email").val();
-	csrfValue = $("input[name='_csrf'").val();
+	csrfValue = $("input[name='_csrf']").val();
 
 	// url = "[[@{/customers/check_unique_email}]]"; // In CustomerRestController
 	url = moduleURL + "/check_unique_email";

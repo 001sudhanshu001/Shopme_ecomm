@@ -1,10 +1,7 @@
 package com.ShopMe.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -25,4 +22,17 @@ public class State {
     @JoinColumn(name = "country_id")
     @JsonBackReference
     private Country country;
+
+    public State(String name, Country country) {
+        this.name = name;
+        this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "State{" +
+                "name='" + name + '\'' +
+                ", country=" + country.getName() +
+                '}';
+    }
 }

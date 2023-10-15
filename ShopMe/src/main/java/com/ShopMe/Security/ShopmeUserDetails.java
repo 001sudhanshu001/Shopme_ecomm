@@ -2,15 +2,11 @@ package com.ShopMe.Security;
 
 import com.ShopMe.Entity.Role;
 import com.ShopMe.Entity.User;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +15,7 @@ import java.util.Set;
 public class ShopmeUserDetails implements UserDetails {
 
     private User user;
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public ShopmeUserDetails(User user) {

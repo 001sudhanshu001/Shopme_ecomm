@@ -1,15 +1,10 @@
 package com.ShopMe.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @Entity
@@ -57,6 +52,9 @@ public class User {
     public String getPhotoImagePath(){
 
         if(id == null || photos == null) return "/images/default-user.png";
+
+//        return "user-photos/" + this.id + "/" +this.photos;
+//        return "/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/6/Alfred.png";
 
         return "/user-photos/" + this.id + "/" +this.photos;
     }

@@ -60,6 +60,7 @@ public class BrandController {
         System.out.println("Total Elements : " + page.getTotalElements());
         System.out.println("Total Pages : " + page.getTotalPages());
 
+
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
 //        model.addAttribute("currentPage", pageNUm);
@@ -109,7 +110,7 @@ public class BrandController {
 
             Brand savedBrand = brandService.save(brand);
          //   String uploadDir = "../brand-logos/";
-            String uploadDir = "../brand-logos/" + savedBrand.getId();
+            String uploadDir = "/images/brandlogos/" + savedBrand.getId();
 
             FileUploadUtil.cleanDir(uploadDir);
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);

@@ -109,7 +109,9 @@ public class UserController {
             //   String uploadDir = "user-photos";
             // pehle is naam se ek foldar banaya fir uske andar id's se subfolder
 
+//            String uploadDir = "/user-photos/" + savedUser.getId();
             String uploadDir = "user-photos/" +savedUser.getId();
+//            String uploadDir = "/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/src/main/resources/static/user-photos/" + savedUser.getId();
 
             // cleaning dir before uploading a new one
             FileUploadUtil.cleanDir(uploadDir);
