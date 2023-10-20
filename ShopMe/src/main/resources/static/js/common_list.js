@@ -11,8 +11,7 @@ function showDeleteConfirmModal(link, entityName){
     $("#confirmModal").modal();
 }
 
-
-function handleDetailLinkClick(cssClass, modalId) {
+function handleDetailLinkClick(cssClass, modalId){
 	$(cssClass).on("click", function(e) {
 		e.preventDefault();
 		linkDetailURL = $(this).attr("href");

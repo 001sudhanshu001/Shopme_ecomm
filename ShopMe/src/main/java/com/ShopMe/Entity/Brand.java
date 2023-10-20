@@ -38,7 +38,7 @@ public class Brand {
             return "/images/image-thumbnail.png";
         }
 
-        return "/images/brandlogos/" + this.id + "/" + this.logo;
+        return "/brand-logos/" + this.id + "/" + this.logo;
     }
 
 

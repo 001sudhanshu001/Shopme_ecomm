@@ -39,7 +39,7 @@ public class BrandService {
     }
 
     public Brand save(Brand brand){
-        return  brandRepo.save(brand);
+        return brandRepo.save(brand);
     }
 
     public Brand get(Integer id) throws BrandNotFoundException {
