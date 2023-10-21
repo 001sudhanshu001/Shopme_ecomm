@@ -2,6 +2,7 @@ package com.ShopMe;
 
 import com.ShopMe.DAO.OrderRepo;
 import com.ShopMe.Entity.Customer;
+import com.ShopMe.Entity.OrderTrack;
 import com.ShopMe.Entity.order.Order;
 import com.ShopMe.Entity.Product;
 import com.ShopMe.Entity.order.OrderDetail;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -151,5 +153,34 @@ public class OrderRepoTests {
         Optional<Order> result = repo.findById(orderId);
         assertThat(result).isNotPresent();
     }
+
+
+    @Test
+    public void testUpdateOrderTracks() {
+        Integer orderId = 5;
+        Order order = repo.findById(orderId).get();
+
+        OrderTrack newTrack = new OrderTrack();
+        newTrack.setOrder(order);
+        newTrack.setUpdatedTime(new Date());
+        newTrack.setStatus(OrderStatus.PICKED);
+        newTrack.setNotes(OrderStatus.PICKED.defaultDescription());
+//
+//        OrderTrack processingTrack = new OrderTrack();
+//        processingTrack.setOrder(order);
+//        processingTrack.setUpdatedTime(new Date());
+ //       processingTrack.setStatus(OrderStatus.PROCESSING);
+//        processingTrack.setNotes(OrderStatus.PROCESSING.defaultDescription());
+
+        List<OrderTrack> orderTracks = order.getOrderTracks();
+        orderTracks.add(newTrack);
+//        orderTracks.add(processingTrack);
+//
+        Order updatedOrder = repo.save(order);
+//
+        System.out.println("-----------------------------------");
+        System.out.println(updatedOrder.getOrderTracks().size());
+    }
+
 
 }

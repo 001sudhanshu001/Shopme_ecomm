@@ -34,7 +34,7 @@ public class ShippingRate /*extends IdBasedEntity implements Serializable*/{
     @Override
     public String toString() {
         return "ShippingRate [id=" + id + ", rate=" + rate + ", days=" + days + ", codSupported=" + codSupported
-                + ", country=" + country + ", state=" + state + "]";
+                + ", country=" + country.getName() + ", state=" + state + "]";
     }
 
     @Override

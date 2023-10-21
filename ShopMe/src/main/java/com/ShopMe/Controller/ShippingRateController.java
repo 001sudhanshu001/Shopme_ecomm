@@ -5,7 +5,7 @@ import com.ShopMe.Entity.ShippingRate;
 import com.ShopMe.ExceptionHandler.ShippingRateAlreadyExistsException;
 import com.ShopMe.ExceptionHandler.ShippingRateNotFoundException;
 import com.ShopMe.Service.Impl.ShippingRateService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -18,11 +18,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class ShippingRateController {
-    private String defaultRedirectURL = "redirect:/shipping_rates";
+    private static final String defaultRedirectURL = "redirect:/shipping_rates";
 
-    @Autowired
-    private ShippingRateService service;
+    private final ShippingRateService service;
 
     @GetMapping("/shipping_rates")
     public String listFirstPage(Model model) {

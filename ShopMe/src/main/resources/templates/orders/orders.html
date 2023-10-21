@@ -49,10 +49,11 @@
 <!--                    <div th:replace="fragments :: format_currency(${order.total})"></div>-->
 <!--                </td>-->
                 <td class="hideable-column">[[${order.total}]]</td>
+
 <!--                <td>-->
 <!--                    <div th:replace="fragments :: format_time(${order.orderTime})"></div>-->
 <!--                </td>-->
-                <td class="hideable-column">Time</td>
+                <td class="hideable-column">[[${order.orderTime}]]</td>
                 <td class="hideable-column">[[${order.destination}]]</td>
                 <td class="hideable-column">[[${order.paymentMethod}]]</td>
                 <td class="hideable-column">[[${order.status}]]</td>
@@ -81,6 +82,7 @@
                 <div class="col-10">
                     <div>[[${order.customer.fullName}]], [[${order.country}]]</div>
                     <div><small>[[${order.orderTime}]] - [[${order.status}]]</small></div>
+                    <div><div th:value="${order.total}">Total</div> - [[${order.paymentMethod}]]</div>
 <!--                    <div><div th:replace="fragments :: format_currency(${order.total})">Total</div> - [[${order.paymentMethod}]]</div>-->
                     <div>
                         <a class="fas fa-file-alt fa-2x icon-green link-detail"

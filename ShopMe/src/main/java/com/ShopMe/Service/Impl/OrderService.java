@@ -1,6 +1,8 @@
 package com.ShopMe.Service.Impl;
 
+import com.ShopMe.DAO.CountryRepo;
 import com.ShopMe.DAO.OrderRepo;
+import com.ShopMe.Entity.Country;
 import com.ShopMe.Entity.order.Order;
 import com.ShopMe.ExceptionHandler.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -10,14 +12,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
     public static final int ORDERS_PER_PAGE = 10;
-
     private final OrderRepo orderRepo;
+    private final CountryRepo countryRepo;
 
     public Page<Order> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
         Sort sort = null;
@@ -56,8 +59,11 @@ public class OrderService {
         if (count == null || count == 0) {
             throw new OrderNotFoundException("Could not find any orders with ID " + id);
         }
-
         orderRepo.deleteById(id);
+    }
+
+    public List<Country> listAllCountries() {
+        return countryRepo.findAllByOrderByNameAsc();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.ShopMe.Controller.order;
 
+import com.ShopMe.Entity.Country;
 import com.ShopMe.Entity.order.Order;
 import com.ShopMe.Entity.settings.Setting;
 import com.ShopMe.ExceptionHandler.OrderNotFoundException;
@@ -97,6 +98,28 @@ public class OrderController {
         return defaultRedirectURL;
     }
 
+    @GetMapping("/orders/edit/{id}")
+    public String editOrder(@PathVariable("id") Integer id, Model model, RedirectAttributes ra,
+                            HttpServletRequest request) {
+
+        try {
+            Order order = orderService.get(id);;
+
+            List<Country> listCountries = orderService.listAllCountries();
+
+            model.addAttribute("pageTitle", "Edit Order (ID: " + id + ")");
+            model.addAttribute("order", order);
+            model.addAttribute("listCountries", listCountries);
+
+            return "orders/order_form";
+
+        } catch (OrderNotFoundException ex) {
+            ra.addFlashAttribute("message", ex.getMessage());
+            return defaultRedirectURL;
+        }
+
+    }
+
     public void loadCurrencySetting(HttpServletRequest request) {
         List<Setting> currencySettings= settingService.getCurrencySettings();
 
@@ -105,6 +128,5 @@ public class OrderController {
             request.setAttribute(setting.getKey(), setting.getValue());
         }
     }
-
 
 }

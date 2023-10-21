@@ -1,13 +1,12 @@
 package com.ShopMe.Entity.order;
 
 import com.ShopMe.Entity.Customer;
+import com.ShopMe.Entity.OrderTrack;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -65,6 +64,9 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // one order can be in many details
     private Set<OrderDetail> orderDetails = new HashSet<>();
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderTrack> orderTracks = new ArrayList<>();
 
     @Transient
     public String getDestination() {
