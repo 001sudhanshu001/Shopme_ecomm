@@ -1,6 +1,6 @@
 package com.ShopMe.Entity.order;
 
-public enum OrderStatus {
+public enum  OrderStatus {
 
     NEW {
         @Override
