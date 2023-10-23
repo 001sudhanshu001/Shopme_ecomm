@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
 @Transactional
 @RequiredArgsConstructor
 public class ShippingRateService {
-    public static final int RATES_PER_PAGE = 1;
+    public static final int RATES_PER_PAGE = 5;
     private static final int DIM_DIVISOR = 139;
 
     private final ShippingRateRepo shipRepo;

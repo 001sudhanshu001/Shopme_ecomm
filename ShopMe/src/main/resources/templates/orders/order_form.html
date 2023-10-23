@@ -6,7 +6,7 @@
   <div th:replace="navigation :: menu">Static Menu</div>
 
   <div>
-    <h2>[[#{orders.form.title}]] | [[${pageTitle}]]</h2>
+    <h2>Order Management | [[${pageTitle}]]</h2>
   </div>
 
   <form th:action="@{/order/save}" th:object="${order}" method="post" onsubmit="return processFormBeforeSubmit();">
@@ -14,16 +14,16 @@
     <div>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab">[[#{orders.details.tab.overview}]]</a>
+          <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab">Overview</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="products-tab" data-toggle="tab" href="#products" role="tab">[[#{orders.details.tab.products}]]</a>
+          <a class="nav-link" id="products-tab" data-toggle="tab" href="#products" role="tab">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="shipping-tab" data-toggle="tab" href="#shipping" role="tab">[[#{orders.details.tab.shipping}]]</a>
+          <a class="nav-link" id="shipping-tab" data-toggle="tab" href="#shipping" role="tab">Shipping</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="track-tab" data-toggle="tab" href="#track" role="tab">[[#{orders.details.tab.track}]]</a>
+          <a class="nav-link" id="track-tab" data-toggle="tab" href="#track" role="tab">Tracking</a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
@@ -31,17 +31,17 @@
           <div th:replace="orders/order_form_overview :: content"></div>
         </div>
 
-<!--        <div class="tab-pane fade p-3" id="products" role="tabpanel">-->
-<!--          <div th:replace="orders/order_form_products :: content"></div>-->
-<!--        </div>-->
+        <div class="tab-pane fade p-3" id="products" role="tabpanel">
+          <div th:replace="orders/order_form_products :: content"></div>
+        </div>
 
         <div class="tab-pane fade p-3" id="shipping" role="tabpanel">
           <div th:replace="orders/order_form_shipping :: content"></div>
         </div>
 
-<!--        <div class="tab-pane fade p-3" id="track" role="tabpanel">-->
-<!--          <div th:replace="orders/order_form_tracks:: content"></div>-->
-<!--        </div>-->
+        <div class="tab-pane fade p-3" id="track" role="tabpanel">
+          <div th:replace="orders/order_form_tracks:: content"></div>
+        </div>
       </div>
     </div>
     <div>
@@ -55,7 +55,7 @@
   <div th:replace="modal_fragment :: modal_dialog"></div>
   <div th:replace="orders/add_product_modal :: content"></div>
 
-  <div th:replace="fragments :: footer">[[#{orders.form.staticfooter}]]</div>
+  <div th:replace="fragments :: footer"></div>
 </div>
 <script type="text/javascript">
   contextPath = "[[@{/}]]";

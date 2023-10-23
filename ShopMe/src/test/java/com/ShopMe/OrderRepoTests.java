@@ -2,7 +2,7 @@ package com.ShopMe;
 
 import com.ShopMe.DAO.OrderRepo;
 import com.ShopMe.Entity.Customer;
-import com.ShopMe.Entity.OrderTrack;
+import com.ShopMe.Entity.order.OrderTrack;
 import com.ShopMe.Entity.order.Order;
 import com.ShopMe.Entity.Product;
 import com.ShopMe.Entity.order.OrderDetail;
@@ -157,7 +157,7 @@ public class OrderRepoTests {
 
     @Test
     public void testUpdateOrderTracks() {
-        Integer orderId = 5;
+        Integer orderId = 10;
         Order order = repo.findById(orderId).get();
 
         OrderTrack newTrack = new OrderTrack();

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class CustomerService {
     public static final int CUSTOMERS_PER_PAGE = 10;
     private final CustomerRepo customerRepo;
     private final CountryRepo countryRepo;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public Page<Customer> listByPage(int pageNum, String sortField, String sortDir, String keyword){
         Sort sort = Sort.by(sortField);
@@ -54,15 +55,47 @@ public class CustomerService {
         return countryRepo.findAllByOrderByNameAsc();
     }
 
-    public boolean isEmailUnique(String email){
-        Customer customer = customerRepo.findByEmail(email);
+//    public boolean isEmailUnique(String email){
+//        Customer customer = customerRepo.findByEmail(email);
+//
+//        return customer == null;
+//    }
+    public boolean isEmailUnique(Integer id, String email) {
+        Customer existCustomer = customerRepo.findByEmail(email);
 
-        return customer == null;
+        if (existCustomer != null && !Objects.equals(existCustomer.getId(), id)) {
+            // found another customer having the same email
+            return false;
+        }
+
+        return true;
     }
+
 
     // This is the method used to save the customer if the Admin update the customer
     public void save(Customer customerInForm) {
+//        Customer customerInDB = customerRepo.findById(customerInForm.getId()).get();
+//
+//        if (!customerInForm.getPassword().isEmpty()) {
+//            String encodedPassword = passwordEncoder.encode(customerInForm.getPassword());
+//            customerInForm.setPassword(encodedPassword);
+//        } else {
+//            customerInForm.setPassword(customerInDB.getPassword());
+//        }
+//        // Since in the Editing form are not sending created time, enabled status, and verification code
+//        // so if we update it then all these three values will be null
+//        // so we have to add these also explicitly
+//        customerInForm.setEnabled(customerInDB.isEnabled());
+//        customerInForm.setCreatedTime(customerInDB.getCreatedTime());
+//        customerInForm.setVerificationCode(customerInDB.getVerificationCode());
+//        customerInForm.setAuthenticationType(customerInDB.getAuthenticationType());
+//        customerInForm.setResetPasswordToken(customerInDB.getResetPasswordToken());
+//
+//        customerRepo.save(customerInForm);
+
+
         Customer customerInDB = customerRepo.findById(customerInForm.getId()).get();
+
 
         if (!customerInForm.getPassword().isEmpty()) {
             String encodedPassword = passwordEncoder.encode(customerInForm.getPassword());
@@ -70,9 +103,7 @@ public class CustomerService {
         } else {
             customerInForm.setPassword(customerInDB.getPassword());
         }
-        // Since in the Editing form are not sending created time, enabled status, and verification code
-        // so if we update it then all these three values will be null
-        // so we have to add these also explicitly
+
         customerInForm.setEnabled(customerInDB.isEnabled());
         customerInForm.setCreatedTime(customerInDB.getCreatedTime());
         customerInForm.setVerificationCode(customerInDB.getVerificationCode());

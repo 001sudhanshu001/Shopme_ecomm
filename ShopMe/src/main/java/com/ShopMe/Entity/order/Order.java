@@ -1,7 +1,6 @@
 package com.ShopMe.Entity.order;
 
 import com.ShopMe.Entity.Customer;
-import com.ShopMe.Entity.OrderTrack;
 import lombok.Getter;
 import lombok.Setter;
 

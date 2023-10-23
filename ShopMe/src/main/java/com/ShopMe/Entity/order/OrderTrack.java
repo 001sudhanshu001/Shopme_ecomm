@@ -1,7 +1,5 @@
-package com.ShopMe.Entity;
+package com.ShopMe.Entity.order;
 
-import com.ShopMe.Entity.order.Order;
-import com.ShopMe.Entity.order.OrderStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
