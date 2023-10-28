@@ -32,7 +32,7 @@ $(document).ready(function() {
 	});
 
 	buttonAddState.click(function() {
-		if (buttonAddState.val() == "Add") {
+		if (buttonAddState.val() === "Add") {
 		//	if(checkUnique()){
 				addState();
 		//	}
@@ -54,9 +54,12 @@ function deleteState() {
 	stateId = dropDownStates.val();
 
 	url = contextPath + "states/delete/" + stateId;
+	console.log("State Id is : " + stateId);
+	console.log("delete URl");
+	console.log(url);
 
 	$.ajax({
-		type: 'DELETE',
+		type: 'POST',
 		url: url,
 		beforeSend: function(xhr) {
 			xhr.setRequestHeader(csrfHeaderName, csrfValue);
@@ -107,6 +110,8 @@ function addState() {
 	if (!validateFormState()) return;
 	
 	url = contextPath + "states/save";
+	console.log("save URl");
+	console.log(url);
 	stateName = fieldStateName.val();
 
 	selectedCountry = $("#dropDownCountriesForStates option:selected");

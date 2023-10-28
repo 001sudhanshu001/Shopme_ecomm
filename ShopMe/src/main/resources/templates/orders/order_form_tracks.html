@@ -39,7 +39,7 @@
 				    		<input type="hidden" name="trackStatus" value="NEW" />
 				    	</th:block>
 				      <select name="trackStatus" class="form-control dropDownStatus" required style="max-width: 150px"
-				      		th:rowNumber="${status.count}" 
+				      		th:rowNumber="${status.count}"
 				      		th:disabled="${isTrackWithStatusNew}"
 				      		th:id="${isTrackWithStatusNew ? 'trackStatusOptions' : ''}">
 
@@ -48,7 +48,7 @@
 			  					th:defaultDescription="${os.defaultDescription}" />
 				      	</th:block>
 
-				      </select>	
+				      </select>
 				    </div>
 				  </div>
 

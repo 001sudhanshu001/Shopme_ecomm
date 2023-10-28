@@ -39,6 +39,7 @@ public class OrderTrack {
         return dateFormatter.format(this.updatedTime);
     }
 
+    @Transient
     public void setUpdatedTimeOnForm(String dateString) throws ParseException {
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
         try {
