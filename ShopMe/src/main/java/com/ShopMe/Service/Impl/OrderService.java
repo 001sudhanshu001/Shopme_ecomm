@@ -4,6 +4,8 @@ import com.ShopMe.DAO.CountryRepo;
 import com.ShopMe.DAO.OrderRepo;
 import com.ShopMe.Entity.Country;
 import com.ShopMe.Entity.order.Order;
+import com.ShopMe.Entity.order.OrderStatus;
+import com.ShopMe.Entity.order.OrderTrack;
 import com.ShopMe.ExceptionHandler.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -72,5 +75,27 @@ public class OrderService {
         orderInForm.setCustomer(orderInDB.getCustomer());
 
         orderRepo.save(orderInForm);
+    }
+
+    public void updateStatus(Integer orderId, String status) {
+        Order orderInDB = orderRepo.findById(orderId).get();
+        OrderStatus statusToUpdate = OrderStatus.valueOf(status);
+
+        if (!orderInDB.hasStatus(statusToUpdate)) {
+            List<OrderTrack> orderTracks = orderInDB.getOrderTracks();
+
+            OrderTrack track = new OrderTrack();
+            track.setOrder(orderInDB);
+            track.setStatus(statusToUpdate);
+            track.setUpdatedTime(new Date());
+            track.setNotes(statusToUpdate.defaultDescription());
+
+            orderTracks.add(track);
+
+            orderInDB.setStatus(statusToUpdate);
+
+            orderRepo.save(orderInDB);
+        }
+
     }
 }
