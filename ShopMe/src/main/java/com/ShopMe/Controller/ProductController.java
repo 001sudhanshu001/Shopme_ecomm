@@ -8,6 +8,7 @@ import com.ShopMe.Service.Impl.CategoryService;
 import com.ShopMe.Service.Impl.ProductService;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +33,7 @@ import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ProductController {
 
     private final ProductService productService;
@@ -102,18 +107,21 @@ public class ProductController {
     public String saveProduct(Product product, RedirectAttributes redirectAttributes,
                               @RequestParam(value = "fileImage", required = false)MultipartFile mainImageMultipart,
                               @RequestParam(value = "extraImage", required = false)MultipartFile[] extraImageMultiparts,
+                              @RequestParam(name = "detailIDs", required = false) String[] detailIDs,
                               @RequestParam(name = "detailNames", required = false) String[] detailNames,
                               @RequestParam(name = "detailValues", required = false) String[] detailValues,
                               @RequestParam(name = "imageIDs", required = false) String[] imageIDs,// same name as in product_images.html
                               @RequestParam(name = "imageNames", required = false) String[] imageNames,
                               @AuthenticationPrincipal ShopmeUserDetails loggedUser
-                              )
-            throws IOException, ProductNotFoundException { // fileImage as we used in product_images.html
-        if(loggedUser.hasRole("Salesperson")){ // Just updating Price by Salesperson
-            productService.saveProductPrice(product);
-            redirectAttributes.addFlashAttribute("message","The Product has been saved successfully");
+                              ) throws IOException, ProductNotFoundException { // fileImage as we used in product_images.html
 
-            return "redirect:/products";
+        if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+            if (loggedUser.hasRole("Salesperson")) { // Just updating Price by Salesperson
+                productService.saveProductPrice(product);
+                redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully");
+
+                return "redirect:/products";
+            }
         }
         // If user has Admin or Editor then the fileImage i.e. main photo is required
         // this is handled in product_image.html and product_image_readonly.html
@@ -125,14 +133,35 @@ public class ProductController {
 //        Product clearedProduct = productService.get(product.getId());
 //        product.getDetails().clear();//Removing old details which are present in the database
 
-        setProductDetials(detailNames, detailValues, product);
+        setProductDetails(detailIDs, detailNames, detailValues, product);
 
         Product savedProduct = productService.save(product);
 
         saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
+        deleteExtraImagesWereRemovedOnForm(product);
 
         redirectAttributes.addFlashAttribute("message","The Product has been saved successfully");
         return "redirect:/products";
+    }
+
+    public static void deleteExtraImagesWereRemovedOnForm(Product product) {
+        String extraImageDir = "../product-images/" + product.getId() + "/extras";
+        Path dirPath = Paths.get(extraImageDir);
+
+        try {
+            Files.list(dirPath).forEach(file -> {
+                String filename = file.toFile().getName();
+                if (!product.containsImageName(filename)) {
+                    try {
+                        Files.delete(file);
+                    } catch (IOException e) {
+                        log.error("Could not delete extra image: " + filename);
+                    }
+                }
+            });
+        } catch (IOException ex) {
+            log.error("Could not list directory: " + dirPath);
+        }
     }
 
     private void setExistingExtraImagesName(String[] imageIDs, String[] imageNames, Product product) {
@@ -149,14 +178,17 @@ public class ProductController {
         product.setImages(images);
     }
 
-    private void setProductDetials(String[] detailNames, String[] detailValues, Product product) throws ProductNotFoundException {
+    private void setProductDetails(String[] detailIDs, String[] detailNames, String[] detailValues, Product product) throws ProductNotFoundException {
         if(detailNames == null || detailNames.length == 0) return;
 
         for(int count = 0; count < detailNames.length; count++){
             String name = detailNames[count];
             String value = detailValues[count];
+            Integer id = Integer.parseInt(detailIDs[count]);
 
-            if(!name.isEmpty() && !value.isEmpty()){
+            if (id != 0) {
+                product.addDetails(id, name, value);
+            } else if (!name.isEmpty() && !value.isEmpty()) {
                 product.addDetails(name, value);
             }
         }

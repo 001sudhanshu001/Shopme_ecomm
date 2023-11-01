@@ -52,13 +52,17 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand; // one brand can have many products
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductImage> images = new HashSet<>();  //one product can have many images
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductDetails> details = new ArrayList<>();
 
     public void addDetails(String name, String value){
         this.details.add(new ProductDetails(name, value, this));
+    }
+
+    public void addDetails(Integer id, String name, String value){
+        this.details.add(new ProductDetails(id,name, value, this));
     }
 
     @Transient
