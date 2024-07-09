@@ -5,6 +5,7 @@ import com.ShopMe.Entity.Currency;
 import com.ShopMe.Entity.settings.GeneralSettingBag;
 import com.ShopMe.Entity.settings.Setting;
 import com.ShopMe.Service.Impl.SettingService;
+import com.ShopMe.UtilityClasses.Constants;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,8 @@ public class SettingController {
         for(Setting setting : listSettings){ // Instead of iterating in html page we did it here
             model.addAttribute(setting.getKey(), setting. getValue());
         }
+
+        model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
         return "settings/settings";
     }
 

@@ -1,5 +1,6 @@
 package com.ShopMe.Entity;
 
+import com.ShopMe.UtilityClasses.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,12 +18,16 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(length = 128, nullable = false , unique = true)
     private String name;
+
     @Column(length = 64, nullable = false , unique = true)
     private String alias;
+
     @Column(length = 128, nullable = false) // length of image file
     private String image;
+
     private boolean enabled;
 
     // This is for Searching Category
@@ -32,6 +37,7 @@ public class Category {
     @OneToOne // ek category ka ek hi parent
     @JoinColumn(name = "parent_id")
     private Category parent; // beacuse it will be hierarchical relation
+
     @OneToMany(mappedBy = "parent") // ek category ke kai child
     @OrderBy("name asc")
     private Set<Category> children = new HashSet<>();
@@ -89,7 +95,9 @@ public class Category {
             return "/images/image-thumbnail.png";
         }
 
-        return "/category-images/" + this.id + "/" + this.image;
+        // return "/category-images/" + this.id + "/" + this.image;
+        return Constants.S3_BASE_URI + "/category-images/" + this.id + "/" + this.image;
+
     }
 
     public boolean isHasChildren() {

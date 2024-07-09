@@ -22,7 +22,7 @@ $(document).ready(function(){
 function checkFileSize(fileInput) {
     fileSize = fileInput.files[0].size;
     if(fileSize > MAX_FILE_SIZE){
-        fileInput.setCustomValidity("You must choose an image less than " + MAX_FILE_SIZE/1024 + "MB");
+        fileInput.setCustomValidity("You must choose an image less than 1 MB");
         fileInput.reportValidity();
         return false;
     }else{

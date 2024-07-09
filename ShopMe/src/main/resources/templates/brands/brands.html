@@ -30,7 +30,7 @@
       <table class="table table-responsive-xl table-bordered table-striped table-hover">
         <thead class="thead-dark">
             <tr>
-                <th>Brand ID</th>
+                <th th:replace="fragments :: column_link('/brands' ,'id', 'Brand ID','none')"></th>
                 <th>Logo</th>
                 <th th:replace="fragments :: column_link('/brands' ,'name', 'Brand Name','none')"></th>
                 <th>Categories</th>

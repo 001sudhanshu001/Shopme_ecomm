@@ -1,5 +1,6 @@
 package com.ShopMe.Entity;
 
+import com.ShopMe.UtilityClasses.Constants;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.NumberUtils;
@@ -19,7 +20,7 @@ public class Product {
     private String name;
     @Column(unique = true, length = 256, nullable = false)
     private String alias;
-    @Column(length = 512, nullable = false, name = "short_description")
+    @Column(length = 2000, nullable = false, name = "short_description")
     private String shortDescription;
     @Column(length = 4000, nullable = false,  name = "full_description")
     private String fullDescription;
@@ -46,14 +47,18 @@ public class Product {
 
     @Column(name = "main_image", nullable = false)
     private String mainImage;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category; // one cate. can have many products
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand; // one brand can have many products
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductImage> images = new HashSet<>();  //one product can have many images
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductDetails> details = new ArrayList<>();
 
@@ -75,7 +80,10 @@ public class Product {
         if(id == null || mainImage == null) {
             return "/images/image-thumbnail.png";
         }
-        return "/product-images/" + this.id + "/" + this.mainImage;
+      //  return "/product-images/" + this.id + "/" + this.mainImage;
+
+        return Constants.S3_BASE_URI + "/product-images/" + this.id + "/" + this.mainImage;
+
     }
     @Override
     public String toString() {

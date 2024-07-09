@@ -15,18 +15,26 @@ public class MvcConfig implements WebMvcConfigurer {
 //       registry.addResourceHandler("user-photos/**")
 //               .addResourceLocations("/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/34/target.png");
 
+       // for Older version
+       /*
         exposeDirectory("user-photos", registry);
         exposeDirectory("../category-images", registry);
         exposeDirectory("../brand-logos", registry);
         exposeDirectory("../product-images", registry);
        exposeDirectory("../site-logo", registry);
+       */
+
+       exposeDirectory("user-photos", registry);
+       exposeDirectory("category-images", registry);
+       exposeDirectory("brand-logos", registry);
+       exposeDirectory("product-images", registry);
+       exposeDirectory("site-logo", registry);
    }
 
    private void exposeDirectory(String pathPattern, ResourceHandlerRegistry registry){
        Path path = Paths.get(pathPattern);
 
        String absolutePath = path.toFile().getAbsolutePath();
-
        String logicalPath = pathPattern.replace("../","") + "/**";
 
        registry.addResourceHandler(logicalPath)

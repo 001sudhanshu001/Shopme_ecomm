@@ -1,5 +1,6 @@
 package com.ShopMe.Entity;
 
+import com.ShopMe.UtilityClasses.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,12 +20,14 @@ public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false, length = 45, unique = true)
     private String name;
+
     @Column(nullable = false, length = 128)
     private String logo;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "brands_categories",
             joinColumns = @JoinColumn(name = "brand_id"),
@@ -38,7 +41,9 @@ public class Brand {
             return "/images/image-thumbnail.png";
         }
 
-        return "/brand-logos/" + this.id + "/" + this.logo;
+//        return "/brand-logos/" + this.id + "/" + this.logo;
+        return Constants.S3_BASE_URI + "/brand-logos/" + this.id + "/" + this.logo;
+
     }
 
 

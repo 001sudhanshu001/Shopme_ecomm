@@ -10,11 +10,11 @@
             <h2>Manage Users</h2>
             <a th:href="@{/users/new}" class="fa-sharp fa-solid fa-user-plus fa-2x icon-dark mr-2" title="Create New User"></a>
 
-            <a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark" title="Export to CSV"></a>
+<!--            <a th:href="@{/users/export/csv}" class="fas fa-file-csv fa-2x icon-dark" title="Export to CSV"></a>-->
 
-            <a th:href="@{/users/export/excel}" class="fa-solid fa-file-excel fa-2x icon-dark mr-2" title="Export to Excel"></a>
+<!--            <a th:href="@{/users/export/excel}" class="fa-solid fa-file-excel fa-2x icon-dark mr-2" title="Export to Excel"></a>-->
 
-            <a th:href="@{/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark" title="Export to PDF mr-2"></a>
+<!--            <a th:href="@{/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark" title="Export to PDF mr-2"></a>-->
         </div>
 
         <div th:if="${message != null}" class="alert alert-success text-center"> <!-- success msg for new user created -->
@@ -123,8 +123,6 @@
             </div>
         </div>
 
-
-
         <!-- to show page navigation, this will be show only if there are users -->
         <div th:replace="fragments :: pagination('/users', 'users')"></div>
 
@@ -141,7 +139,7 @@
                     link = $(this);
                     userId = link.attr("userId");
                     $("#yesButton").attr("href", link.attr("href"));
-                    $("#confirmText").text("Are you sure you want to delete this user, ID : " + userId + "?");
+                    $("#confirmText").text("Are you sure you want to delete this user ?");
                     $("#confirmModal").modal();
                 });
             });

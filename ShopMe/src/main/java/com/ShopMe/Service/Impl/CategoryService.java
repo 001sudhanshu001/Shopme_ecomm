@@ -43,7 +43,8 @@ public class CategoryService {
 
         Page<Category> pageCategories = null;
         if(keyword != null && !keyword.isEmpty()){ // means it is form searching
-             pageCategories = categoryRepo.search(keyword, pageable);
+            pageable = PageRequest.of(pageNum-1, 5, sort);
+            pageCategories = categoryRepo.search(keyword, pageable);
         }else {
              pageCategories =  categoryRepo.findRootCategories(pageable);
         }

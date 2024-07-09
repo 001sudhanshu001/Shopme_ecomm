@@ -26,10 +26,10 @@ public class SettingBag {
 
     public void update(String key, String value){
         Setting setting = get(key);
-        System.out.println("The key is :"+ key + "value: " + value);
-        System.out.println("In Update currency Symbol" + setting);
+//        System.out.println("The key is :"+ key + "value: " + value);
+//        System.out.println("In Update currency Symbol" + setting);
         if(setting != null && value != null) {
-            System.out.println("Setting symbol " + value);
+         //   System.out.println("Setting symbol " + value);
             setting.setValue(value);
         }
     }

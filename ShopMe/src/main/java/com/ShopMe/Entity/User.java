@@ -2,6 +2,7 @@ package com.ShopMe.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.ShopMe.UtilityClasses.Constants;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -56,7 +57,10 @@ public class User {
 //        return "user-photos/" + this.id + "/" +this.photos;
 //        return "/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/6/Alfred.png";
 
-        return "/user-photos/" + this.id + "/" +this.photos;
+       // return "/user-photos/" + this.id + "/" +this.photos; ***
+      //  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++" + Constants.S3_BASE_URI);
+        return Constants.S3_BASE_URI + "/user-photos/" + this.id + "/" + this.photos;
+     //   return "";
     }
     @Transient
     public String getFullName() {

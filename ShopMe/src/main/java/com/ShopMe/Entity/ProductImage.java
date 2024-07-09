@@ -1,5 +1,6 @@
 package com.ShopMe.Entity;
 
+import com.ShopMe.UtilityClasses.Constants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +35,9 @@ public class ProductImage {  // this is for extra images of the product
 
     @Transient
     public String getImagePath() {
-        return "/product-images/" + product.getId() + "/extras/" + this.name;
+       // return "/product-images/" + product.getId() + "/extras/" + this.name;
+
+        return Constants.S3_BASE_URI + "/product-images/" + product.getId() + "/extras/" + this.name;
     }
 
 }

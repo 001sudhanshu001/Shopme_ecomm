@@ -7,11 +7,11 @@
 	<div>
 		<h2>Manage Customers</h2>
 
-		<a th:href="@{/customers/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
-		
-		<a th:href="@{/customers/export/excel}" style="text-decoration: none;" class="fas fa-file-excel fa-2x icon-dark mr-2"></a>		
+<!--		<a th:href="@{/customers/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>-->
+<!--		-->
+<!--		<a th:href="@{/customers/export/excel}" style="text-decoration: none;" class="fas fa-file-excel fa-2x icon-dark mr-2"></a>		-->
 
-		<a th:href="@{/customers/export/pdf}" style="text-decoration: none;" class="fas fa-file-pdf fa-2x icon-dark mr-2"></a>	
+<!--		<a th:href="@{/customers/export/pdf}" style="text-decoration: none;" class="fas fa-file-pdf fa-2x icon-dark mr-2"></a>	-->
 	</div>
 
 	<div th:if="${message != null}" class="alert alert-success text-center"> <!-- success msg for new user created -->
@@ -66,9 +66,9 @@
 							title="View details of this customer"
 							></a>					
 						&nbsp; 
-						<div th:replace="fragments :: edit('customer', '/customers/edit/' + ${customer.id})" />
+<!--						<div th:replace="fragments :: edit('customer', '/customers/edit/' + ${customer.id})" />-->
 						&nbsp; 
-						<div th:replace="fragments :: delete('customer', ${customer.id}, '/customers/delete/' + ${customer.id}, true)" />
+<!--						<div th:replace="fragments :: delete('customer', ${customer.id}, '/customers/delete/' + ${customer.id}, true)" />-->
 					</td>					
 				</tr>
 			</tbody>
@@ -92,9 +92,9 @@
 						title="View details of this customer"
 						></a>					
 					&nbsp; 
-					<div th:replace="fragments :: edit('customer', '/customers/edit/' + ${customer.id})" />
+<!--					<div th:replace="fragments :: edit('customer', '/customers/edit/' + ${customer.id})" />-->
 					&nbsp; 
-					<div th:replace="fragments :: delete('customer', ${customer.id}, '/customers/delete/' + ${customer.id}, true)" />
+<!--					<div th:replace="fragments :: delete('customer', ${customer.id}, '/customers/delete/' + ${customer.id}, true)" />-->
 				</div>
 			</div>
 			<div>&nbsp;</div>

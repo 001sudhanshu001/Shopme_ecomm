@@ -77,49 +77,47 @@
                         </li>
                     </th:block>
 
+<!--                    <th:block sec:authorize="hasAnyAuthority('Admin','salesperson')">-->
+<!--                        <li class="nav-item">-->
+<!--                            <a th:href="@{/report}" class="nav-link">Sales Report</a>-->
+<!--                        </li>-->
+<!--                    </th:block>-->
 
-                    <th:block sec:authorize="hasAnyAuthority('Admin','salesperson')">
-                        <li class="nav-item">
-                            <a th:href="@{/report}" class="nav-link">Sales Report</a>
-                        </li>
-                    </th:block>
 
+<!--                    <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">-->
+<!--                        <li class="nav-item">-->
+<!--                            <a th:href="@{/articles}" class="nav-link">Articles</a>-->
+<!--                        </li>-->
+<!--                    </th:block>-->
 
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
-                        <li class="nav-item">
-                            <a th:href="@{/articles}" class="nav-link">Articles</a>
-                        </li>
-                    </th:block>
-
-                    <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
-                        <li class="nav-item">
-                            <a th:href="@{/menu}" class="nav-link">Menus</a>
-                        </li>
-                    </th:block>
-
+<!--                    <th:block sec:authorize="hasAnyAuthority('Admin','Editor')">-->
+<!--                        <li class="nav-item">-->
+<!--                            <a th:href="@{/menu}" class="nav-link">Menus</a>-->
+<!--                        </li>-->
+<!--                    </th:block>-->
 
                     <li class="nav-item dropdown" sec:authorize="hasAuthority('Admin')">
-                        <a th:href="@{/settings}" class="nav-link dropdown-toggle"
+                        <a th:href="@{/settings}" class="nav-link"
                            data-toggle="dropdown">Settings
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" th:href="@{/settings#general}">General</a>
-                            <a class="dropdown-item" th:href="@{/settings#countries}">Countries</a>
-                            <a class="dropdown-item" th:href="@{/settings#states}">States</a>
-                            <a class="dropdown-item" th:href="@{/settings#mailServer}">Mail Server</a>
-                            <a class="dropdown-item" th:href="@{/settings#mailTemplate}">Mail Template</a>
-                            <a class="dropdown-item" th:href="@{/settings#payment}">Payment</a>
+<!--                        <div class="dropdown-menu">-->
+<!--                            <a class="dropdown-item" th:href="@{/settings#general}">General</a>-->
+<!--                            <a class="dropdown-item" th:href="@{/settings#countries}">Countries</a>-->
+<!--                            <a class="dropdown-item" th:href="@{/settings#states}">States</a>-->
+<!--                            <a class="dropdown-item" th:href="@{/settings#mailServer}">Mail Server</a>-->
+<!--                            <a class="dropdown-item" th:href="@{/settings#mailTemplate}">Mail Template</a>-->
+<!--                            <a class="dropdown-item" th:href="@{/settings#payment}">Payment</a>-->
 
-                        </div>
+<!--                        </div>-->
                     </li>
 
-                    <li>
-                        <span class="fas fa-user fa-2x icon-silver"></span>
-                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+                        <a class="nav-link"
                            th:href="@{/account}"
                            sec:authentication="principal.fullname">
+                            <li>
+                                <span class="fas fa-user fa-2x icon-silver"></span>
+                            </li>
                         </a>
                     </li>
                     <li class="nav-item">
