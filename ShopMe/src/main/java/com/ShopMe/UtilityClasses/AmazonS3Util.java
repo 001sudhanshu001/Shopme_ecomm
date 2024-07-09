@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 @Slf4j
 public class AmazonS3Util {
@@ -42,7 +41,7 @@ public class AmazonS3Util {
         S3Client client = S3Client.builder().build();
 
         PutObjectRequest request = PutObjectRequest.builder().bucket(BUCKET_NAME)
-                .key(folderName + "/" + fileName).acl("public-read").build();
+                .key(folderName + "/" + fileName).acl(ObjectCannedACL.PUBLIC_READ).build();
 
         try(inputStream) {
             int contentLength = inputStream.available();

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Configuration
+// @Configuration // No need as we moved to S3
 public class MvcConfig implements WebMvcConfigurer {
 
    @Override

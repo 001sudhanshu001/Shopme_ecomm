@@ -5,10 +5,10 @@ import com.ShopMe.Entity.CategoryPageInfo;
 import com.ShopMe.ExceptionHandler.CategoryNotFoundException;
 import com.ShopMe.Exporter.Category.CategoryCsvExporter;
 import com.ShopMe.Service.Impl.CategoryService;
+import com.ShopMe.UtilityClasses.AmazonS3Util;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import io.github.classgraph.Resource;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -90,13 +91,19 @@ public class CategoryController {
             throws IOException {
 
         if(!multipartFile.isEmpty()){
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
             category.setImage(fileName);
 
             Category savedCategory = this.categoryService.save(category);
-            String uploadDir = "../category-images/" + savedCategory.getId();
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+//            String uploadDir = "../category-images/" + savedCategory.getId();
+//            FileUploadUtil.cleanDir(uploadDir);
+//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+            String uploadDir = "category-images/" + savedCategory.getId();
+            AmazonS3Util.removeFolder(uploadDir);
+            AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
         }else {
             this.categoryService.save(category);
         }
@@ -142,8 +149,11 @@ public class CategoryController {
                                  RedirectAttributes attributes){
         try{
             categoryService.delete(id);
-            String categoryDir = "../category-images/" + id; // deleting the photo of the categoty
-            FileUploadUtil.removeDir(categoryDir);
+//            String categoryDir = "../category-images/" + id;
+//            FileUploadUtil.removeDir(categoryDir);
+
+            String categoryDir = "category-images/" + id;
+            AmazonS3Util.removeFolder(categoryDir);
 
             attributes.addFlashAttribute("message", "The category having ID " +id + " has been deleted successfully");
         }catch (CategoryNotFoundException ex){

@@ -22,7 +22,7 @@ import java.io.IOException;
 public class AccountController {
     private final UserService userService;
 
-    @GetMapping("/account") // module 7, video 8 @ 7:00
+    @GetMapping("/account")
     public String viewDetails(@AuthenticationPrincipal ShopmeUserDetails loggedUser, Model model){
         String email = loggedUser.getUsername();
         User user = userService.getByEmail(email);
@@ -32,22 +32,19 @@ public class AccountController {
         return "users/account_form";
     }
 
-    @PostMapping("/account/update") //@RequestParam is used to extract data from query
+    @PostMapping("/account/update")
     public String saveDetails(User user, RedirectAttributes redirectAttributes,
                            @AuthenticationPrincipal ShopmeUserDetails loggedUser,
                            @RequestParam("image") MultipartFile multipartFile) throws IOException {
         System.out.println("4");
 
-        // ham sabhi user ki id ke naam se ek folder create krege(user-photos) mai
-        if(!multipartFile.isEmpty()){ // checking if file is uploaded or not
+
+        if(!multipartFile.isEmpty()){
 
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
-            user.setPhotos(fileName); // DB mai image name hoga aur Photo System mai save hoge
+            user.setPhotos(fileName);
             User savedUser = this.userService.updateAccount(user);
-
-            //   String uploadDir = "user-photos";
-            // pehle is naam se ek foldar banaya fir uske andar id's se subfolder
 
             String uploadDir = "user-photos/" +savedUser.getId();
 
@@ -68,7 +65,7 @@ public class AccountController {
 
             loggedUser.setFirstName(user.getFirstName());
             loggedUser.setlastName(user.getLastName());
-            // to show success message
+
             redirectAttributes.addFlashAttribute("message","Your account details have been updated");
 
             return "redirect:/account";

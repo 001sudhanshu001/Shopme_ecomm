@@ -5,6 +5,7 @@ import com.ShopMe.Entity.Currency;
 import com.ShopMe.Entity.settings.GeneralSettingBag;
 import com.ShopMe.Entity.settings.Setting;
 import com.ShopMe.Service.Impl.SettingService;
+import com.ShopMe.UtilityClasses.AmazonS3Util;
 import com.ShopMe.UtilityClasses.Constants;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
@@ -68,9 +69,14 @@ public class SettingController {
             String value = "/site-logo/" + fileName;
             settingBag.updateSiteLogo(value);
 
-            String uploadDir = "../site-logo";
-            FileUploadUtil.cleanDir(uploadDir);
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+//            String uploadDir = "../site-logo";
+//            FileUploadUtil.cleanDir(uploadDir);
+//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+            String uploadDir = "site-logo";
+            AmazonS3Util.removeFolder(uploadDir);
+            AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
+
         }
     }
 
@@ -80,7 +86,7 @@ public class SettingController {
 
         if(findByIdResult.isPresent()){
             Currency currency = findByIdResult.get();
-            System.out.println("Currency" + currency);
+           // System.out.println("Currency" + currency);
             String symbol = currency.getSymbol();
             System.out.println(symbol);
             settingBag.updateCurrencySymbol(symbol);
@@ -90,12 +96,11 @@ public class SettingController {
     private void updateSettingValuesFromForm(HttpServletRequest request, List<Setting> listSettings){
         for(Setting setting : listSettings){
             String value = request.getParameter(setting.getKey());
-            System.out.println("Printing Values : " + value);
+          //  System.out.println("Printing Values : " + value);
             if(value != null){
                 setting.setValue(value);
             }
         }
-        System.out.println(listSettings);
         settingService.saveAll(listSettings);
     }
 

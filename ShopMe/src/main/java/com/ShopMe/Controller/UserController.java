@@ -8,6 +8,7 @@ import com.ShopMe.Exporter.User.UserExcelExporter;
 import com.ShopMe.Exporter.User.UserPdfExporter;
 import com.ShopMe.Service.Impl.UserServiceImpl;
 import com.ShopMe.Service.UserService;
+import com.ShopMe.UtilityClasses.AmazonS3Util;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -41,8 +42,8 @@ public class UserController {
     @GetMapping("/users")
     public String getAllUsers(Model model) { // by default sorting will be asc based on firstName
 
-        return this.listByPage(1, model, "firstName", "asc", null); // firstName ki spelling same honi chaiye jo user entity mai hai
-    }                                                                                   // starting mai koi searching nahi ahi
+        return this.listByPage(1, model, "firstName", "asc", null);
+    }
             //--------------- paging ----------------
     @GetMapping("/users/page/{pageNumber}") // @Param is used to get value from query
     public String listByPage(@PathVariable(name = "pageNumber") int pageNumber, Model model,
@@ -54,7 +55,6 @@ public class UserController {
 
         long startCount = (long) (pageNumber - 1) * UserServiceImpl.USER_PER_PAGE + 1;
         long endCount = startCount + UserServiceImpl.USER_PER_PAGE - 1;
-        System.out.println("In user controller" + startCount);
 
         if(endCount > page.getTotalElements()){
             endCount = page.getTotalElements();
@@ -92,11 +92,9 @@ public class UserController {
         return "users/user_form";
     }
 
-    // new user or update user ke liye form handler yahi hai
     @PostMapping("/users/save") //@RequestParam is used to extract data from query
     public String saveUser(User user, RedirectAttributes redirectAttributes, // 'user' will come from Form
                            @RequestParam("image") MultipartFile multipartFile) throws IOException {
-        System.out.println("4");
 
         // ham sabhi user ki id ke naam se ek folder create krege(user-photos) mai
         if(!multipartFile.isEmpty()){ // checking if file is uploaded or not
@@ -106,16 +104,15 @@ public class UserController {
             user.setPhotos(fileName); // DB mai image name hoga aur Photo System mai save hoge
             User savedUser = this.userService.save(user);
 
-            //   String uploadDir = "user-photos";
-            // pehle is naam se ek foldar banaya fir uske andar id's se subfolder
-
 //            String uploadDir = "/user-photos/" + savedUser.getId();
-            String uploadDir = "user-photos/" +savedUser.getId();
-//            String uploadDir = "/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/src/main/resources/static/user-photos/" + savedUser.getId();
+            String uploadDir = "user-photos/" + savedUser.getId();
 
             // cleaning dir before uploading a new one
-            FileUploadUtil.cleanDir(uploadDir);
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile); // this is Custom class
+//            FileUploadUtil.cleanDir(uploadDir);
+//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile); // this is Custom class
+
+            AmazonS3Util.removeFolder(uploadDir);
+            AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 
         }else {
             // saving only remaining if file is empty
@@ -123,8 +120,6 @@ public class UserController {
                 user.setPhotos(null);
             }
             this.userService.save(user);
-            // to show success message
-
         }
 
         redirectAttributes.addFlashAttribute("message","The user has been saved successfully.");
@@ -168,6 +163,9 @@ public class UserController {
             // if we want to delete user photo also
 //            String userDir = "../user-photos/" + id;
 //            FileUploadUtil.removeDir(userDir);
+
+            String userDir = "user-photos/" + id;
+            AmazonS3Util.removeFolder(userDir);
             redirectAttributes.addFlashAttribute("message","User with Id " + id +  " has been deleted successfully");
 
 
