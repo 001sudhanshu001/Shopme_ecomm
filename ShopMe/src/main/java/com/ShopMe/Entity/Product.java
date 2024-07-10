@@ -2,8 +2,8 @@ package com.ShopMe.Entity;
 
 import com.ShopMe.UtilityClasses.Constants;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.util.NumberUtils;
 
 import javax.persistence.*;
 import java.util.*;
@@ -11,6 +11,7 @@ import java.util.*;
 @Entity
 @Setter @Getter
 @Table(name = "products")
+@NoArgsConstructor
 public class Product {
 
     @Id
@@ -61,6 +62,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductDetails> details = new ArrayList<>();
+
+    private int reviewCount;
+    private float averageRating;
+
 
     public void addDetails(String name, String value){
         this.details.add(new ProductDetails(name, value, this));
@@ -121,5 +126,9 @@ public class Product {
             return price * ((100 - discountPercent)/100);
         }
         return this.price;
+    }
+
+    public Product(Integer id) {
+        this.id = id;
     }
 }

@@ -50,16 +50,10 @@ public class CategoryService {
         }
 
         List<Category> rootCategories = pageCategories.getContent();
-        //***************************************
-        System.out.println("In Service" + rootCategories);
 
         pageInfo.setTotalElements(pageCategories.getTotalElements());
         pageInfo.setTotalPage(pageCategories.getTotalPages());
 
-
-        //********************************************
-        System.out.println("In Category Service Total pages : " + pageCategories.getTotalPages());
-        System.out.println("*********** Page category total elements" + pageCategories.getTotalElements());
         if(keyword != null && !keyword.isEmpty()){
             List<Category> searchResult = pageCategories.getContent();
             for(Category category : searchResult){
