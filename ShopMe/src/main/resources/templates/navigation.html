@@ -77,7 +77,13 @@
                         </li>
                     </th:block>
 
-<!--                    <th:block sec:authorize="hasAnyAuthority('Admin','salesperson')">-->
+                    <th:block sec:authorize="hasAnyAuthority('Admin','Salesperson','Shipper', 'Editor')">
+                        <li class="nav-item">
+                            <a th:href="@{/reviews}" class="nav-link">Review</a>
+                        </li>
+                    </th:block>
+
+                    <!--                    <th:block sec:authorize="hasAnyAuthority('Admin','salesperson')">-->
 <!--                        <li class="nav-item">-->
 <!--                            <a th:href="@{/report}" class="nav-link">Sales Report</a>-->
 <!--                        </li>-->

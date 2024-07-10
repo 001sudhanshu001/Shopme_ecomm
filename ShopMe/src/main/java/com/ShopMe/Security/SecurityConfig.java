@@ -43,13 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        System.out.println("Dao Auth configure");
         auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("Url Secured");
          http
                  .authorizeRequests()
                  .antMatchers("/states/list_by_country/**").hasAnyAuthority("Admin", "Salesperson")
@@ -66,6 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  .antMatchers("/orders", "/orders/", "/orders/page/**", "/orders/detail/**").hasAnyAuthority("Admin", "Salesperson", "Shipper")
                  .antMatchers("/customers/**", "/orders/**", "/get_shipping_cost").hasAnyAuthority("Admin", "Salesperson")
                  .antMatchers("/orders_shipper/update/**").hasAuthority("Shipper")
+                 .antMatchers("/reviews/**").hasAnyAuthority("Admin", "Assistant")
                  .anyRequest().authenticated()
                  .and()
                      .formLogin()

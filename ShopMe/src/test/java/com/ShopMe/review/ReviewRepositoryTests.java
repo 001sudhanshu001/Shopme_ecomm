@@ -27,7 +27,7 @@ public class ReviewRepositoryTests {
     @Test
     public void testCreateReview() {
 
-        Integer productId = 2;
+        Integer productId = 1;
         Product product = new Product(productId);
 
         Integer customerId = 6;
@@ -67,7 +67,7 @@ public class ReviewRepositoryTests {
 
     @Test
     public void testUpdateReviewById() {
-        Integer id = 1;
+        Integer id = 4;
         Review review = repo.findById(id).get();
 
         String headline = "An awesome phone at an awesome price";

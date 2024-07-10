@@ -36,6 +36,8 @@ public class Review {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    private int votes;
+
     @Override
     public int hashCode() {
         final int prime = 31;
