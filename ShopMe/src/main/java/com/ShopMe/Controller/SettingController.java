@@ -86,7 +86,6 @@ public class SettingController {
 
         if(findByIdResult.isPresent()){
             Currency currency = findByIdResult.get();
-           // System.out.println("Currency" + currency);
             String symbol = currency.getSymbol();
             System.out.println(symbol);
             settingBag.updateCurrencySymbol(symbol);
@@ -96,7 +95,6 @@ public class SettingController {
     private void updateSettingValuesFromForm(HttpServletRequest request, List<Setting> listSettings){
         for(Setting setting : listSettings){
             String value = request.getParameter(setting.getKey());
-          //  System.out.println("Printing Values : " + value);
             if(value != null){
                 setting.setValue(value);
             }

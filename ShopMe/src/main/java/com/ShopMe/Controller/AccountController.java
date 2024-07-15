@@ -3,6 +3,7 @@ package com.ShopMe.Controller;
 import com.ShopMe.Entity.User;
 import com.ShopMe.Security.ShopmeUserDetails;
 import com.ShopMe.Service.UserService;
+import com.ShopMe.UtilityClasses.AmazonS3Util;
 import com.ShopMe.UtilityClasses.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,8 +37,6 @@ public class AccountController {
     public String saveDetails(User user, RedirectAttributes redirectAttributes,
                            @AuthenticationPrincipal ShopmeUserDetails loggedUser,
                            @RequestParam("image") MultipartFile multipartFile) throws IOException {
-        System.out.println("4");
-
 
         if(!multipartFile.isEmpty()){
 
@@ -49,8 +48,11 @@ public class AccountController {
             String uploadDir = "user-photos/" +savedUser.getId();
 
             // cleaning dir before uploading a new one
-            FileUploadUtil.cleanDir(uploadDir);
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile); // this is Custom class
+//            FileUploadUtil.cleanDir(uploadDir);
+//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile); // this is Custom class
+
+            AmazonS3Util.removeFolder(uploadDir);
+            AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 
             redirectAttributes.addFlashAttribute("message","Your account details have been updated");
 

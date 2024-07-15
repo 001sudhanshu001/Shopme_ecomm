@@ -26,8 +26,7 @@ public class OrderService {
     private final CountryRepo countryRepo;
 
     public Page<Order> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
-        Sort sort = null;
-        System.out.println("listBypage called");
+        Sort sort;
 
         if ("destination".equals(sortField)) {
             sort = Sort.by("country").and(Sort.by("state")).and(Sort.by("city"));

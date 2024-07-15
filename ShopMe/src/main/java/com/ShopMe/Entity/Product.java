@@ -10,24 +10,34 @@ import java.util.*;
 
 @Entity
 @Setter @Getter
-@Table(name = "products")
+@Table(name = "products",
+        indexes = {
+        @Index(name = "product_name_index", columnList = "name"),
+        @Index(name = "product_alias_index", columnList = "alias")
+        }
+    )
 @NoArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(unique = true, length = 256, nullable = false)
     private String name;
+
     @Column(unique = true, length = 256, nullable = false)
     private String alias;
+
     @Column(length = 2000, nullable = false, name = "short_description")
     private String shortDescription;
+
     @Column(length = 4000, nullable = false,  name = "full_description")
     private String fullDescription;
 
     @Column(name = "created_time")
     private Date createdTime;
+
     private Date updatedTime;
 
     private boolean enabled;
@@ -99,11 +109,9 @@ public class Product {
     }
 
     public boolean containsImageName(String imageName) {
-        Iterator<ProductImage> iterator = images.iterator();
 
-        while (iterator.hasNext()){
-            ProductImage img = iterator.next();
-            if(img.getName().equals(imageName)){
+        for (ProductImage img : images) {
+            if (img.getName().equals(imageName)) {
                 return true;
             }
         }

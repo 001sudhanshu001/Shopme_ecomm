@@ -44,7 +44,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     @Query("Update Product p SET p.averageRating = COALESCE((SELECT AVG(r.rating) FROM Review r WHERE r.product.id = ?1), 0),"
             + " p.reviewCount = (SELECT COUNT(r.id) FROM Review r WHERE r.product.id =?1) "
             + "WHERE p.id = ?1")
-    @Modifying
+    @Modifying    // COALESCE is used to return first non-null value
     void updateReviewCountAndAverageRating(Integer productId);
 
 }

@@ -30,14 +30,14 @@ public class ReviewRepositoryTests {
         Integer productId = 1;
         Product product = new Product(productId);
 
-        Integer customerId = 6;
+        Integer customerId = 13;
         Customer customer = new Customer(customerId);
 
         Review review = new Review();
-        review.setHeadline("Perfect for my needs. Loving it!");
-        review.setComment("Nice to have: wireless remote, iOS app, GPS...");
+        review.setHeadline("Nice! But can be better");
+        review.setComment("It lacks some necessary featues");
         review.setReviewTime(new Date());
-        review.setRating(5);
+        review.setRating(3);
         review.setCustomer(customer);
         review.setProduct(product);
 

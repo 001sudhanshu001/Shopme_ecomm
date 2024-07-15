@@ -63,7 +63,10 @@ public class ProductService {
 
         product.setUpdatedTime(new Date());
 
-        return repo.save(product);
+        Product savedProduct = repo.save(product);
+        repo.updateReviewCountAndAverageRating(savedProduct.getId());
+
+        return savedProduct;
     }
 
     public void saveProductPrice(Product productInForm) { // This is used in the case when Salesperson is allowed to change only pricing

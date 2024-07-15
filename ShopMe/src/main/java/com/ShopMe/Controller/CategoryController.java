@@ -48,8 +48,6 @@ public class CategoryController {
 
         CategoryPageInfo pageInfo = new CategoryPageInfo();
         List<Category> categories = categoryService.listByPage(pageInfo, pageNum,sortField, sortDir, keyword);
-        System.out.println("In controller " + categories);
-
         long startCount = (long) (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
         long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
 

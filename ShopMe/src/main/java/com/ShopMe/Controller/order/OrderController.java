@@ -65,8 +65,6 @@ public class OrderController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("keyword", keyword);
-        System.out.println("----------------------------------");
-        page.getContent().forEach(o-> System.out.println(o.getCustomer().getFirstName()));
 
         // If the user have only Shipper Role then only
         if(!loggedUser.hasRole("Admin") && ! loggedUser.hasRole("Salesperson") &&loggedUser.hasRole("Shipper")) {
@@ -138,8 +136,6 @@ public class OrderController {
 
     @PostMapping("/order/save")
     public String saveOrder(Order order, HttpServletRequest request, RedirectAttributes ra) {
-        System.out.println("Country : " + order.getCountry());
-        System.out.println("Total : " + order.getTotal());
         String countryName = request.getParameter("countryName");
 
         order.setCountry(countryName);

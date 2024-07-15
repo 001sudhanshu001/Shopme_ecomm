@@ -11,22 +11,32 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "users",
+        indexes = {
+            @Index(name = "user_email_index", columnList = "email")
+        }
+    )
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(length = 128, nullable = false, unique = true)
     private String email;
+
     @Column(length = 64, nullable = false)
     private String password;
+
     @Column(name = "first_name", length = 45, nullable = false)
     private String firstName;
+
     @Column(name = "last_name", length = 45, nullable = false)
     private String lastName;
+
     @Column(length = 64)
     private String photos;
+
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -58,9 +68,7 @@ public class User {
 //        return "/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/6/Alfred.png";
 
        // return "/user-photos/" + this.id + "/" +this.photos; ***
-      //  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++" + Constants.S3_BASE_URI);
         return Constants.S3_BASE_URI + "/user-photos/" + this.id + "/" + this.photos;
-     //   return "";
     }
     @Transient
     public String getFullName() {

@@ -49,8 +49,6 @@ public class SettingRepoTest {
     @Test
     public void testListSettingCategory() {
         List<Setting> settings = repo.findByCategory(SettingCategory.GENERAL);
-
-        settings.forEach(setting -> System.out.println(setting));
     }
 
 }

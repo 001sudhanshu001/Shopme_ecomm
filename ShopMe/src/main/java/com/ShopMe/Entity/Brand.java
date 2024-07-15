@@ -11,7 +11,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "brands")
+@Table(name = "brands",
+        indexes = {
+            @Index(name = "brand_name_index", columnList = "name")
+        }
+    )
 @Getter
 @Setter
 @ToString
@@ -27,7 +31,7 @@ public class Brand {
     @Column(nullable = false, length = 128)
     private String logo;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "brands_categories",
             joinColumns = @JoinColumn(name = "brand_id"),

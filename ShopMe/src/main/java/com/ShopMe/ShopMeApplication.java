@@ -15,8 +15,7 @@ import org.springframework.context.annotation.Bean;
 @RequiredArgsConstructor
 public class ShopMeApplication implements CommandLineRunner {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
 	private final RoleRepository roleRepository;
 	private final BrandRepo brandRepo;

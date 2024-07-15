@@ -327,7 +327,6 @@ public class ProductController {
 
     @GetMapping("/products/details/{id}")
     public String viewProductDetails(@PathVariable("id") Integer id, Model model,  RedirectAttributes redirectAttributes){
-        System.out.println("DATAILS CALLED");
         try{
             Product product = productService.get(id);
             model.addAttribute("product", product);
