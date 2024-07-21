@@ -36,9 +36,9 @@ public class Category {
 
     @OneToOne // ek category ka ek hi parent
     @JoinColumn(name = "parent_id")
-    private Category parent; // beacuse it will be hierarchical relation
+    private Category parent; // because it will be hierarchical relation
 
-    @OneToMany(mappedBy = "parent") // ek category ke kai child
+    @OneToMany(mappedBy = "parent")
     @OrderBy("name asc")
     private Set<Category> children = new HashSet<>();
 

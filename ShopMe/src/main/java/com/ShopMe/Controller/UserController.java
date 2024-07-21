@@ -31,20 +31,18 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-
 public class UserController {
     private final UserService userService;
 
     private final ModelMapper modelMapper;
 
 
-    //----------- this url will always show first page -----------
     @GetMapping("/users")
-    public String getAllUsers(Model model) { // by default sorting will be asc based on firstName
+    public String getAllUsers(Model model) {
 
         return this.listByPage(1, model, "firstName", "asc", null);
     }
-            //--------------- paging ----------------
+
     @GetMapping("/users/page/{pageNumber}") // @Param is used to get value from query
     public String listByPage(@PathVariable(name = "pageNumber") int pageNumber, Model model,
                                 @Param("sortField") String sortField, @Param("sortDir") String sortDir,
@@ -77,14 +75,13 @@ public class UserController {
 
     }
 
-    // -------- to show a form to create new user -----------
     @GetMapping("/users/new")
     public String newUser(Model model){
 
         List<Role> listRoles = this.userService.listRoles();
 
         User user = new User();
-        user.setEnabled(true); // by default user is enabled
+        user.setEnabled(true);
         model.addAttribute("user",user);
         model.addAttribute("listRoles",listRoles);
         model.addAttribute("pageTitle","Create New User");
@@ -92,16 +89,15 @@ public class UserController {
         return "users/user_form";
     }
 
-    @PostMapping("/users/save") //@RequestParam is used to extract data from query
-    public String saveUser(User user, RedirectAttributes redirectAttributes, // 'user' will come from Form
+    @PostMapping("/users/save")
+    public String saveUser(User user, RedirectAttributes redirectAttributes,
                            @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
-        // ham sabhi user ki id ke naam se ek folder create krege(user-photos) mai
-        if(!multipartFile.isEmpty()){ // checking if file is uploaded or not
+        if(!multipartFile.isEmpty()){
 
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
-            user.setPhotos(fileName); // DB mai image name hoga aur Photo System mai save hoge
+            user.setPhotos(fileName);
             User savedUser = this.userService.save(user);
 
 //            String uploadDir = "/user-photos/" + savedUser.getId();
@@ -109,13 +105,12 @@ public class UserController {
 
             // cleaning dir before uploading a new one
 //            FileUploadUtil.cleanDir(uploadDir);
-//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile); // this is Custom class
+//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
             AmazonS3Util.removeFolder(uploadDir);
             AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 
         }else {
-            // saving only remaining if file is empty
             if(user.getPhotos().isEmpty()){
                 user.setPhotos(null);
             }
@@ -126,13 +121,12 @@ public class UserController {
         return getRedirectURLtoAffectedUser(user);
 
     }
-    private String getRedirectURLtoAffectedUser(User user){ // to show only affected user after updating
+    private String getRedirectURLtoAffectedUser(User user){
         String firstPartOfEmail = user.getEmail().split("@")[0];
         return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
     }
 
 
-    //-------------------- edit(Update) the user ------------------
     @GetMapping("/users/edit/{id}")
     public String editUser(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
         Optional<User> optionalUser = this.userService.get(id);
@@ -140,10 +134,10 @@ public class UserController {
             redirectAttributes.addFlashAttribute(
                     "error_message", "User Not Found With Id " + id
             );
-            return "redirect:/users"; // redirect to the users page with message error
+            return "redirect:/users";
         }
 
-        User user = optionalUser.get();// humne DB main pehle se pade user ko le kr page pe bhej diya jisse update kiya jaa sktha hai
+        User user = optionalUser.get();
 
         List<Role> listRoles = this.userService.listRoles();
         model.addAttribute("user",user);
@@ -154,7 +148,6 @@ public class UserController {
     }
 
 
-    // ------------------ delete user -----------------
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
         try {
@@ -166,23 +159,22 @@ public class UserController {
 
             String userDir = "user-photos/" + id;
             AmazonS3Util.removeFolder(userDir);
-            redirectAttributes.addFlashAttribute("message","User with Id " + id +  " has been deleted successfully");
+            redirectAttributes.addFlashAttribute("message",
+                    "User with Id " + id +  " has been deleted successfully");
 
 
-        }catch (UserNotFoundException e){ // message mai vo message ayega jo humne UserService class se bheja hai
+        }catch (UserNotFoundException e){
             redirectAttributes.addFlashAttribute("error_message",e.getMessage());
         }
-        return "redirect:/users"; // redirect to the users page with proper message
+        return "redirect:/users";
 
     }
-
-
-    // ----------- handling enableing and disabling the user
 
    // th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
     @GetMapping("/users/{id}/enabled/{status}")
     public String updateUserEnabledStatus(@PathVariable("id") Integer id,
-                                          @PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes){
+                                          @PathVariable("status") boolean enabled,
+                                          RedirectAttributes redirectAttributes){
 
         this.userService.updateUSerEnabledStatus(id, enabled);
 
@@ -194,7 +186,6 @@ public class UserController {
         return "redirect:/users";
     }
 
-    // ----------- export to csv -------------
 
     @GetMapping("/users/export/csv")
     public void exportTOCSV(HttpServletResponse response) throws IOException {
@@ -204,7 +195,6 @@ public class UserController {
         exporter.export(allUser, response);
     }
 
-    // ----------- export ot Excel -------------
     @GetMapping("/users/export/excel")
     public void exportTOExcel(HttpServletResponse response) throws IOException {
         List<User> allUser = this.userService.getAllUser();
@@ -213,7 +203,6 @@ public class UserController {
         exporter.export(allUser, response);
     }
 
-    // ----------- export ot PDF -------------
     @GetMapping("/users/export/pdf")
     public void exportToPdf(HttpServletResponse response) throws IOException {
         List<User> allUser = this.userService.getAllUser();

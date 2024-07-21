@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -67,7 +68,7 @@ public class BrandService {
         if(isCreatingNew){
             if (brandByName != null) return "Duplicated";
         }else { // while updating if user try to enter duplicate name
-            if(brandByName != null && brandByName.getId() != id){
+            if(brandByName != null && !Objects.equals(brandByName.getId(), id)){
                 return "Duplicated";
             }
         }

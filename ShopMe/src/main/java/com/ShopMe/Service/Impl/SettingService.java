@@ -32,7 +32,6 @@ public class SettingService {
     }
 
     public void saveAll(Iterable<Setting> settings){
-        System.out.println("In saveAll of Service, the settings are : " + settings);
         settingRepo.saveAll(settings);
     }
 

@@ -54,7 +54,8 @@ public class AccountController {
             AmazonS3Util.removeFolder(uploadDir);
             AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 
-            redirectAttributes.addFlashAttribute("message","Your account details have been updated");
+            redirectAttributes.addFlashAttribute("message",
+                    "Your account details have been updated");
 
             return "redirect:/account";
 
@@ -68,7 +69,8 @@ public class AccountController {
             loggedUser.setFirstName(user.getFirstName());
             loggedUser.setlastName(user.getLastName());
 
-            redirectAttributes.addFlashAttribute("message","Your account details have been updated");
+            redirectAttributes.addFlashAttribute("message",
+                    "Your account details have been updated");
 
             return "redirect:/account";
         }

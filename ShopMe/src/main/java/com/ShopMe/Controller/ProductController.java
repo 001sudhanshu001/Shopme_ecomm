@@ -118,9 +118,10 @@ public class ProductController {
                               ) throws IOException, ProductNotFoundException { // fileImage as we used in product_images.html
 
         if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
-            if (loggedUser.hasRole("Salesperson")) { // Just updating Price by Salesperson
+            if (loggedUser.hasRole("Salesperson")) {
                 productService.saveProductPrice(product);
-                redirectAttributes.addFlashAttribute("message", "The Product has been saved successfully");
+                redirectAttributes.addFlashAttribute("message",
+                        "The Product has been saved successfully");
 
                 return "redirect:/products";
             }
@@ -142,7 +143,8 @@ public class ProductController {
         saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
         deleteExtraImagesThatWereRemovedOnForm(product);
 
-        redirectAttributes.addFlashAttribute("message","The Product has been saved successfully");
+        redirectAttributes.addFlashAttribute("message",
+                "The Product has been saved successfully");
         return "redirect:/products";
     }
 
@@ -192,7 +194,8 @@ public class ProductController {
         product.setImages(images);
     }
 
-    private void setProductDetails(String[] detailIDs, String[] detailNames, String[] detailValues, Product product) throws ProductNotFoundException {
+    private void setProductDetails(String[] detailIDs, String[] detailNames,
+                                   String[] detailValues, Product product)  throws ProductNotFoundException {
         if(detailNames == null || detailNames.length == 0) return;
 
         for(int count = 0; count < detailNames.length; count++){
@@ -247,7 +250,8 @@ public class ProductController {
 
     private void setMainImage(MultipartFile mainImageMultipart, Product product) {
         if(!mainImageMultipart.isEmpty()) {
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(mainImageMultipart.getOriginalFilename()));
+            String fileName = StringUtils
+                    .cleanPath(Objects.requireNonNull(mainImageMultipart.getOriginalFilename()));
             product.setMainImage(fileName);
         }
     }
@@ -264,7 +268,8 @@ public class ProductController {
 
     @GetMapping("/products/{id}/enabled/{status}")
     public String updateCategoryEnabledStatus(@PathVariable("id") Integer id,
-                                              @PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
+                                              @PathVariable("status") boolean enabled,
+                                              RedirectAttributes redirectAttributes) {
 
         productService.updateProductEnabledStatus(id, enabled);
         String updatedStatus = enabled ? "Enabled" : "Disabled";
@@ -326,7 +331,8 @@ public class ProductController {
     }
 
     @GetMapping("/products/details/{id}")
-    public String viewProductDetails(@PathVariable("id") Integer id, Model model,  RedirectAttributes redirectAttributes){
+    public String viewProductDetails(@PathVariable("id") Integer id, Model model,
+                                     RedirectAttributes redirectAttributes){
         try{
             Product product = productService.get(id);
             model.addAttribute("product", product);

@@ -37,7 +37,7 @@ public class ShippingRateService {
         Sort sort = Sort.by(sortField);
 
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-        Pageable pageable = PageRequest.of(pageNumber - 1, RATES_PER_PAGE, sort);// page number starts at 0
+        Pageable pageable = PageRequest.of(pageNumber - 1, RATES_PER_PAGE, sort);
 
         if(keyword != null){
             return this.shipRepo.findAll(keyword, pageable);
@@ -100,6 +100,7 @@ public class ShippingRateService {
                     + "destination. You have to enter shipping cost manually.");
         }
 
+        // TODO
         Product product = productRepo.findById(productId).get();
 
         float dimWeight = (product.getLength() * product.getWidth() * product.getHeight()) / DIM_DIVISOR;

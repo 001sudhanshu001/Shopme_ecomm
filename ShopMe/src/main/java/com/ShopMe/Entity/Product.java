@@ -87,7 +87,7 @@ public class Product {
 
     @Transient
     public void addExtraImage(String imageName){
-        this.images.add(new ProductImage(imageName, this)); // image added to this Product only
+        this.images.add(new ProductImage(imageName, this));
     }
 
     @Transient

@@ -3,7 +3,7 @@ package com.ShopMe.ExceptionHandler;
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice// we can also extends ResponseEntityExceptionHandler class and then override handelMethodArgumentNotValidException
+@RestControllerAdvice// we can also extend ResponseEntityExceptionHandler class and then override handelMethodArgumentNotValidException
 public class GlobelExceptionHandler  {
 
     //if ResourceNotFoundException ayega toh ye message Chal jayega aur exception handel ho jayega with proper Message

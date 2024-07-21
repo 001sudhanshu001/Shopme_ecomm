@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +71,7 @@ public class ProductService {
     }
 
     public void saveProductPrice(Product productInForm) { // This is used in the case when Salesperson is allowed to change only pricing
+        // TODO ->
         Product productInDB = repo.findById(productInForm.getId()).get();
         productInDB.setCost(productInForm.getCost());
         productInDB.setPrice(productInForm.getPrice());
@@ -83,10 +85,10 @@ public class ProductService {
 
         Product productByName = repo.findByName(name);
 
-        if(isCreatingNew){ // new Product is creating and this Product Name already Exists
+        if(isCreatingNew){
             if(productByName != null) return "Duplicate";
         }else { // while updating
-            if(productByName != null && productByName.getId() != id){
+            if(productByName != null && !Objects.equals(productByName.getId(), id)){
                 return "Duplicate";
             }
         }

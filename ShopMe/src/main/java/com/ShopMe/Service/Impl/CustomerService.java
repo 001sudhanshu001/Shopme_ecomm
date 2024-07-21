@@ -48,7 +48,8 @@ public class CustomerService {
     }
 
     public Customer get(Integer id) throws CustomerNotFoundException {
-        return customerRepo.findById(id).orElseThrow(()-> new CustomerNotFoundException("Could not find any customers with ID " + id));
+        return customerRepo.findById(id)
+                .orElseThrow(()-> new CustomerNotFoundException("Could not find any customers with ID " + id));
     }
 
     public List<Country> listAllCountries() {

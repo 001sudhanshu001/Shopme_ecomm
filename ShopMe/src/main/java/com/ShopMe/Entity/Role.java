@@ -13,6 +13,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(length = 40, nullable = false, unique = true) // no two roles have the same name
     private String name;
 

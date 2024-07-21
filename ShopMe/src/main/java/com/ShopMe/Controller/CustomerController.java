@@ -25,7 +25,8 @@ public class CustomerController {
 
     @GetMapping("/customers")
     public String listFirstPage(Model model){
-        return listByPage(model, 1, "firstName", "asc", null);
+        return listByPage(model, 1,
+                "firstName", "asc", null);
     }
 
     @GetMapping("/customers/page/{pageNum}")
@@ -62,7 +63,8 @@ public class CustomerController {
 
     @GetMapping("/customers/{id}/enabled/{status}")
     public String updateCustomerEnabledStatus(@PathVariable("id") Integer id,
-                                              @PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
+                                              @PathVariable("status") boolean enabled,
+                                              RedirectAttributes redirectAttributes) {
 
         customerService.updateCustomerEnabledStatus(id,enabled);
         String status = enabled ? "enabled" : "disabled";
@@ -77,7 +79,8 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable Integer id, RedirectAttributes ra) {
         try {
             customerService.delete(id);
-            ra.addFlashAttribute("message", "The customer ID " + id + " has been deleted successfully.");
+            ra.addFlashAttribute("message",
+                    "The customer ID " + id + " has been deleted successfully.");
         } catch (CustomerNotFoundException ex) {
             ra.addFlashAttribute("error_message", ex.getMessage());
 
@@ -119,7 +122,8 @@ public class CustomerController {
     @PostMapping("/customers/save")
     public String saveCustomer(Customer customer, Model model, RedirectAttributes ra) {
         customerService.save(customer);
-        ra.addFlashAttribute("message", "The customer ID " + customer.getId() + " has been updated successfully.");
+        ra.addFlashAttribute("message",
+                "The customer ID " + customer.getId() + " has been updated successfully.");
 
         return "redirect:/customers";
     }

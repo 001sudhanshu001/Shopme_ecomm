@@ -28,7 +28,7 @@ import java.util.Optional;
 public class SettingController {
     private final SettingService settingService;
 
-    private final CurrencyRepo currencyRepo; // TO display list of currencies
+    private final CurrencyRepo currencyRepo;
 
     @GetMapping("/settings")
     public String listAll(Model model){
@@ -37,7 +37,7 @@ public class SettingController {
 
         model.addAttribute("listCurrency", listCurrency);
         model.addAttribute("pageTitle", "Settings - Shopme Admin");
-        for(Setting setting : listSettings){ // Instead of iterating in html page we did it here
+        for(Setting setting : listSettings){
             model.addAttribute(setting.getKey(), setting. getValue());
         }
 

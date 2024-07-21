@@ -98,21 +98,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isEmailUnique( Integer id,String email){
         User userByEmail = this.userRepository.findByEmail(email);
-        if (userByEmail == null) return true; // pehle se nahi hai
+        if (userByEmail == null) return true;
 
         boolean isCreatingNew = (id == null);
 
         if(isCreatingNew){
             if(userByEmail != null) return false;
         }else {
-            if (userByEmail.getId() != id){
-                return false;
-            }
+            return userByEmail.getId() == id;
         }
         return true; // agar empty hai toh means ki is email se koi user nahi hai, means unique hai
     }
 
-    // ------------- to update the user -------------------
     @Override
     public Optional<User> get(Integer id) {
 //        try {
@@ -124,7 +121,6 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findById(id);
     }
 
-    //---------------------- Delete User -------------------
     @Override
     public void deleteUser(Integer id) throws UserNotFoundException {
         Long countById = this.userRepository.countById(id);
@@ -136,20 +132,19 @@ public class UserServiceImpl implements UserService {
         this.userRepository.deleteById(id);
 
     }
-     //------------------ Update Enbaled status -----------------
+
     @Override
     public void updateUSerEnabledStatus(Integer id, boolean enabled) {
         this.userRepository.updateEnabledStatus(id, enabled);
     }
 
-    // ---------------------- Pagining ----------------------
     @Override
     public Page<User> listByPage(int pageNumber, String sortField, String sortDir, String keyword) {
 
         Sort sort = Sort.by(sortField);
 
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-        Pageable pageable = PageRequest.of(pageNumber - 1, USER_PER_PAGE, sort);// page number starts at 0
+        Pageable pageable = PageRequest.of(pageNumber - 1, USER_PER_PAGE, sort);
 
         if(keyword != null){
             return this.userRepository.findAll(keyword, pageable);

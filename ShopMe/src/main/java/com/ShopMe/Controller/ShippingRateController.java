@@ -26,7 +26,8 @@ public class ShippingRateController {
 
     @GetMapping("/shipping_rates")
     public String listFirstPage(Model model) {
-        return this.listByPage(1, model, "country", "asc", null);
+        return this.listByPage(1, model, "country",
+                "asc", null);
     }
 
     @GetMapping("/shipping_rates/page/{pageNum}")
@@ -78,7 +79,8 @@ public class ShippingRateController {
         try {
             service.save(rate);
 
-            ra.addFlashAttribute("message", "The shipping rate has been saved successfully.");
+            ra.addFlashAttribute("message",
+                    "The shipping rate has been saved successfully.");
         } catch (ShippingRateAlreadyExistsException ex) {
 
             ra.addFlashAttribute("message", ex.getMessage());
@@ -114,7 +116,8 @@ public class ShippingRateController {
         try {
             service.updateCODSupport(id, supported);
 
-            ra.addFlashAttribute("message", "COD support for shipping rate ID " + id + " has been updated.");
+            ra.addFlashAttribute("message",
+                    "COD support for shipping rate ID " + id + " has been updated.");
         } catch (ShippingRateNotFoundException ex) {
 
             ra.addFlashAttribute("message", ex.getMessage());
@@ -129,7 +132,8 @@ public class ShippingRateController {
         try {
             service.delete(id);
 
-            ra.addFlashAttribute("message", "The shipping rate ID " + id + " has been deleted.");
+            ra.addFlashAttribute("message",
+                    "The shipping rate ID " + id + " has been deleted.");
         } catch (ShippingRateNotFoundException ex) {
 
             ra.addFlashAttribute("message", ex.getMessage());

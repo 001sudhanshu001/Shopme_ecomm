@@ -79,8 +79,8 @@ public class BrandController {
     }
 
     @PostMapping("/brands/save")
-    public String saveBrand(Brand brand, @RequestParam("fileImage")MultipartFile multipartFile, RedirectAttributes ra)
-            throws IOException {
+    public String saveBrand(Brand brand, @RequestParam("fileImage")MultipartFile multipartFile,
+                            RedirectAttributes ra) throws IOException {
 
         if(!multipartFile.isEmpty()){
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
@@ -134,7 +134,8 @@ public class BrandController {
             String brandDir = "brand-logos/" + id;
             AmazonS3Util.removeFolder(brandDir);
 
-            redirectAttributes.addFlashAttribute("message","The Brand with Id " + id +  " has been deleted successfully");
+            redirectAttributes.addFlashAttribute("message",
+                    "The Brand with Id " + id +  " has been deleted successfully");
         }catch (BrandNotFoundException e){
             redirectAttributes.addFlashAttribute("error_message",e.getMessage());
         }

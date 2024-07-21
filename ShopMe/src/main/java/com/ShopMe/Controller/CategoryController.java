@@ -27,10 +27,9 @@ import java.util.Objects;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    // to get default first page
-    @GetMapping({"/categories", "/categories/page"}) //@Param is used to extract data from query in url
+    @GetMapping({"/categories", "/categories/page"})
     private String listFirstPage(Model model){
-        return listByPage(1,"name", "asc", null, model); // default there is no searching
+        return listByPage(1,"name", "asc", null, model);
 
     }
 
@@ -67,7 +66,7 @@ public class CategoryController {
 
         model.addAttribute("sortField",sortField);
         model.addAttribute("sortDir",sortDir);
-        model.addAttribute("reverseSortDir", reverseSortDir); // to toggle sorting order
+        model.addAttribute("reverseSortDir", reverseSortDir);
 
         return "categories/categories";
     }
@@ -130,7 +129,8 @@ public class CategoryController {
 
     @GetMapping("/categories/{id}/enabled/{status}")
     public String updateCategoryEnabledStatus(@PathVariable("id") Integer id,
-                                              @PathVariable("status") boolean enabled, RedirectAttributes attributes){
+                                              @PathVariable("status") boolean enabled,
+                                              RedirectAttributes attributes){
 
         this.categoryService.updateCategoryEnabledStatus(id, enabled);
         String stat = enabled ? "enabled" : "disabled";
@@ -153,7 +153,8 @@ public class CategoryController {
             String categoryDir = "category-images/" + id;
             AmazonS3Util.removeFolder(categoryDir);
 
-            attributes.addFlashAttribute("message", "The category having ID " +id + " has been deleted successfully");
+            attributes.addFlashAttribute("message",
+                    "The category having ID " +id + " has been deleted successfully");
         }catch (CategoryNotFoundException ex){
             attributes.addFlashAttribute("error_message", ex.getMessage());
         }

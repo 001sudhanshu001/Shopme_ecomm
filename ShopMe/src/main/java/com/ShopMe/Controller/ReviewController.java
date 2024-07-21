@@ -96,7 +96,8 @@ public class ReviewController {
     @PostMapping("/reviews/save")
     public String saveReview(Review reviewInForm, RedirectAttributes ra) {
         reviewService.save(reviewInForm);
-        ra.addFlashAttribute("messageSuccess", "The review ID " + reviewInForm.getId() + " has been updated successfully.");
+        ra.addFlashAttribute("messageSuccess",
+                "The review ID " + reviewInForm.getId() + " has been updated successfully.");
         return defaultRedirectURL;
     }
 
@@ -104,7 +105,8 @@ public class ReviewController {
     public String deleteReview(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             reviewService.delete(id);
-            ra.addFlashAttribute("messageSuccess", "The review ID " + id + " has been deleted.");
+            ra.addFlashAttribute("messageSuccess",
+                    "The review ID " + id + " has been deleted.");
         } catch (ReviewNotFoundException ex) {
             ra.addFlashAttribute("messageError", ex.getMessage());
         }

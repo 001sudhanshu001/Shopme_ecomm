@@ -25,7 +25,9 @@ public class BrandRestController {
     }
 
     @GetMapping("/brands/{id}/categories")
-    public List<CategoryDto> listCategoriesByBrand(@PathVariable("id") Integer brandId) throws BrandNotFoundRestException {
+    public List<CategoryDto> listCategoriesByBrand(@PathVariable("id") Integer brandId)
+            throws BrandNotFoundRestException {
+
         List<CategoryDto> listCategories = new ArrayList<>();
         try {
             Brand brand = brandService.get(brandId);
