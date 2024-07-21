@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        .nav-link {
+            color: #ffffff;
+            padding: 10px 15px;
+            text-decoration: none;
+        }
 
+        .nav-link:hover {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        .nav-link.active {
+            background-color: #007bff; /* Blue background for the active tab */
+            color: #ffffff;
+        }
+    </style>
+</head>
  <body>
 
     <div th:fragment="menu">
@@ -135,6 +153,26 @@
             </div>
         </nav>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            // Handle click event for navigation links
+            $('.nav-link').on('click', function() {
+                $('.nav-link').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            // Highlight the current page link on load
+            const path = window.location.pathname;
+            $('.nav-link').each(function() {
+                const href = $(this).attr('href');
+                if (path === href || (path === '/' && href === '/')) {
+                    $(this).addClass('active');
+                }
+            });
+        });
+    </script>
+
 
  </body>
 </html>

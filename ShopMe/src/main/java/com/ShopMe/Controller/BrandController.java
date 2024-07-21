@@ -29,11 +29,13 @@ import java.util.Objects;
 public class BrandController {
     private final BrandService brandService;
     private final CategoryService categoryService;
+
     @GetMapping("/brands")
     public String listFirstPage(Model model){
 
         return this.listByPage(1,model,"name", "asc",null);
     }
+
     @GetMapping("/brands/page/{pageNum}")
     public String listByPage(@PathVariable(name = "pageNum") int pageNUm, Model model,
                              @Param("sortField") String sortField, @Param("sortDir") String sortDir,

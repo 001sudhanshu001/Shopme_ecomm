@@ -130,51 +130,23 @@ public class CustomerController {
 //
 //    @GetMapping("/customers/export/csv")
 //    public void exportToCSV(HttpServletResponse response) throws IOException {
-//
-//        LOGGER.info("CustomerController | exportToCSV is called");
-//
 //        List<Customer> listCustomers = service.listAll();
-//
-//        LOGGER.info("CustomerController | exportToCSV | listCustomers.size() : " + listCustomers.size());
-//
 //        CustomerCsvExporter exporter = new CustomerCsvExporter();
-//
-//        LOGGER.info("CustomerController | exportToCSV | export is starting");
-//
+
 //        exporter.export(listCustomers, response);
-//
-//        LOGGER.info("CustomerController | exportToCSV | export completed");
 //    }
 //
 //    @GetMapping("/customers/export/excel")
 //    public void exportToExcel(HttpServletResponse response) throws IOException {
-//
-//        LOGGER.info("CustomerController | exportToExcel is called");
-//
 //        List<Customer> listCustomers = service.listAll();
-//
-//        LOGGER.info("CustomerController | exportToExcel | listCustomers.size() : " + listCustomers.size());
-//
 //        CustomerExcelExporter exporter = new CustomerExcelExporter();
-//
-//        LOGGER.info("CustomerController | exportToExcel | export is starting");
-//
 //        exporter.export(listCustomers, response);
-//
-//        LOGGER.info("CustomerController | exportToExcel | export completed");
 //    }
 //
 //    @GetMapping("/customers/export/pdf")
 //    public void exportToPDF(HttpServletResponse response) throws IOException {
-//
-//
 //        List<Customer> listCustomers = customerService.listAll();
-//
-//        LOGGER.info("UserController | exportToPDF | listCustomers.size() : " + listCustomers.size());
-//
 //        CustomerPdfExporter exporter = new CustomerPdfExporter();
-//
-//
 //        exporter.export(listCustomers, response);
 //
 //    }

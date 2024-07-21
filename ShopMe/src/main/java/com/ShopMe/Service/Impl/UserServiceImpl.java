@@ -162,7 +162,6 @@ public class UserServiceImpl implements UserService {
                 String resignedUrl =
                         generatePreSignedUrl("user-photos/" + user.getId() + "/" + user.getPhotos());
                 user.setPreSignedURL(resignedUrl);
-                user.setPassword(UUID.randomUUID().toString()); // TODO : This is temporary Solution, use DTO
             }
         }
 

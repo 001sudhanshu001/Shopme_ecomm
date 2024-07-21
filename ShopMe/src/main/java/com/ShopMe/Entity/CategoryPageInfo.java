@@ -9,5 +9,4 @@ public class CategoryPageInfo {
     private int totalPage;
     private long totalElements;
 
-
 }

@@ -49,7 +49,7 @@ public class AccountController {
 
             // cleaning dir before uploading a new one
 //            FileUploadUtil.cleanDir(uploadDir);
-//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile); // this is Custom class
+//            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
             AmazonS3Util.removeFolder(uploadDir);
             AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());

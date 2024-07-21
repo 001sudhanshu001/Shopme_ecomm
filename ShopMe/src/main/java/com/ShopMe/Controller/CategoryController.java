@@ -40,13 +40,14 @@ public class CategoryController {
                              @Param("keyword") String keyword,
                              Model model){
 
-
-        if(sortDir == null || sortDir.isEmpty()){ // default sorting
+        if(sortDir == null || sortDir.isEmpty()){
             sortDir  = "asc";
         }
 
         CategoryPageInfo pageInfo = new CategoryPageInfo();
-        List<Category> categories = categoryService.listByPage(pageInfo, pageNum,sortField, sortDir, keyword);
+        List<Category> categories = categoryService
+                .listByPage(pageInfo, pageNum,sortField, sortDir, keyword);
+
         long startCount = (long) (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
         long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
 
@@ -84,11 +85,12 @@ public class CategoryController {
 
     @PostMapping("/categories/save")
     public String saveCategory(Category category,
-                               @RequestParam("fileName")MultipartFile multipartFile, RedirectAttributes attributes)
-            throws IOException {
+                               @RequestParam("fileName")MultipartFile multipartFile,
+                               RedirectAttributes attributes) throws IOException {
 
         if(!multipartFile.isEmpty()){
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            String fileName = StringUtils
+                    .cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
             category.setImage(fileName);
 
@@ -105,13 +107,15 @@ public class CategoryController {
             this.categoryService.save(category);
         }
 
-        attributes.addFlashAttribute("message","The category has been saved successfully ");
+        attributes.addFlashAttribute("message",
+                "The category has been saved successfully ");
         return "redirect:/categories";
 
     }
 
     @GetMapping("/categories/edit/{id}")
-    public String editCategory(@PathVariable("id") Integer id, Model model, RedirectAttributes attributes){
+    public String editCategory(@PathVariable("id") Integer id, Model model,
+                               RedirectAttributes attributes){
         try {
             Category category = this.categoryService.get(id);
             List<Category> listCategories = this.categoryService.listCategoriesUsedInForm();

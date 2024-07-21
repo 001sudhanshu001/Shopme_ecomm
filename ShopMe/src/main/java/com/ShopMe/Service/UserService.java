@@ -15,7 +15,7 @@ public interface UserService {
 
     User save(User user);
 
-    public boolean isEmailUnique(Integer id,String email);
+    boolean isEmailUnique(Integer id,String email);
 
     Optional<User> get(Integer id);
 

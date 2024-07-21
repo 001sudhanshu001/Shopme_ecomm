@@ -23,10 +23,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, length = 256, nullable = false)
+    @Column(length = 256, nullable = false, unique = true)
     private String name;
 
-    @Column(unique = true, length = 256, nullable = false)
+    @Column(length = 256, nullable = false, unique = true)
     private String alias;
 
     @Column(length = 2000, nullable = false, name = "short_description")
@@ -61,14 +61,14 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category; // one cate. can have many products
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
-    private Brand brand; // one brand can have many products
+    private Brand brand;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ProductImage> images = new HashSet<>();  //one product can have many images
+    private Set<ProductImage> images = new HashSet<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductDetails> details = new ArrayList<>();
