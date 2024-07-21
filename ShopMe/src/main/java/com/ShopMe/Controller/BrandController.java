@@ -123,7 +123,8 @@ public class BrandController {
     }
 
     @GetMapping("/brands/delete/{id}")
-    public String deleteBrand(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+    public String deleteBrand(@PathVariable("id") Integer id, Model model,
+                              RedirectAttributes redirectAttributes){
 
         try {
             brandService.delete(id);

@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,13 +44,14 @@ public class UserController {
         return this.listByPage(1, model, "firstName", "asc", null);
     }
 
-    @GetMapping("/users/page/{pageNumber}") // @Param is used to get value from query
+    @GetMapping("/users/page/{pageNumber}")
     public String listByPage(@PathVariable(name = "pageNumber") int pageNumber, Model model,
                                 @Param("sortField") String sortField, @Param("sortDir") String sortDir,
                                 @Param("keyword") String keyword) {
 
         Page<User> page = this.userService.listByPage(pageNumber, sortField, sortDir, keyword);
         List<User> allUser = page.getContent();
+
 
         long startCount = (long) (pageNumber - 1) * UserServiceImpl.USER_PER_PAGE + 1;
         long endCount = startCount + UserServiceImpl.USER_PER_PAGE - 1;
@@ -94,6 +96,10 @@ public class UserController {
                            @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
         if(!multipartFile.isEmpty()){
+
+            // TODO : Add Unique Image logic using UUID in the name and same for other Images also like Brand, product
+//            String uniqueFileName =
+//                    UUID.randomUUID() + "__" + System.currentTimeMillis();
 
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 

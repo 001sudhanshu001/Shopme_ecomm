@@ -45,7 +45,7 @@ public class ProductController {
 
     @GetMapping("/products")
     public String listFirstPage(Model model){
-        return listByPage(1,model, "name","asc",null, 0); // Initially CategoryID is 0
+        return listByPage(1,model, "name","asc",null, 0);// Initially CategoryID is 0
 //        List<Product> listProducts = productService.listAll();
 //
 //        model.addAttribute("listProducts",listProducts);
@@ -285,7 +285,8 @@ public class ProductController {
     }
 
     @GetMapping("/products/delete/{id}")
-    public String deleteProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+    public String deleteProduct(@PathVariable("id") Integer id, Model model,
+                                RedirectAttributes redirectAttributes){
         try {
             productService.delete(id);
             // deleting images related to this product
@@ -311,7 +312,8 @@ public class ProductController {
 
     // To edit product
     @GetMapping("/products/edit/{id}")
-    public String editProduct(@PathVariable("id") Integer id, Model model,  RedirectAttributes redirectAttributes){
+    public String editProduct(@PathVariable("id") Integer id, Model model,
+                              RedirectAttributes redirectAttributes){
         try{
             Product product = productService.get(id);
 

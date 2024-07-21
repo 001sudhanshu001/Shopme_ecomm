@@ -15,7 +15,7 @@ import java.util.Set;
         indexes = {
             @Index(name = "user_email_index", columnList = "email")
         }
-    )
+)
 public class User {
 
     @Id
@@ -36,6 +36,9 @@ public class User {
 
     @Column(length = 64)
     private String photos;
+
+    @Transient
+    private String preSignedURL;
 
     private boolean enabled;
 
@@ -65,11 +68,12 @@ public class User {
         if(id == null || photos == null) return "/images/default-user.png";
 
 //        return "user-photos/" + this.id + "/" +this.photos;
-//        return "/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/6/Alfred.png";
 
        // return "/user-photos/" + this.id + "/" +this.photos; ***
+        // TODO :: Using Pre-Signed URL
         return Constants.S3_BASE_URI + "/user-photos/" + this.id + "/" + this.photos;
     }
+
     @Transient
     public String getFullName() {
         return firstName + " " + lastName;

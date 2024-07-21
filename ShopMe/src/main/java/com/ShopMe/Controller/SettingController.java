@@ -114,7 +114,7 @@ public class SettingController {
     }
 
     @PostMapping("/settings/save_mail_templates")
-    public String saveMailTempllateSettings(HttpServletRequest request, RedirectAttributes ra) {
+    public String saveMailTemplateSettings(HttpServletRequest request, RedirectAttributes ra) {
         List<Setting> mailTemplateSetting = settingService.getMailTemplateSetting();
 
         updateSettingValuesFromForm(request, mailTemplateSetting);

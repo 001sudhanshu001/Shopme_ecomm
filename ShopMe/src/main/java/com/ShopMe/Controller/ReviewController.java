@@ -24,9 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReviewController.class);
-
-    private String defaultRedirectURL = "redirect:/reviews/page/1?sortField=reviewTime&sortDir=desc";
+    private final String defaultRedirectURL = "redirect:/reviews/page/1?sortField=reviewTime&sortDir=desc";
 
     private final ReviewService reviewService;
 

@@ -15,7 +15,7 @@ import java.util.Set;
         indexes = {
             @Index(name = "brand_name_index", columnList = "name")
         }
-    )
+)
 @Getter
 @Setter
 @ToString

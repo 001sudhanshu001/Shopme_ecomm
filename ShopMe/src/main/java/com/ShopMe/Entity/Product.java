@@ -12,8 +12,8 @@ import java.util.*;
 @Setter @Getter
 @Table(name = "products",
         indexes = {
-        @Index(name = "product_name_index", columnList = "name"),
-        @Index(name = "product_alias_index", columnList = "alias")
+        @Index(name = "product_name_index", columnList = "name", unique = true),
+        @Index(name = "product_alias_index", columnList = "alias", unique = true)
         }
     )
 @NoArgsConstructor

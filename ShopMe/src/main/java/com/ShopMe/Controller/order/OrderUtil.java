@@ -1,6 +1,5 @@
 package com.ShopMe.Controller.order;
 
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,22 +17,13 @@ import com.ShopMe.Service.Impl.SettingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 public class OrderUtil {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderUtil.class);
 
     public static void loadCurrencySetting(HttpServletRequest request, SettingService settingService) {
 
-        LOGGER.info("OrderUtil | loadCurrencySetting is called");
-
         List<Setting> currencySettings = settingService.getCurrencySettings();
 
-        LOGGER.info("OrderUtil | loadCurrencySetting | currencySettings : " + currencySettings.toString());
-
         for (Setting setting : currencySettings) {
-            LOGGER.info("OrderUtil | loadCurrencySetting | setting | key : " + setting.getKey() + " , value : " + setting.getValue());
             request.setAttribute(setting.getKey(), setting.getValue());
         }
     }
@@ -47,12 +37,6 @@ public class OrderUtil {
         String[] trackStatuses = request.getParameterValues("trackStatus");
         String[] trackDates = request.getParameterValues("trackDate");
         String[] trackNotes = request.getParameterValues("trackNotes");
-
-
-        LOGGER.info("OrderUtil | updateOrderTracks | trackIds : " + trackIds.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | trackStatuses : " + trackStatuses.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | trackDates : " + trackDates.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | trackNotes : " + trackNotes.toString());
 
         List<OrderTrack> orderTracks = order.getOrderTracks();
 
@@ -85,15 +69,12 @@ public class OrderUtil {
                 e.printStackTrace();
             }
 
-            LOGGER.info("OrderUtil | updateOrderTracks | trackRecord : " + trackRecord.toString());
 
             orderTracks.add(trackRecord);
         }
     }
 
     public static void updateProductDetails(Order order, HttpServletRequest request) {
-
-        LOGGER.info("OrderUtil | updateProductDetails is called");
 
         String[] detailIds = request.getParameterValues("detailId");
         String[] productIds = request.getParameterValues("productId");
@@ -103,34 +84,11 @@ public class OrderUtil {
         String[] productSubtotals = request.getParameterValues("productSubtotal");
         String[] productShipCosts = request.getParameterValues("productShipCost");
 
-        LOGGER.info("OrderUtil | updateOrderTracks | detailIds : " + detailIds.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | productIds : " + productIds.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | productPrices : " + productPrices.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | productDetailCosts : " + productDetailCosts.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | quantities : " + quantities.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | productSubtotals : " + productSubtotals.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | productSubtotals : " + productShipCosts.toString());
-
         Set<OrderDetail> orderDetails = order.getOrderDetails();
 
-        LOGGER.info("OrderUtil | updateOrderTracks | orderDetails : " + orderDetails.toString());
-        LOGGER.info("OrderUtil | updateOrderTracks | orderDetails.size : " + orderDetails.size());
-
-        LOGGER.info("OrderUtil | updateOrderTracks | productSubtotals : " + detailIds.length);
-
         for (int i = 0; i < detailIds.length; i++) {
-
-            LOGGER.info("OrderUtil | updateOrderTracks | Detail ID : " + detailIds[i]);
-            LOGGER.info("OrderUtil | updateOrderTracks | Prodouct ID : " + productIds[i]);
-            LOGGER.info("OrderUtil | updateOrderTracks | Cost : " + productDetailCosts[i]);
-            LOGGER.info("OrderUtil | updateOrderTracks | Quantity : " + quantities[i]);
-            LOGGER.info("OrderUtil | updateOrderTracks | Subtotal : " + productSubtotals[i]);
-            LOGGER.info("OrderUtil | updateOrderTracks | Ship cost : " + productShipCosts[i]);
-
             OrderDetail orderDetail = new OrderDetail();
             Integer detailId = Integer.parseInt(detailIds[i]);
-
-            LOGGER.info("OrderUtil | updateOrderTracks | detailId : " + detailId);
 
             if (detailId > 0) {
                 orderDetail.setId(detailId);
@@ -143,8 +101,6 @@ public class OrderUtil {
             orderDetail.setShippingCost(Float.parseFloat(productShipCosts[i]));
             orderDetail.setQuantity(Integer.parseInt(quantities[i]));
             orderDetail.setUnitPrice(Float.parseFloat(productPrices[i]));
-
-            LOGGER.info("OrderUtil | updateOrderTracks | orderDetail : " + orderDetail.toString());
 
             orderDetails.add(orderDetail);
 

@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 // this class will be called by Spring security during authentication process
 
-@RequiredArgsConstructor
 public class ShopmeUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     @Transactional
@@ -24,8 +24,7 @@ public class ShopmeUserDetailsService implements UserDetailsService {
 //            System.out.println(user.getRoles().getClass());
 //            System.out.println("User Role Fetching..!");
 
-            ShopmeUserDetails shopmeUserDetails = new ShopmeUserDetails(user);
-            return shopmeUserDetails;
+            return new ShopmeUserDetails(user);
         }
         throw new UsernameNotFoundException("Could not find user with email" +email);
     }

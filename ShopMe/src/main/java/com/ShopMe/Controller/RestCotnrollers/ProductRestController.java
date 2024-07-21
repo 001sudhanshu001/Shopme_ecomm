@@ -13,7 +13,6 @@ public class ProductRestController {
 
     @PostMapping("/products/check_unique")
     public String checkUnique(@Param("id") Integer id, @Param("name") String name) {
-        System.out.println("Inside checkUnique");
         return productService.checkUnique(id, name);
     }
 }

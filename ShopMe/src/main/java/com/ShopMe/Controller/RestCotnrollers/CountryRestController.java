@@ -14,9 +14,8 @@ public class CountryRestController { // This Controller handles AJAX call from S
 
     @GetMapping("/countries/list")
     public List<Country> listAll() {
-        List<Country> countryList = repo.findAllByOrderByNameAsc();
 
-        return countryList;
+        return repo.findAllByOrderByNameAsc();
     }
 
     @PostMapping("/countries/save")

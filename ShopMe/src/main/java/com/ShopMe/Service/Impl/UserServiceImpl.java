@@ -6,6 +6,11 @@ import com.ShopMe.Entity.Role;
 import com.ShopMe.Entity.User;
 import com.ShopMe.ExceptionHandler.UserNotFoundException;
 import com.ShopMe.Service.UserService;
+import com.ShopMe.UtilityClasses.Constants;
+import com.ShopMe.constants.AwsConstants;
+import com.amazonaws.HttpMethod;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -16,8 +21,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.net.URL;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,23 +40,22 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final AmazonS3 amazonS3;
+
     @Override
     public List<User> getAllUser(){
-        List<User> users = this.userRepository.findAll(Sort.by("firstName").ascending());
 
-        return users;
+        return this.userRepository.findAll(Sort.by("firstName").ascending());
     }
 
     @Override
     public List<Role> listRoles() {
-        List<Role> roles = this.roleRepository.findAll();
-        return roles;
+        return this.roleRepository.findAll();
     }
 
     @Override
     public User getByEmail(String email) {
-        User user = this.userRepository.findByEmail(email);
-        return user;
+        return this.userRepository.findByEmail(email);
     }
 
 
@@ -61,14 +66,13 @@ public class UserServiceImpl implements UserService {
         if(isUpdating){
             User existingUser = this.userRepository.findById(user.getId()).get();
 
-            if(user.getPassword().isEmpty()){ // password mai koi change nahi h=aya toh wahi purana password dal do
+            if(user.getPassword().isEmpty()){
                 user.setPassword(existingUser.getPassword());
             }else {
-                this.setPasswordEncoder(user); // encoding password before saving into DB
+                this.setPasswordEncoder(user);
             }
-        }else { //  just creating new user
-            this.setPasswordEncoder(user); // encoding password before saving into DB
-
+        }else {
+            this.setPasswordEncoder(user);
         }
         return this.userRepository.save(user);
     }
@@ -105,9 +109,9 @@ public class UserServiceImpl implements UserService {
         if(isCreatingNew){
             if(userByEmail != null) return false;
         }else {
-            return userByEmail.getId() == id;
+            return Objects.equals(userByEmail.getId(), id);
         }
-        return true; // agar empty hai toh means ki is email se koi user nahi hai, means unique hai
+        return true;
     }
 
     @Override
@@ -116,7 +120,7 @@ public class UserServiceImpl implements UserService {
 //            return this.userRepository.findById(id).get();
 //
 //        }catch (NoSuchElementException e){
-//            throw new UserNotFoundException("User not found with id " +id); //  this is custom exception
+//            throw new UserNotFoundException("User not found with id " +id);
 //        }
         return this.userRepository.findById(id);
     }
@@ -150,12 +154,33 @@ public class UserServiceImpl implements UserService {
             return this.userRepository.findAll(keyword, pageable);
         }
 
-        Page<User> page = this.userRepository.findAll(pageable);
-        return page;
+        // TODO :: It will also Fetch Password, So use DTO
+        Page<User> userPage = this.userRepository.findAll(pageable);
+
+        for(User user : userPage) {
+            if(user.getPhotos() != null && !user.getPhotos().isEmpty()) {
+                String resignedUrl =
+                        generatePreSignedUrl("user-photos/" + user.getId() + "/" + user.getPhotos());
+                user.setPreSignedURL(resignedUrl);
+                user.setPassword(UUID.randomUUID().toString()); // TODO : This is temporary Solution, use DTO
+            }
+        }
+
+        return userPage;
 
     }
 
+    private String generatePreSignedUrl(String objectKey) {
+        Date expiration = new Date(System.currentTimeMillis() + AwsConstants.expirationMinutes * 60 * 1000);
 
+        GeneratePresignedUrlRequest generatePresignedUrlRequest =
+                new GeneratePresignedUrlRequest(AwsConstants.bucketName, objectKey)
+                .withMethod(HttpMethod.GET)
+                .withExpiration(expiration);
+
+        URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
+        return url.toString();
+    }
 
 
 }

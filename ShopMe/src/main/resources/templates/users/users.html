@@ -72,9 +72,9 @@
                         <td>
                             <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-dark"></span>
 
-                            <img th:if="${user.photos != null}" th:src="@{${user.photoImagePath}}" style="width:100px">  <!-- user class mai method-->
-<!--                            <img th:src="@{./user-photos/1/namhm.png}" alt=""/>-->
-                         </td>
+<!--                            <img th:if="${user.photos != null}" th:src="@{${user.photoImagePath}}" style="width:100px">-->
+                            <img th:if="${user.photos != null}" th:src="@{${user.preSignedURL}}" style="width:100px">
+                        </td>
                         <td  class="hideable-column" th:text="${user.email}"></td>
                         <td th:text="${user.firstName}"></td>
                         <td th:text="${user.lastName}"></td>

@@ -38,15 +38,18 @@ public class OrderController {
     }
 
     @GetMapping("/orders/page/{pageNum}")
-    public String listByPage(@PathVariable(name = "pageNum") int pageNUm, Model model,
-                             @Param("sortField") String sortField, @Param("sortDir") String sortDir,
-                             @Param("keyword") String keyword, @AuthenticationPrincipal ShopmeUserDetails loggedUser){
-        Page<Order> page = this.orderService.listByPage(pageNUm, sortField, sortDir, keyword);
+    public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
+                             @Param("sortField") String sortField,
+                             @Param("sortDir") String sortDir,
+                             @Param("keyword") String keyword,
+                             @AuthenticationPrincipal ShopmeUserDetails loggedUser){
+
+        Page<Order> page = this.orderService.listByPage(pageNum, sortField, sortDir, keyword);
         List<Order> listOrders = page.getContent();
         page.getContent().forEach(o-> System.out.println(o.getCustomer().getFirstName()));
 
 
-        long startCount = (long) (pageNUm - 1) * OrderService.ORDERS_PER_PAGE + 1;
+        long startCount = (long) (pageNum - 1) * OrderService.ORDERS_PER_PAGE + 1;
         long endCount = startCount +  OrderService.ORDERS_PER_PAGE - 1;
 
         if(endCount > page.getTotalElements()){
@@ -55,7 +58,7 @@ public class OrderController {
 
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
-        model.addAttribute("currentPage", pageNUm);
+        model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
@@ -67,7 +70,9 @@ public class OrderController {
         model.addAttribute("keyword", keyword);
 
         // If the user have only Shipper Role then only
-        if(!loggedUser.hasRole("Admin") && ! loggedUser.hasRole("Salesperson") &&loggedUser.hasRole("Shipper")) {
+        if(!loggedUser.hasRole("Admin")
+                && ! loggedUser.hasRole("Salesperson")
+                && loggedUser.hasRole("Shipper")) {
             return "orders/orders_shipper";
         }
 
@@ -77,7 +82,8 @@ public class OrderController {
 
     @GetMapping("/orders/detail/{id}")
     public String viewOrderDetails(@PathVariable("id") Integer id, Model model,
-                                   RedirectAttributes ra, HttpServletRequest request, @AuthenticationPrincipal ShopmeUserDetails loggedUser) {
+                                   RedirectAttributes ra, HttpServletRequest request,
+                                   @AuthenticationPrincipal ShopmeUserDetails loggedUser) {
 
         try {
             Order order = orderService.get(id);
@@ -102,10 +108,12 @@ public class OrderController {
     }
 
     @GetMapping("/orders/delete/{id}")
-    public String deleteOrder(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
+    public String deleteOrder(@PathVariable("id") Integer id, Model model,
+                              RedirectAttributes ra) {
         try {
             orderService.delete(id);
-            ra.addFlashAttribute("messageSuccess", "The order ID " + id + " has been deleted.");
+            ra.addFlashAttribute("messageSuccess",
+                    "The order ID " + id + " has been deleted.");
         } catch (OrderNotFoundException ex) {
             ra.addFlashAttribute("messageError", ex.getMessage());
         }
@@ -145,7 +153,8 @@ public class OrderController {
 
         orderService.save(order);
 
-        ra.addFlashAttribute("messageSuccess", "The order ID " + order.getId() + " has been updated successfully");
+        ra.addFlashAttribute("messageSuccess",
+                "The order ID " + order.getId() + " has been updated successfully");
         return defaultRedirectURL;
     }
 

@@ -20,7 +20,7 @@ public class BrandRestController {
     private final BrandService brandService;
 
     @PostMapping("/brands/check_unique")
-    public String checkUninque(@Param("id") Integer id, @Param("name") String name){
+    public String checkUnique(@Param("id") Integer id, @Param("name") String name){
         return brandService.checkUnique(id, name);
     }
 

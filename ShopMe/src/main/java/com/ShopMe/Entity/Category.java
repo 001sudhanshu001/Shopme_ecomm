@@ -13,7 +13,12 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "categories")
+@Table(name = "categories",
+        indexes = {
+              @Index(name = "category_name_index", columnList = "name", unique = true),
+              @Index(name = "category_alias_index", columnList = "alias", unique = true)
+        }
+)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

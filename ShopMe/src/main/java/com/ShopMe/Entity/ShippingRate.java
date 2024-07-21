@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ShippingRate /*extends IdBasedEntity implements Serializable*/{
+public class ShippingRate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
