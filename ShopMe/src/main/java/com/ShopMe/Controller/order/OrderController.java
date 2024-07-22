@@ -30,9 +30,6 @@ public class OrderController {
 
     @GetMapping("/orders")
     public String listFirstPage(Model model){
-
-//        return this.listByPage(1,model,"name", "asc",null);
-
         return defaultRedirectURL;
     }
 

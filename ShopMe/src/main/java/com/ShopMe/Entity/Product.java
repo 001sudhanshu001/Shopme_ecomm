@@ -76,6 +76,8 @@ public class Product {
     private int reviewCount;
     private float averageRating;
 
+    @Transient
+    private String preSignedURLForMainImage;
 
     public void addDetails(String name, String value){
         this.details.add(new ProductDetails(name, value, this));

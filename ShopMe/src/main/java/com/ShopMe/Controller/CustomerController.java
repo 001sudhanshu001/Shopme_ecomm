@@ -89,7 +89,8 @@ public class CustomerController {
     }
 
     @GetMapping("/customers/detail/{id}")
-    public String viewCustomer(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
+    public String viewCustomer(@PathVariable("id") Integer id, Model model,
+                               RedirectAttributes ra) {
         try {
             Customer customer = customerService.get(id);
             model.addAttribute("customer", customer);

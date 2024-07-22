@@ -76,8 +76,10 @@
                         <input type="hidden" th:field="*{photos}">
                         <input type="file" id="fileImage" name="image" accept="image/png, image/jpeg"
                              class="mb-2"/>
-                        <img id="thumbnail"  th:src="@{${user.photoImagePath}}" alt="Photos Preview"
-                            class="img-fluid" /> <!-- ab update form mai old image dikhegi-->
+<!--                        <img id="thumbnail"  th:src="@{${user.photoImagePath}}" alt="Photos Preview"-->
+<!--                            class="img-fluid" /> &lt;!&ndash; ab update form mai old image dikhegi&ndash;&gt;-->
+                        <img id="thumbnail"  th:src="@{${user.preSignedURL}}" alt="Photos Preview"
+                             class="img-fluid" />
                     </div>
                 </div>
 

@@ -6,6 +6,7 @@ import com.ShopMe.Entity.Role;
 import com.ShopMe.Entity.User;
 import com.ShopMe.ExceptionHandler.UserNotFoundException;
 import com.ShopMe.Service.UserService;
+import com.ShopMe.UtilityClasses.AmazonS3Util;
 import com.ShopMe.UtilityClasses.Constants;
 import com.ShopMe.constants.AwsConstants;
 import com.amazonaws.HttpMethod;
@@ -40,7 +41,8 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final AmazonS3 amazonS3;
+    private final AmazonS3Util amazonS3Util;
+
 
     @Override
     public List<User> getAllUser(){
@@ -55,7 +57,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByEmail(String email) {
-        return this.userRepository.findByEmail(email);
+        User user = this.userRepository.findByEmail(email);
+        user.setPreSignedURL(amazonS3Util.generatePreSignedUrl("user-photos/"
+                + user.getId() + "/" + user.getPhotos()));
+
+        return user;
     }
 
 
@@ -94,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
         return this.userRepository.save(userInDB);
     }
-    public void setPasswordEncoder(User user){
+    private void setPasswordEncoder(User user){
         String encode = this.passwordEncoder.encode(user.getPassword());
         user.setPassword(encode);
     }
@@ -116,13 +122,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> get(Integer id) {
-//        try {
-//            return this.userRepository.findById(id).get();
-//
-//        }catch (NoSuchElementException e){
-//            throw new UserNotFoundException("User not found with id " +id);
-//        }
-        return this.userRepository.findById(id);
+        Optional<User> optionalUser = this.userRepository.findById(id);
+        if(optionalUser.isEmpty()) {
+            return optionalUser;
+        } else {
+            User user = optionalUser.get();
+            user.setPreSignedURL(amazonS3Util.generatePreSignedUrl("user-photos/"
+                    + user.getId() + "/" + user.getPhotos()));
+            return Optional.of(user);
+        }
     }
 
     @Override
@@ -132,9 +140,7 @@ public class UserServiceImpl implements UserService {
         if(countById == null || countById == 0){
             throw new UserNotFoundException("Could not find any user with id " + id);
         }
-
         this.userRepository.deleteById(id);
-
     }
 
     @Override
@@ -160,27 +166,13 @@ public class UserServiceImpl implements UserService {
         for(User user : userPage) {
             if(user.getPhotos() != null && !user.getPhotos().isEmpty()) {
                 String resignedUrl =
-                        generatePreSignedUrl("user-photos/" + user.getId() + "/" + user.getPhotos());
+                        amazonS3Util.generatePreSignedUrl("user-photos/"
+                                + user.getId() + "/" + user.getPhotos());
                 user.setPreSignedURL(resignedUrl);
             }
         }
-
         return userPage;
-
     }
-
-    private String generatePreSignedUrl(String objectKey) {
-        Date expiration = new Date(System.currentTimeMillis() + AwsConstants.expirationMinutes * 60 * 1000);
-
-        GeneratePresignedUrlRequest generatePresignedUrlRequest =
-                new GeneratePresignedUrlRequest(AwsConstants.bucketName, objectKey)
-                .withMethod(HttpMethod.GET)
-                .withExpiration(expiration);
-
-        URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
-        return url.toString();
-    }
-
 
 }
 

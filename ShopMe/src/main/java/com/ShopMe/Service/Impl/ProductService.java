@@ -3,6 +3,7 @@ package com.ShopMe.Service.Impl;
 import com.ShopMe.DAO.ProductRepo;
 import com.ShopMe.Entity.Product;
 import com.ShopMe.ExceptionHandler.ProductNotFoundException;
+import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,8 @@ public class ProductService {
     private final ProductRepo repo;
 
     public static final int PRODUCTS_PER_PAGE = 3;
+
+    private final AmazonS3 amazonS3;
 
     public List<Product> listAll() {
         return repo.findAll();

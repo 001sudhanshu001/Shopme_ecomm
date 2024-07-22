@@ -87,6 +87,7 @@ public class UserController {
         model.addAttribute("user",user);
         model.addAttribute("listRoles",listRoles);
         model.addAttribute("pageTitle","Create New User");
+        model.addAttribute("editing", false);
 
         return "users/user_form";
     }
@@ -149,6 +150,7 @@ public class UserController {
         model.addAttribute("user",user);
         model.addAttribute("listRoles",listRoles);
         model.addAttribute("pageTitle","Edit the user(ID : "+id+ ")");
+        model.addAttribute("editing", true);
 
         return "users/user_form";
     }

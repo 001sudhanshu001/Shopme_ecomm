@@ -13,7 +13,7 @@ public class MvcConfig implements WebMvcConfigurer {
    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //       registry.addResourceHandler("user-photos/**")
-//               .addResourceLocations("/home/sudhanshu/Documents/MyBackup/D/E-Commerce/ShopMe/ShopMe/user-photos/34/target.png");
+//               .addResourceLocations("");
 
        // for Older version
        /*
