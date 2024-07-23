@@ -41,6 +41,7 @@ public class SettingController {
             model.addAttribute(setting.getKey(), setting. getValue());
         }
 
+        // TODO -> Presigned URL FOR site logo in settings
         model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
         return "settings/settings";
     }

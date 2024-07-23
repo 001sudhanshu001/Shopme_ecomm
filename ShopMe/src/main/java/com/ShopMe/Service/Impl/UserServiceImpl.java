@@ -7,11 +7,6 @@ import com.ShopMe.Entity.User;
 import com.ShopMe.ExceptionHandler.UserNotFoundException;
 import com.ShopMe.Service.UserService;
 import com.ShopMe.UtilityClasses.AmazonS3Util;
-import com.ShopMe.UtilityClasses.Constants;
-import com.ShopMe.constants.AwsConstants;
-import com.amazonaws.HttpMethod;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -22,9 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +39,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUser(){
-
         return this.userRepository.findAll(Sort.by("firstName").ascending());
     }
 
@@ -157,12 +149,19 @@ public class UserServiceImpl implements UserService {
         Pageable pageable = PageRequest.of(pageNumber - 1, USER_PER_PAGE, sort);
 
         if(keyword != null){
-            return this.userRepository.findAll(keyword, pageable);
+            Page<User> userPage = this.userRepository.findAll(keyword, pageable);
+            addResignedURI(userPage);
+            return userPage;
         }
 
         // TODO :: It will also Fetch Password, So use DTO
         Page<User> userPage = this.userRepository.findAll(pageable);
 
+        addResignedURI(userPage);
+        return userPage;
+    }
+
+    private void addResignedURI(Page<User> userPage) {
         for(User user : userPage) {
             if(user.getPhotos() != null && !user.getPhotos().isEmpty()) {
                 String resignedUrl =
@@ -171,7 +170,6 @@ public class UserServiceImpl implements UserService {
                 user.setPreSignedURL(resignedUrl);
             }
         }
-        return userPage;
     }
 
 }

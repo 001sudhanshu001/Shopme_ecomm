@@ -31,7 +31,9 @@ public class ProductService {
         return repo.findAll();
     }
 
-    public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword, Integer categoryId){
+    public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword,
+                                    Integer categoryId){
+
         Sort sort = Sort.by(sortField);
 
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();

@@ -40,6 +40,9 @@ public class Brand {
     private Set<Category> categories = new HashSet<>();
 
     @Transient
+    private String preSignedURL;
+
+    @Transient
     public String getLogoPath(){
         if(this.id == null) {
             return "/images/image-thumbnail.png";

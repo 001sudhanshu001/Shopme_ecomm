@@ -2,7 +2,9 @@ package com.ShopMe.Service.Impl;
 
 import com.ShopMe.DAO.BrandRepo;
 import com.ShopMe.Entity.Brand;
+import com.ShopMe.Entity.User;
 import com.ShopMe.ExceptionHandler.BrandNotFoundException;
+import com.ShopMe.UtilityClasses.AmazonS3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,8 @@ public class BrandService {
 
     public static final int BRANDS_PER_PAGE = 5;
 
+    private final AmazonS3Util amazonS3Util;
+
     public List<Brand> listAll() {
         return brandRepo.findAll();
     }
@@ -34,9 +38,14 @@ public class BrandService {
         Pageable pageable = PageRequest.of(pageNum - 1, BRANDS_PER_PAGE, sort);
 
         if(keyword != null){
-            return brandRepo.findAll(keyword, pageable);
+            Page<Brand> brandPage = brandRepo.findAll(keyword, pageable);
+            addResignedURI(brandPage);
+            return brandPage;
         }
-        return brandRepo.findAll(pageable);
+
+        Page<Brand> brandPage = brandRepo.findAll(pageable);
+        addResignedURI(brandPage);
+        return brandPage;
     }
 
     public Brand save(Brand brand){
@@ -45,7 +54,10 @@ public class BrandService {
 
     public Brand get(Integer id) throws BrandNotFoundException {
         try {
-            return brandRepo.findById(id).get();
+            Brand brand = brandRepo.findById(id).get();
+            brand.setPreSignedURL(amazonS3Util.generatePreSignedUrl("brand-logos/"
+                    + brand.getId() + "/" + brand.getLogo()));
+            return brand;
         }catch (NoSuchElementException ex){
             throw new BrandNotFoundException("Could not find any brand with ID "+ id);
         }
@@ -73,5 +85,16 @@ public class BrandService {
             }
         }
         return "OK";
+    }
+
+    private void addResignedURI(Page<Brand> brandPage) {
+        for(Brand brand : brandPage) {
+            if(brand.getLogo() != null && !brand.getLogo().isEmpty()) {
+                String resignedUrl =
+                        amazonS3Util.generatePreSignedUrl("brand-logos/"
+                                + brand.getId() + "/" + brand.getLogo());
+                brand.setPreSignedURL(resignedUrl);
+            }
+        }
     }
 }

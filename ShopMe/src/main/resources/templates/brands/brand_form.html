@@ -33,7 +33,7 @@
                  th:required="${brand.id == null}"
                  class="mb-2"/><!-- means if brand id is null i.e. it is a new brand then the file input is required, but not for updation-->
           <div class="mt-2">
-            <img id="thumbnail" alt="Image Preview" th:src="@{${brand.logoPath}}"  class="img-fluid"/>
+            <img id="thumbnail" alt="Image Preview" th:src="@{${brand.preSignedURL}}"  class="img-fluid"/>
           </div>
         </div>
       </div>
