@@ -4,6 +4,7 @@ import com.ShopMe.DAO.CategoryRepo;
 import com.ShopMe.Entity.Category;
 import com.ShopMe.Entity.CategoryPageInfo;
 import com.ShopMe.ExceptionHandler.CategoryNotFoundException;
+import com.ShopMe.UtilityClasses.AmazonS3Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,11 +17,12 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-@Transactional // to update enabled category status
+@Transactional
 public class CategoryService {
 
     public static final int ROOT_CATEGORIES_PER_PAGE = 1;
     private final CategoryRepo categoryRepo;
+    private final AmazonS3Util amazonS3Util;
 
 //    @PostConstruct
 //    void init() {
@@ -28,8 +30,8 @@ public class CategoryService {
 //        System.out.println(categoryRepo.getClass());
 //    }
 
-    public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortField, String sortDir,
-                                     String keyword) {
+    public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortField,
+                                     String sortDir, String keyword) {
 
         Sort sort = Sort.by(sortField);
 
@@ -41,8 +43,8 @@ public class CategoryService {
 
         Pageable pageable = PageRequest.of(pageNum-1, ROOT_CATEGORIES_PER_PAGE, sort);
 
-        Page<Category> pageCategories = null;
-        if(keyword != null && !keyword.isEmpty()){ // means it is form searching
+        Page<Category> pageCategories;
+        if(keyword != null && !keyword.isEmpty()){
             pageable = PageRequest.of(pageNum-1, 5, sort);
             pageCategories = categoryRepo.search(keyword, pageable);
         }else {
@@ -57,7 +59,7 @@ public class CategoryService {
         if(keyword != null && !keyword.isEmpty()){
             List<Category> searchResult = pageCategories.getContent();
             for(Category category : searchResult){
-                category.setHasChildren(category.getChildren().size() > 0);
+                category.setHasChildren(!category.getChildren().isEmpty());
             }
             return searchResult;
         }else {
@@ -130,7 +132,7 @@ public class CategoryService {
                 for(Category subCategory : children){
                     String name = "--" + subCategory.getName();
                     categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
-                    listSubCatogoriesUsedInForm(categoriesUsedInForm, subCategory, 1);
+                    listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, 1);
                 }
             }
         }
@@ -138,7 +140,7 @@ public class CategoryService {
         return categoriesUsedInForm;
     }
 
-    private void listSubCatogoriesUsedInForm(List<Category> categoriesUsedInForm, Category parent, int subLevel) {
+    private void listSubCategoriesUsedInForm(List<Category> categoriesUsedInForm, Category parent, int subLevel) {
         int newSubLevel = subLevel + 1;
 
         Set<Category> children = sortSubCategories(parent.getChildren());
@@ -153,13 +155,16 @@ public class CategoryService {
 
             categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
 
-            listSubCatogoriesUsedInForm(categoriesUsedInForm, subCategory, newSubLevel);
+            listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, newSubLevel);
         }
     }
 
     public Category get(Integer id) throws CategoryNotFoundException {
         try {
-            return this.categoryRepo.findById(id).get();
+            Category category = this.categoryRepo.findById(id).get();
+            category.setPreSignedURL(amazonS3Util.generatePreSignedUrl("category-images/"
+                    + category.getId() + "/" + category.getImage()));
+            return category;
         }catch (NoSuchElementException ex){
             throw new CategoryNotFoundException("Could not find any category with ID " + id);
         }
@@ -226,6 +231,5 @@ public class CategoryService {
 
         this.categoryRepo.deleteById(id);
     }
-
 
 }

@@ -26,6 +26,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
+    private final AmazonS3Util amazonS3Util;
 
     @GetMapping({"/categories", "/categories/page"})
     private String listFirstPage(Model model){
@@ -47,6 +48,8 @@ public class CategoryController {
         CategoryPageInfo pageInfo = new CategoryPageInfo();
         List<Category> categories = categoryService
                 .listByPage(pageInfo, pageNum,sortField, sortDir, keyword);
+
+        addPreResignedURL(categories);
 
         long startCount = (long) (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
         long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
@@ -72,11 +75,25 @@ public class CategoryController {
         return "categories/categories";
     }
 
+    private void addPreResignedURL(List<Category> categoryPage) {
+        for(Category category : categoryPage) {
+            if(category.getImage() != null && !category.getImage().isEmpty()) {
+                String resignedUrl =
+                        amazonS3Util.generatePreSignedUrl("category-images/"
+                                + category.getId() + "/" + category.getImage());
+                category.setPreSignedURL(resignedUrl);
+            }
+        }
+    }
+
     @GetMapping("/categories/new")
     public String newCategory(Model model){
         List<Category> listCategories = this.categoryService.listCategoriesUsedInForm(); // to show in dropdown
 
-        model.addAttribute("category", new Category());
+        Category category = new Category();
+        category.setPreSignedURL("/images/image-thumbnail.png"); // To show dummy Image
+
+        model.addAttribute("category", category);
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("pageTitle", "Create new category" );
 

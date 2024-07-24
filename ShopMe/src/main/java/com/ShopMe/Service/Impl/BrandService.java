@@ -2,7 +2,6 @@ package com.ShopMe.Service.Impl;
 
 import com.ShopMe.DAO.BrandRepo;
 import com.ShopMe.Entity.Brand;
-import com.ShopMe.Entity.User;
 import com.ShopMe.ExceptionHandler.BrandNotFoundException;
 import com.ShopMe.UtilityClasses.AmazonS3Util;
 import lombok.RequiredArgsConstructor;
@@ -39,12 +38,12 @@ public class BrandService {
 
         if(keyword != null){
             Page<Brand> brandPage = brandRepo.findAll(keyword, pageable);
-            addResignedURI(brandPage);
+            addPreResignedURL(brandPage);
             return brandPage;
         }
 
         Page<Brand> brandPage = brandRepo.findAll(pageable);
-        addResignedURI(brandPage);
+        addPreResignedURL(brandPage);
         return brandPage;
     }
 
@@ -87,7 +86,7 @@ public class BrandService {
         return "OK";
     }
 
-    private void addResignedURI(Page<Brand> brandPage) {
+    private void addPreResignedURL(Page<Brand> brandPage) {
         for(Brand brand : brandPage) {
             if(brand.getLogo() != null && !brand.getLogo().isEmpty()) {
                 String resignedUrl =

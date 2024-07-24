@@ -44,7 +44,6 @@ public class BrandController {
         Page<Brand> page = this.brandService.listByPage(pageNUm, sortField, sortDir, keyword);
         List<Brand> listBrand = page.getContent();
 
-
         long startCount = (long) (pageNUm - 1) * BrandService.BRANDS_PER_PAGE + 1;
         long endCount = startCount +  BrandService.BRANDS_PER_PAGE - 1;
 
@@ -73,8 +72,10 @@ public class BrandController {
     public String newBrand(Model model){
         List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 
+        Brand brand = new Brand();
+        brand.setPreSignedURL("/images/image-thumbnail.png");
         model.addAttribute("listCategories", listCategories);
-        model.addAttribute("brand", new Brand());
+        model.addAttribute("brand", brand);
         model.addAttribute("pageTitle","Create New Brand");
 
         return "brands/brand_form";

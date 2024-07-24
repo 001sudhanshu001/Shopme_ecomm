@@ -47,6 +47,9 @@ public class Category {
     @OrderBy("name asc")
     private Set<Category> children = new HashSet<>();
 
+    @Transient
+    private String preSignedURL;
+
     public static Category copyIdAndName(Category category){
         Category cat = new Category();
         cat.setName(category.getName());

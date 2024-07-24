@@ -53,7 +53,7 @@
                     <tr th:each="cat : ${categories}">
                         <td>[[${cat.id}]]</td>
                         <td>
-                            <img th:src="@{${cat.imagePath}}" style="width:100px" class="img-fulid"/>
+                            <img th:src="@{${cat.preSignedURL}}" style="width:100px" class="img-fluid"/>
                         </td>
                         <td class="badge badge-secondary">[[${cat.name}]]</td>
                         <td>[[${cat.alias}]]</td>
