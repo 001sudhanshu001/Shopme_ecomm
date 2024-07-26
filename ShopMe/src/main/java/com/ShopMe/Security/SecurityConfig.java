@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
          http
                  .authorizeRequests()
+                 .antMatchers("/actuator/**").permitAll() // TODO : Securing Properly with SuperAdmin Role
                  .antMatchers("/states/list_by_country/**").hasAnyAuthority("Admin", "Salesperson")
                  .antMatchers("/states/list_by_country/**").hasAnyAuthority("Admin", "Salesperson")
                  .antMatchers("/users/**", "/settings/**", "/countries/**", "/states/**").hasAuthority("Admin")
