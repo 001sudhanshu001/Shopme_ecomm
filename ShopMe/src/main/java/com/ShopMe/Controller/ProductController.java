@@ -116,6 +116,28 @@ public class ProductController {
                               @AuthenticationPrincipal ShopmeUserDetails loggedUser
                               ) throws IOException, ProductNotFoundException { // fileImage as we used in product_images.html
 
+        if(product.getName()!= null && product.getName().contains("/")) {
+            product.setName(product.getName().replace("/", "-"));
+        }
+
+        if(product.getAlias() != null && product.getAlias().contains("/")) {
+            product.setAlias(product.getAlias().replace("/","-"));
+        }
+        // TODO : Handle Constraints with proper error message
+        if(product.getShortDescription() != null && product.getShortDescription().length() >= 1900) {
+            product.setShortDescription(product.getShortDescription().substring(0, 1800));
+        }
+        if(product.getFullDescription() != null && product.getFullDescription().length() >= 3900) {
+            product.setFullDescription(product.getFullDescription().substring(0, 3800));
+        }
+        if(product.getName()!= null && product.getName().length() > 256) {
+            product.setName(product.getName().substring(0, 250));
+        }
+
+        if(product.getAlias() != null && product.getAlias().length() > 256) {
+            product.setAlias(product.getAlias().substring(0, 250));
+        }
+
         if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
             if (loggedUser.hasRole("Salesperson")) {
                 productService.saveProductPrice(product);
@@ -200,13 +222,16 @@ public class ProductController {
         for(int count = 0; count < detailNames.length; count++){
             String name = detailNames[count];
             String value = detailValues[count];
-            int id = Integer.parseInt(detailIDs[count]);
+            if(!Objects.equals(detailIDs[count].trim(), "")) {
+                int id = Integer.parseInt(detailIDs[count]);
 
-            if (id != 0) {
-                product.addDetails(id, name, value);
-            } else if (!name.isEmpty() && !value.isEmpty()) {
-                product.addDetails(name, value);
+                if (id != 0) {
+                    product.addDetails(id, name, value);
+                } else if (!name.isEmpty() && !value.isEmpty()) {
+                    product.addDetails(name, value);
+                }
             }
+
         }
     }
 
