@@ -105,7 +105,7 @@
                 <div class="col-4">
                     <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-dark"></span>
 
-                    <img th:if="${user.photos != null}" th:src="@{${user.photoImagePath}}"
+                    <img th:if="${user.photos != null}" th:src="@{${user.getPreSignedURL()}}"
                          style="width:100px">               <!-- user class mai method-->
                 </div>
                 <div class="col-8">

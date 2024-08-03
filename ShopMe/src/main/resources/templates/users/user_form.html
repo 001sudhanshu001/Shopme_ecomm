@@ -85,7 +85,7 @@
 
                             <img id="thumbnail" th:if="${editing}"  th:src="@{${user.preSignedURL}}" alt="Photos Preview"
                                 class="img-fluid" /> <!-- This is default image -->
-                            <img th:unless="${editing}"  th:src="@{${user.photoImagePath}}" alt="Photos Preview"
+                            <img th:unless="${editing}"  th:src="@{${user.getPreSignedURL()}}" alt="Photos Preview"
                                  class="img-fluid" />
                         </div>
                     </div>

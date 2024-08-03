@@ -146,14 +146,14 @@ public class CategoryService {
         Set<Category> children = sortSubCategories(parent.getChildren());
 
         for(Category subCategory : children){
-            String name = "";
+            StringBuilder name = new StringBuilder();
             for(int i = 0; i < newSubLevel; i++){
-                name += "--";
+                name.append("--");
             }
 
-            name += subCategory.getName();
+            name.append(subCategory.getName());
 
-            categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
+            categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name.toString()));
 
             listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, newSubLevel);
         }

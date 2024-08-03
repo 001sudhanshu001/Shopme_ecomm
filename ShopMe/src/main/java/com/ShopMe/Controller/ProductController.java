@@ -27,10 +27,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -140,7 +137,12 @@ public class ProductController {
 
         if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
             if (loggedUser.hasRole("Salesperson")) {
-                productService.saveProductPrice(product);
+                try {
+                    productService.saveProductPrice(product);
+                } catch (ProductNotFoundException ex) {
+                    redirectAttributes.addFlashAttribute("error_message", ex.getMessage());
+                    return "redirect:/products";
+                }
                 redirectAttributes.addFlashAttribute("message",
                         "The Product has been saved successfully");
 

@@ -90,7 +90,7 @@
           <tr th:each="product : ${listProducts}">
             <td class="hideable-column">[[${product.id}]]</td>
             <td>
-              <img th:src="@{${product.mainImagePath}}" style="width: 120px" class="img-fluid"/>
+              <img th:src="@{${product.getPreSignedURLForMainImage()}}" style="width: 120px" class="img-fluid"/>
             </td>
             <td>
                 <a class="link-detail" th:href="@{'/products/details/' + ${product.id}}"
@@ -128,7 +128,7 @@
                 <div th:each="product : ${listProducts}" class="row m-1">
 
                     <div class="col-4">
-                        <img th:src="@{${product.mainImagePath}}" style="width: 80px" class="img-fluid"/>
+                        <img th:src="@{${product.getPreSignedURLForMainImage()}}" style="width: 80px" class="img-fluid"/>
                     </div>
                     <div class="col-8">
                         <a class="link-detail" th:href="@{'/products/details/' + ${product.id}}"

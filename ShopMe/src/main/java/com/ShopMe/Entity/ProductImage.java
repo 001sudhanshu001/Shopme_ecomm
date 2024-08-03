@@ -23,6 +23,9 @@ public class ProductImage {  // this is for extra images of the product
     @JoinColumn(name = "product_id")
     private Product product; // one product can have many images
 
+    @Transient
+    private String preSignedURL;
+
     public ProductImage(String name, Product product) {
         this.name = name;
         this.product = product;

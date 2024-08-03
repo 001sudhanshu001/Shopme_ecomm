@@ -10,7 +10,7 @@
             <div><label>Main Image: [[${product.mainImage}]]</label></div>
             <div class="m-2">
                 <img id="thumbnail" alt="Main image preview" class="img-fluid"
-                     th:src="@{${product.mainImagePath}}"> <!-- same id as we used in common.js -->
+                     th:src="@{${product.getPreSignedURLForMainImage()}}"> <!-- same id as we used in common.js -->
             </div>
 
             <input type="hidden"/> <!-- To show name in the image-->
@@ -23,7 +23,7 @@
                 </div>
                 <div class="m-2">
                     <img th:alt="'Extra image #' + ${status.index + 1} + ' preview'" class="img-fluid"
-                         th:src="@{${productImage.imagePath}}"/>
+                         th:src="@{${productImage.getPreSignedURL()}}"/>
                 </div>
             </div>
         </th:block>

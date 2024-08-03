@@ -105,6 +105,24 @@ public class CategoryController {
                                @RequestParam("fileName")MultipartFile multipartFile,
                                RedirectAttributes attributes) throws IOException {
 
+        // TODO : Give error and also check for Non Null
+        if(category.getName().length() > 127) {
+            category.setName(category.getName().substring(0, 126));
+        }
+
+        if(category.getAlias().length() > 63) {
+            category.setAlias(category.getAlias().substring(0, 63));
+        }
+
+        // Generate unique name for image using Timestamp
+        if(category.getImage().length() > 128) {
+            category.setImage(category.getImage().substring(0, 63));
+        }
+
+        if(category.getAlias().contains("/")) {
+            category.setAlias(category.getAlias().replace("/", "-"));
+        }
+
         if(!multipartFile.isEmpty()){
             String fileName = StringUtils
                     .cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

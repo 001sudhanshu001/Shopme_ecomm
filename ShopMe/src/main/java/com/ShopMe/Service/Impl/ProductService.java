@@ -2,9 +2,12 @@ package com.ShopMe.Service.Impl;
 
 import com.ShopMe.DAO.ProductRepo;
 import com.ShopMe.Entity.Product;
+import com.ShopMe.Entity.ProductImage;
 import com.ShopMe.ExceptionHandler.ProductNotFoundException;
+import com.ShopMe.UtilityClasses.AmazonS3Util;
 import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.boot.cfgxml.internal.CfgXmlAccessServiceInitiator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +30,8 @@ public class ProductService {
 
     private final AmazonS3 amazonS3;
 
+    private final AmazonS3Util amazonS3Util;
+
     public List<Product> listAll() {
         return repo.findAll();
     }
@@ -46,13 +51,19 @@ public class ProductService {
                 return repo.searchInCategory(categoryId, categoryIdMatch, keyword, pageable);
             }
             // if normal Search
-            return repo.findAll(keyword, pageable);
+            Page<Product> productPage = repo.findAll(keyword, pageable);
+            addPresignedURL(productPage);
+            return productPage;
         }
         if(categoryId != null && categoryId > 0){
             String categoryIdMatch = "-" + String.valueOf(categoryId) + "-";
-            return repo.findAllInCategory(categoryId, categoryIdMatch, pageable);
+            Page<Product> allInCategory = repo.findAllInCategory(categoryId, categoryIdMatch, pageable);
+            addPresignedURL(allInCategory);
+            return allInCategory;
         }
-        return repo.findAll(pageable);
+        Page<Product> productPage = repo.findAll(pageable);
+        addPresignedURL(productPage);
+        return productPage;
     }
 
     public Product save(Product product){
@@ -75,9 +86,13 @@ public class ProductService {
         return savedProduct;
     }
 
-    public void saveProductPrice(Product productInForm) { // This is used in the case when Salesperson is allowed to change only pricing
+    public void saveProductPrice(Product productInForm) throws ProductNotFoundException { // This is used in the case when Salesperson is allowed to change only pricing
         // TODO ->
-        Product productInDB = repo.findById(productInForm.getId()).get();
+        Product productInDB = repo.findById(productInForm.getId())
+                .orElseThrow(
+                        () -> new ProductNotFoundException(
+                                "Could not find any product with ID " + productInForm.getId()
+                ));
         productInDB.setCost(productInForm.getCost());
         productInDB.setPrice(productInForm.getPrice());
         productInDB.setDiscountPercent(productInForm.getDiscountPercent());
@@ -115,11 +130,31 @@ public class ProductService {
     }
 
     public Product get(Integer id) throws ProductNotFoundException {
-        try {
-            return repo.findById(id).get();
-        }catch (NoSuchElementException ex){
-            throw new ProductNotFoundException("Could not find any product with ID " + id);
+        Product product = repo.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Could not find any product with ID " + id));
+        addPresignedURL(product);
+
+        return product;
+    }
+
+    public void addPresignedURL(Product product) {
+        product.setPreSignedURLForMainImage(amazonS3Util.generatePreSignedUrl("product-images/"
+                + product.getId() + "/" + product.getMainImage()));
+
+        // TODO : Create Static Field in a separate class for Object keys
+        for (ProductImage productImage : product.getImages()) {
+            productImage.setPreSignedURL(amazonS3Util.generatePreSignedUrl("product-images/"
+                    + product.getId() + "/extras/" + productImage.getName()));
         }
     }
 
+    private void addPresignedURL(Page<Product> page) {
+        List<Product> content = page.getContent();
+
+        for(Product product : content) {
+            product.setPreSignedURLForMainImage(amazonS3Util.generatePreSignedUrl("product-images/"
+                    + product.getId() + "/" + product.getMainImage()));
+        }
+        // No need to generate URL for extra images as in list only main image will be displayed
+    }
 }
