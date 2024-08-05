@@ -14,7 +14,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 40, nullable = false, unique = true) // no two roles have the same name
+    @Column(length = 40, nullable = false, unique = true)
     private String name;
 
     @Column(length = 150, nullable = false)

@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class CountryRestController { // This Controller handles AJAX call from Settings -> countries
+public class CountryRestController {
     private final CountryRepo repo;
 
     @GetMapping("/countries/list")

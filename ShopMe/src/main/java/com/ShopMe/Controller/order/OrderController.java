@@ -42,8 +42,6 @@ public class OrderController {
 
         Page<Order> page = this.orderService.listByPage(pageNum, sortField, sortDir, keyword);
         List<Order> listOrders = page.getContent();
-        page.getContent().forEach(o-> System.out.println(o.getCustomer().getFirstName()));
-
 
         long startCount = (long) (pageNum - 1) * OrderService.ORDERS_PER_PAGE + 1;
         long endCount = startCount +  OrderService.ORDERS_PER_PAGE - 1;

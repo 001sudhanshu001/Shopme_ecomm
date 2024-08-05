@@ -14,10 +14,13 @@ public class Setting {
     @Id
     @Column(name = "`key`", nullable = false, length = 123)
     private String key;
+
     @Column(nullable = false, length = 1024)
     private String value;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 45)
+
     private SettingCategory category;
 
     public Setting(String key) {

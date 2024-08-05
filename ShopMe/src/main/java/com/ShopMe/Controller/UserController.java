@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,7 +37,6 @@ public class UserController {
     private final UserService userService;
 
     private final ModelMapper modelMapper;
-
 
     @GetMapping("/users")
     public String getAllUsers(Model model) {
@@ -102,7 +102,7 @@ public class UserController {
 //            String uniqueFileName =
 //                    UUID.randomUUID() + "__" + System.currentTimeMillis();
 
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
             user.setPhotos(fileName);
             User savedUser = this.userService.save(user);
@@ -157,7 +157,8 @@ public class UserController {
 
 
     @GetMapping("/users/delete/{id}")
-    public String deleteUser(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+    public String deleteUser(@PathVariable("id") Integer id, Model model,
+                             RedirectAttributes redirectAttributes){
         try {
 
             this.userService.deleteUser(id);
@@ -178,7 +179,6 @@ public class UserController {
 
     }
 
-   // th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
     @GetMapping("/users/{id}/enabled/{status}")
     public String updateUserEnabledStatus(@PathVariable("id") Integer id,
                                           @PathVariable("status") boolean enabled,

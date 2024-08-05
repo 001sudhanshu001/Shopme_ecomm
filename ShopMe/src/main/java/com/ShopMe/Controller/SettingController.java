@@ -21,14 +21,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class SettingController {
     private final SettingService settingService;
-
     private final CurrencyRepo currencyRepo;
+    private final AmazonS3Util amazonS3Util;
 
     @GetMapping("/settings")
     public String listAll(Model model){
@@ -37,12 +38,23 @@ public class SettingController {
 
         model.addAttribute("listCurrency", listCurrency);
         model.addAttribute("pageTitle", "Settings - Shopme Admin");
+        String logoName = null;
         for(Setting setting : listSettings){
-            model.addAttribute(setting.getKey(), setting. getValue());
+            if(setting.getKey().equals("SITE_LOGO")) {
+                logoName = setting.getValue();
+            }
+            model.addAttribute(setting.getKey(), setting.getValue());
         }
 
-        // TODO -> Presigned URL FOR site logo in settings
-        model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
+        System.out.println("LOGO NAME " + logoName);
+
+        if(logoName != null) {
+            String preSignedUrl = amazonS3Util.generatePreSignedUrl(logoName.substring(1));
+            model.addAttribute("S3_BASE_URI", preSignedUrl);
+        }else { // TODO : Handle it Properly
+            model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
+        }
+
         return "settings/settings";
     }
 
@@ -65,9 +77,9 @@ public class SettingController {
     }
 
     private void saveSiteLogo(MultipartFile multipartFile, GeneralSettingBag settingBag) throws IOException {
-        if(!multipartFile.isEmpty()){ // Saving Site Logo
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            String value = "/site-logo/" + fileName;
+        if(!multipartFile.isEmpty()){
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            String value = "/site-logo/" + fileName; // TODO : Update it with just filename and test and then add DateTime in logoname
             settingBag.updateSiteLogo(value);
 
 //            String uploadDir = "../site-logo";

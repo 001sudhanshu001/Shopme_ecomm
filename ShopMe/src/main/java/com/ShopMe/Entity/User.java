@@ -70,7 +70,6 @@ public class User {
 //        return "user-photos/" + this.id + "/" +this.photos;
 
        // return "/user-photos/" + this.id + "/" +this.photos; ***
-        // TODO :: Using Pre-Signed URL
         return Constants.S3_BASE_URI + "/user-photos/" + this.id + "/" + this.photos;
     }
 
