@@ -5,59 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ce7e040-8097-4a9b-8d80-01082c5a09e3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ShopMe/Shopme-backend.log.2023-11-01.0.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ShopMe/Shopme-backend.log.2023-11-02.0.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/UtilityClasses/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ShopMe/user-photos/36/photo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand-logos/10/dell.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand-logos/11/nvidia.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand-logos/12/91059.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand-logos/13/sand.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand-logos/9/Sony_logo.svg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/3/Screenshot from 2023-11-01 11-00-13.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/3/extras/Screenshot from 2023-11-01 11-00-28.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/4/Screenshot from 2023-11-01 12-30-19.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/4/extras/Screenshot from 2023-11-01 12-30-53.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/5/Screenshot from 2023-11-01 13-00-29.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/5/extras/Screenshot from 2023-11-01 13-00-36.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/5/extras/Screenshot from 2023-11-01 13-00-40.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/6/ASUS TUF Gaming 2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/6/extras/ASUS TUF Gaming top view.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/7/Screenshot from 2023-11-02 08-33-57.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/7/extras/Screenshot from 2023-11-02 08-33-46.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/8/Screenshot from 2023-11-02 08-55-54.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/8/extras/Screenshot from 2023-11-02 08-55-59.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-images/8/extras/Screenshot from 2023-11-02 08-56-06.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/site-logo/ShopmeAdminSmall.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ShopMe.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ShopMe.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/Shopme-backend.log" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/Shopme-backend.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Controller/SettingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Controller/SettingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/Brand.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/Brand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/ProductImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/ProductImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/order/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/settings/SettingBag.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Entity/settings/SettingBag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Service/Impl/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/Service/Impl/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/UtilityClasses/MvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/UtilityClasses/MvcConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/static/js/product_form_images.js" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/static/js/product_form_images.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/brands/brands.html" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/brands/brands.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/categories/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/categories/categories.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/customers/customers.html" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/customers/customers.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/navigation.html" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/navigation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/orders/orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/orders/orders.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/products/product_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/products/product_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/settings/general.html" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/settings/general.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/users/users.html" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/templates/users/users.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ShopMe/t.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/category-images/19/cellphone_stands.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/site-logo/003 ShopmeAdminSmall.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,8 +34,9 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/E-Commerce/ShopMe&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/sudhanshu/Documents/E-commerce/ShopMe/ShopMe/src/main/resources/static/images&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -96,6 +45,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ShopMe/src/main/resources/static/images" />
+    </key>
+  </component>
   <component name="RunManager" selected="Spring Boot.ShopMeApplication">
     <configuration name="Constants" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.ShopMe.UtilityClasses.Constants" />
@@ -135,6 +89,27 @@
       <workItem from="1720445490032" duration="138000" />
       <workItem from="1720532112232" duration="1006000" />
       <workItem from="1720533130998" duration="4763000" />
+      <workItem from="1721650751075" duration="55000" />
+      <workItem from="1721658324912" duration="33000" />
+      <workItem from="1721672105305" duration="2714000" />
+      <workItem from="1721757870859" duration="1716000" />
+      <workItem from="1721844638025" duration="4097000" />
+      <workItem from="1721887221674" duration="19000" />
+      <workItem from="1721980533667" duration="2280000" />
+      <workItem from="1721991571507" duration="138000" />
+      <workItem from="1722013515416" duration="28000" />
+      <workItem from="1722017580254" duration="3704000" />
+      <workItem from="1722021404412" duration="61000" />
+      <workItem from="1722418916410" duration="437000" />
+      <workItem from="1722423055541" duration="6310000" />
+      <workItem from="1722450003161" duration="663000" />
+      <workItem from="1722516760866" duration="16000" />
+      <workItem from="1722534604067" duration="58000" />
+      <workItem from="1722535006155" duration="3656000" />
+      <workItem from="1722672417856" duration="140000" />
+      <workItem from="1722680387517" duration="1893000" />
+      <workItem from="1722800709422" duration="1864000" />
+      <workItem from="1722853878329" duration="499000" />
     </task>
     <servers />
   </component>
