@@ -7,7 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class AbstractExporter {
-    public void setResponseHeader(HttpServletResponse response, String contentType, String extension, String prefix) throws IOException {
+    public void setResponseHeader(HttpServletResponse response, String contentType,
+                                  String extension, String prefix) throws IOException {
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String timeStamp = dateFormatter.format(new Date());
         String fileName = prefix + timeStamp + extension;

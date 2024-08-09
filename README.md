@@ -24,11 +24,12 @@ Here is the repository for the Customer application: [Shopme Customer Applicatio
 - **User Management**: Manage user accounts and roles, ensuring secure access and permissions.
 - **Order Management**: View and manage customer orders, including order status updates and fulfillment.
 - **Security**: Role-based access control ensures that only authorized personnel can perform administrative functions.
-- **File Uploads**: Upload product images seamlessly to AWS S3 for storage and accessibility.
+- **File Uploads**: Upload images seamlessly to AWS S3 for storage and accessibility. Use Presigned URLs to render the images.
 
 ## Technologies Used
 
 - **Backend**: Spring Boot, Spring MVC
+- **Frontend**: Thymeleaf
 - **Database**: MySQL
 - **Cloud**: AWS (S3, RDS)
 - **Security**: Spring Security
@@ -38,7 +39,7 @@ Here is the repository for the Customer application: [Shopme Customer Applicatio
 
 ## Docker Image
 
-The Docker image for the Shopme Admin application is available at: [Docker Hub - sudhanshu00i/shopme-admin](https://hub.docker.com/repository/docker/sudhanshu00i/shopme-admin)
+The Docker image for the Shopme Admin application is available at: [Docker Hub - shopme-admin](https://hub.docker.com/repository/docker/sudhanshu00i/shopme-admin)
 
 <br>
 <br>

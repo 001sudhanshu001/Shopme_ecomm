@@ -19,7 +19,7 @@ public class UserCsvExporter extends AbstractExporter {
                 CsvPreference.STANDARD_PREFERENCE);
         String[] csvHeader = {"User ID", "E-mail", "First Name", "Last Name", "Roles", "Enabled "};
 
-        String[] fieldMapping = {"id", "email", "firstName", "lastname", "roles", "enabled"};// we exculded password and photos
+        String[] fieldMapping = {"id", "email", "firstName", "lastname", "roles", "enabled"};// excluded password and photos
 
         csvWriter.writeHeader(csvHeader);
 
