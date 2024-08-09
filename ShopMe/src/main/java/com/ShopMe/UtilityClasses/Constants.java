@@ -20,7 +20,4 @@ public class Constants {
         return String.format(pattern, bucketName, region);
     }
 
-    public static void main(String[] args) {
-        System.out.println("The Bucket URI is :: " + S3_BASE_URI);
-    }
 }

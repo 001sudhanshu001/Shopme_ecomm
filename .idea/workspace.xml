@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7ce7e040-8097-4a9b-8d80-01082c5a09e3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ShopMe/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/UtilityClasses/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/java/com/ShopMe/UtilityClasses/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ShopMe/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ShopMe/src/main/resources/static/a.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +114,11 @@
       <workItem from="1722680387517" duration="1893000" />
       <workItem from="1722800709422" duration="1864000" />
       <workItem from="1722853878329" duration="499000" />
+      <workItem from="1722937463051" duration="1138000" />
+      <workItem from="1722944375898" duration="37000" />
+      <workItem from="1723015311950" duration="1101000" />
+      <workItem from="1723017637634" duration="757000" />
+      <workItem from="1723018630480" duration="12000" />
     </task>
     <servers />
   </component>
