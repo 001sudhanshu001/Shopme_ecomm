@@ -37,6 +37,12 @@ Here is the repository for the Customer application: [Shopme Customer Applicatio
 - **Build Tools**: Maven
 - **Containerization**: Docker
 
+## ER Diagram 
+<img src="./site-logo/ER_Diagram.png" />
+Admin Users :
+<br>
+<img src="./site-logo/User_Role.png" />
+
 ## Docker Image
 
 The Docker image for the Shopme Admin application is available at: [Docker Hub - shopme-admin](https://hub.docker.com/repository/docker/sudhanshu00i/shopme-admin)
